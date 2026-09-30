@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Club Jorge Camagüey</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: #ffffff;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      padding: 28px 20px 50px;
+    }
+
+    .small {
+      color: #999;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin: 8px 0 4px;
+    }
+
+    .mission {
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 22px;
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .mission-number {
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: .55;
+    }
+
+    .mission h2 {
+      font-size: 28px;
+      margin: 10px 0;
+    }
+
+    .mission p {
+      line-height: 1.5;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: 0;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .main-button {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .card {
+      margin-top: 14px;
+      padding: 20px;
+      border: 1px solid #292929;
+      border-radius: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+    }
+
+    .card p {
+      line-height: 1.5;
+      color: #c8c8c8;
+    }
+
+    .ranking {
+      font-size: 15px;
+      line-height: 2;
+      margin-top: 12px;
+    }
+
+    .prize {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #1b1b1b;
+      font-weight: bold;
+    }
+
+    .progress {
+      margin-top: 12px;
+      height: 8px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress div {
+      width: 0%;
+      height: 100%;
+      background: #ffffff;
+      transition: width .3s ease;
+    }
+
+    .bottom {
+      margin-top: 30px;
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="small">CLUB JORGE CAMAGÜEY</div>
+  <h1 id="welcome">Hola 👋</h1>
+  <div class="small">BAILA · CONECTA · EVOLUCIONA</div>
+
+  <!-- MISIÓN -->
+
+  <div class="mission">
+
+    <div class="mission-number">
+      MISIÓN #01
+    </div>
+
+    <h2>
+      MENOS PASOS.<br>
+      MÁS MÚSICA.
+    </h2>
+
+    <p>
+      Baila una canción completa utilizando
+      solamente cinco movimientos.
+    </p>
+
+    <p>
+      Tu objetivo no es impresionar.
+      Tu objetivo es escuchar.
+    </p>
+
+    <button
+      class="main-button"
+      id="missionButton"
+      onclick="completeMission()"
+    >
+      ✓ HE COMPLETADO LA MISIÓN
+    </button>
+
+  </div>
+
+
+  <!-- RETO DE CIUDADES -->
+
+  <div class="card">
+
+    <h3>🌍 RETO DE CIUDADES</h3>
+
+    <p>
+      ¿Qué ciudad llevará a Jorge a casa?
+    </p>
+
+    <div class="ranking">
+      🥇 Madrid — 127 misiones<br>
+      🥈 Barcelona — 103 misiones<br>
+      🥉 Berlín — 91 misiones<br>
+      4. París — 76 misiones
+    </div>
+
+    <div class="prize">
+      🏆 La ciudad ganadora recibe
+      24 HORAS CON JORGE
+    </div>
+
+  </div>
+
+
+  <!-- PROGRESO -->
+
+  <div class="card">
+
+    <h3>🔥 MI PROGRESO</h3>
+
+    <p id="progressText">
+      0 misiones completadas
+    </p>
+
+    <div class="progress">
+      <div id="progressBar"></div>
+    </div>
+
+    <p id="nextLevel">
+      Tu camino empieza aquí.
+    </p>
+
+  </div>
+
+
+  <!-- JORGE TE MIRA -->
+
+  <div class="card">
+
+    <h3>👀 JORGE TE MIRA</h3>
+
+    <p>
+      Cada semana Jorge elige algunos vídeos
+      del Club, los analiza y comparte sus
+      correcciones con todos.
+    </p>
+
+    <p>
+      <strong>
+        Tu baile. Sus ojos.
+        Una corrección que puede cambiarlo todo.
+      </strong>
+    </p>
+
+  </div>
+
+
+  <div class="bottom">
+    CLUB JORGE CAMAGÜEY · 2026
+  </div>
+
+</div>
+
+
+<script>
+
+  const tg = window.Telegram.WebApp;
+
+  tg.ready();
+  tg.expand();
+
+  // Nombre del usuario de Telegram
+
+  const user = tg.initDataUnsafe?.user;
+
+  if (user?.first_name) {
+    document.getElementById("welcome").innerText =
+      "Hola, " + user.first_name + " 👋";
+  }
+
+
+  // Progreso de misiones
+
+  let missions =
+    Number(localStorage.getItem("missions") || 0);
+
+
+  function updateProgress() {
+
+    document.getElementById("progressText").innerText =
+      missions + (missions === 1
+        ? " misión completada"
+        : " misiones completadas");
+
+
+    const percentage =
+      Math.min((missions / 10) * 100, 100);
+
+    document.getElementById("progressBar").style.width =
+      percentage + "%";
+
+
+    if (missions === 0) {
+
+      document.getElementById("nextLevel").innerText =
+        "Tu camino empieza aquí.";
+
+    } else if (missions < 10) {
+
+      const remaining = 10 - missions;
+
+      document.getElementById("nextLevel").innerText =
+        "Te faltan " + remaining +
+        " para CAMAGÜEY 10.";
+
+    } else {
+
+      document.getElementById("nextLevel").innerText =
+        "🏅 CAMAGÜEY 10 CONSEGUIDO";
+
+    }
+
+  }
+
+
+  function completeMission() {
+
+    const completed =
+      localStorage.getItem("mission01completed");
+
+    if (completed === "yes") {
+
+      alert("Esta misión ya está completada 🔥");
+      return;
+
+    }
+
+
+    missions++;
+
+    localStorage.setItem(
+      "missions",
+      missions
+    );
+
+    localStorage.setItem(
+      "mission01completed",
+      "yes"
+    );
+
+
+    document.getElementById(
+      "missionButton"
+    ).innerText =
+      "🔥 MISIÓN COMPLETADA";
+
+
+    updateProgress();
+
+
+    alert(
+      "🔥 ¡Misión completada! Tu progreso continúa."
+    );
+
+  }
+
+
+  // Comprobar si ya hizo esta misión
+
+  if (
+    localStorage.getItem(
+      "mission01completed"
+    ) === "yes"
+  ) {
+
+    document.getElementById(
+      "missionButton"
+    ).innerText =
+      "🔥 MISIÓN COMPLETADA";
+
+  }
+
+
+  updateProgress();
+
+</script>
+
+</body>
+</html>
