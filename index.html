@@ -1497,7 +1497,7 @@ function showClub(){
 
 /* PERSONAL MISSION */
 
-function completeMission(){
+async function completeMission(){
 
   if(completed){
 
@@ -1513,58 +1513,97 @@ function completeMission(){
       });
 
     return;
-
   }
 
+  const button =
+    document.getElementById("missionButton");
 
-  missions++;
-  completed = true;
+  button.disabled = true;
+  button.innerText = "GUARDANDO...";
 
+  try {
 
-  localStorage.setItem(
-    "missions",
-    missions
-  );
+    const response = await fetch(
+      "https://weniwhqudqzphxdmfxhw.supabase.co/functions/v1/swift-handler",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          initData: tg.initData,
+          action: "complete_mission"
+        })
+      }
+    );
 
+    const result = await response.json();
 
-  localStorage.setItem(
-    "mission01completed",
-    "yes"
-  );
+    if (!response.ok) {
+      console.error("Mission error:", result);
 
+      button.disabled = false;
+      button.innerText = "✓ HE HECHO LA MISIÓN";
 
-  updateUI();
+      showToast(
+        "No hemos podido guardar la misión. Inténtalo de nuevo."
+      );
 
+      return;
+    }
 
-  document
-    .getElementById("confirmBox")
-    .classList.add("show");
+    missions++;
+    completed = true;
 
+    localStorage.setItem(
+      "missions",
+      missions
+    );
 
-  setTimeout(()=>{
+    localStorage.setItem(
+      "mission01completed",
+      "yes"
+    );
+
+    updateUI();
 
     document
       .getElementById("confirmBox")
-      .scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
+      .classList.add("show");
 
-  },200);
+    setTimeout(()=>{
 
+      document
+        .getElementById("confirmBox")
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
 
-  if(tg.HapticFeedback){
+    },200);
 
-    tg.HapticFeedback
-      .notificationOccurred("success");
+    if(tg.HapticFeedback){
 
+      tg.HapticFeedback
+        .notificationOccurred("success");
+
+    }
+
+    showToast(
+      "🔥 Misión completada. Ya cuenta para tu progreso."
+    );
+
+  } catch(error) {
+
+    console.error("Mission connection error:", error);
+
+    button.disabled = false;
+    button.innerText = "✓ HE HECHO LA MISIÓN";
+
+    showToast(
+      "Error de conexión. Inténtalo de nuevo."
+    );
   }
-
-
-  showToast(
-    "🔥 Misión completada. Ya cuenta para tu progreso."
-  );
-
 }
 
 
