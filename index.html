@@ -1,372 +1,669 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club Jorge Camagüey</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Club Jorge Camagüey</title>
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root{
+  --bg:#F3F0E8;
+  --paper:#FFFDF8;
+  --ink:#171717;
+  --muted:#77746D;
+  --line:#DDD8CE;
+  --red:#E34232;
+  --blue:#2457E6;
+  --yellow:#F4C84A;
+  --dark:#191919;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0b;
-      color: #ffffff;
-    }
+*{box-sizing:border-box}
 
-    .app {
-      max-width: 520px;
-      margin: auto;
-      padding: 28px 20px 50px;
-    }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
 
-    .small {
-      color: #999;
-      font-size: 13px;
-      letter-spacing: 2px;
-    }
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:22px 18px 110px;
+}
 
-    h1 {
-      font-size: 32px;
-      margin: 8px 0 4px;
-    }
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+}
 
-    .mission {
-      margin-top: 25px;
-      padding: 25px;
-      border-radius: 22px;
-      background: #ffffff;
-      color: #111111;
-    }
+.brand{
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.7px;
+}
 
-    .mission-number {
-      font-size: 12px;
-      letter-spacing: 2px;
-      opacity: .55;
-    }
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--dark);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
 
-    .mission h2 {
-      font-size: 28px;
-      margin: 10px 0;
-    }
+.hello{
+  font-size:38px;
+  line-height:1;
+  letter-spacing:-1.5px;
+  margin:0 0 8px;
+}
 
-    .mission p {
-      line-height: 1.5;
-    }
+.sub{
+  color:var(--muted);
+  font-size:15px;
+  margin-bottom:20px;
+}
 
-    button {
-      width: 100%;
-      padding: 16px;
-      border: 0;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 12px;
-    }
+.stats{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-bottom:28px;
+}
 
-    .main-button {
-      background: #111111;
-      color: #ffffff;
-    }
+.pill{
+  white-space:nowrap;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:50px;
+  padding:9px 13px;
+  font-size:13px;
+  font-weight:650;
+}
 
-    .card {
-      margin-top: 14px;
-      padding: 20px;
-      border: 1px solid #292929;
-      border-radius: 18px;
-    }
+.section-label{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  color:var(--muted);
+  margin-bottom:9px;
+}
 
-    .card h3 {
-      margin: 0 0 8px;
-    }
+.mission{
+  background:var(--red);
+  color:white;
+  border-radius:26px;
+  padding:25px;
+  margin-bottom:14px;
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
 
-    .card p {
-      line-height: 1.5;
-      color: #c8c8c8;
-    }
+.mission-number{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.6px;
+  opacity:.75;
+}
 
-    .ranking {
-      font-size: 15px;
-      line-height: 2;
-      margin-top: 12px;
-    }
+.mission h2{
+  font-size:34px;
+  line-height:.98;
+  letter-spacing:-1.3px;
+  margin:14px 0 18px;
+  max-width:330px;
+}
 
-    .prize {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 12px;
-      background: #1b1b1b;
-      font-weight: bold;
-    }
+.mission p{
+  font-size:16px;
+  line-height:1.5;
+  max-width:380px;
+}
 
-    .progress {
-      margin-top: 12px;
-      height: 8px;
-      background: #333;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+.action{
+  width:100%;
+  border:0;
+  background:var(--dark);
+  color:white;
+  border-radius:15px;
+  padding:16px;
+  margin-top:10px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+}
 
-    .progress div {
-      width: 0%;
-      height: 100%;
-      background: #ffffff;
-      transition: width .3s ease;
-    }
+.action.done{
+  background:white;
+  color:var(--red);
+}
 
-    .bottom {
-      margin-top: 30px;
-      text-align: center;
-      color: #777;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-  </style>
+.team{
+  background:var(--blue);
+  color:white;
+  border-radius:26px;
+  padding:24px;
+  margin-top:14px;
+}
+
+.team-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.team h2{
+  font-size:26px;
+  margin:5px 0;
+}
+
+.position{
+  font-size:42px;
+  font-weight:850;
+  line-height:1;
+}
+
+.team-copy{
+  opacity:.85;
+  line-height:1.45;
+  font-size:14px;
+  margin-top:12px;
+}
+
+.race{
+  margin-top:20px;
+  background:rgba(255,255,255,.13);
+  border-radius:17px;
+  padding:15px;
+}
+
+.race-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  font-size:14px;
+}
+
+.me{
+  font-weight:800;
+}
+
+.prize{
+  margin-top:13px;
+  padding-top:13px;
+  border-top:1px solid rgba(255,255,255,.25);
+  font-size:13px;
+  font-weight:750;
+}
+
+.watch{
+  margin-top:14px;
+  background:var(--dark);
+  color:white;
+  border-radius:26px;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+
+.watch:after{
+  content:"👀";
+  position:absolute;
+  right:18px;
+  top:12px;
+  font-size:56px;
+  opacity:.15;
+}
+
+.watch h2{
+  margin:5px 0 10px;
+  font-size:27px;
+}
+
+.watch p{
+  color:#C9C9C9;
+  line-height:1.5;
+  font-size:14px;
+  max-width:330px;
+}
+
+.watch strong{
+  color:white;
+}
+
+.progress-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:19px;
+  margin-top:14px;
+}
+
+.progress-head{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:750;
+}
+
+.progress-track{
+  width:100%;
+  height:8px;
+  background:#E2DED5;
+  border-radius:20px;
+  margin-top:13px;
+  overflow:hidden;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:var(--yellow);
+  transition:.35s ease;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  padding:10px 15px calc(10px + env(safe-area-inset-bottom));
+  background:rgba(243,240,232,.94);
+  backdrop-filter:blur(14px);
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:5px;
+  border-top:1px solid var(--line);
+}
+
+.nav-item{
+  text-align:center;
+  font-size:10px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+.nav-item.active{
+  color:var(--red);
+}
+
+.toast{
+  display:none;
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%);
+  width:calc(100% - 40px);
+  max-width:470px;
+  background:#111;
+  color:white;
+  padding:15px 18px;
+  border-radius:15px;
+  text-align:center;
+  font-size:14px;
+  z-index:10;
+}
+
+@media(min-width:700px){
+  .app{padding-top:35px}
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <div class="small">CLUB JORGE CAMAGÜEY</div>
-  <h1 id="welcome">Hola 👋</h1>
-  <div class="small">BAILA · CONECTA · EVOLUCIONA</div>
+  <div class="topbar">
+    <div class="brand">CLUB JORGE CAMAGÜEY</div>
+    <div class="avatar" id="avatar">J</div>
+  </div>
 
-  <!-- MISIÓN -->
+  <h1 class="hello" id="welcome">Hola 👋</h1>
+  <div class="sub">Esta semana tienes una misión.</div>
 
-  <div class="mission">
+  <div class="stats">
+    <div class="pill">🔥 <span id="streak">1</span> semana</div>
+    <div class="pill">✓ <span id="missionCount">0</span> misiones</div>
+    <div class="pill">🌍 <span id="cityLabel">Elige tu ciudad</span></div>
+  </div>
+
+  <div class="section-label">01 · MI MISIÓN</div>
+
+  <section class="mission">
 
     <div class="mission-number">
-      MISIÓN #01
+      MISIÓN DE ESTA SEMANA
     </div>
 
-    <h2>
-      MENOS PASOS.<br>
-      MÁS MÚSICA.
-    </h2>
+    <h2>MENOS PASOS.<br>MÁS MÚSICA.</h2>
 
     <p>
-      Baila una canción completa utilizando
-      solamente cinco movimientos.
+      Baila una canción completa utilizando solamente
+      cinco movimientos.
     </p>
 
     <p>
-      Tu objetivo no es impresionar.
-      Tu objetivo es escuchar.
+      No intentes impresionar. Escucha.
+      Respira. Deja espacio a la música.
     </p>
 
     <button
-      class="main-button"
+      class="action"
       id="missionButton"
-      onclick="completeMission()"
-    >
-      ✓ HE COMPLETADO LA MISIÓN
+      onclick="completeMission()">
+      ✓ HE HECHO LA MISIÓN
     </button>
 
+  </section>
+
+
+  <div class="section-label" style="margin-top:27px;">
+    02 · MI EQUIPO
   </div>
 
+  <section class="team">
 
-  <!-- RETO DE CIUDADES -->
+    <div class="team-top">
+      <div>
+        <div style="font-size:12px;opacity:.7">
+          TU CIUDAD
+        </div>
 
-  <div class="card">
+        <h2 id="cityName">Madrid</h2>
+      </div>
 
-    <h3>🌍 RETO DE CIUDADES</h3>
+      <div>
+        <div style="font-size:11px;opacity:.7">
+          POSICIÓN
+        </div>
+        <div class="position">#2</div>
+      </div>
+    </div>
+
+    <div class="team-copy">
+      Cada misión que completas suma a tu ciudad.
+      Juntos podéis llevar a Jorge hasta vosotros.
+    </div>
+
+    <div class="race">
+
+      <div class="race-row">
+        <span>🥇 Barcelona</span>
+        <strong>1.482</strong>
+      </div>
+
+      <div class="race-row me">
+        <span>🔵 Madrid · TU EQUIPO</span>
+        <strong>1.417</strong>
+      </div>
+
+      <div class="race-row">
+        <span>3 · Berlín</span>
+        <strong>1.201</strong>
+      </div>
+
+      <div class="race-row">
+        <span>4 · París</span>
+        <strong>986</strong>
+      </div>
+
+      <div class="prize">
+        🏆 65 misiones para alcanzar Barcelona
+        <br><br>
+        Próximo premio: 24 HORAS CON JORGE
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="section-label" style="margin-top:27px;">
+    03 · JORGE TE MIRA
+  </div>
+
+  <section class="watch">
+
+    <h2>Tu baile.<br>Los ojos de Jorge.</h2>
 
     <p>
-      ¿Qué ciudad llevará a Jorge a casa?
-    </p>
-
-    <div class="ranking">
-      🥇 Madrid — 127 misiones<br>
-      🥈 Barcelona — 103 misiones<br>
-      🥉 Berlín — 91 misiones<br>
-      4. París — 76 misiones
-    </div>
-
-    <div class="prize">
-      🏆 La ciudad ganadora recibe
-      24 HORAS CON JORGE
-    </div>
-
-  </div>
-
-
-  <!-- PROGRESO -->
-
-  <div class="card">
-
-    <h3>🔥 MI PROGRESO</h3>
-
-    <p id="progressText">
-      0 misiones completadas
-    </p>
-
-    <div class="progress">
-      <div id="progressBar"></div>
-    </div>
-
-    <p id="nextLevel">
-      Tu camino empieza aquí.
-    </p>
-
-  </div>
-
-
-  <!-- JORGE TE MIRA -->
-
-  <div class="card">
-
-    <h3>👀 JORGE TE MIRA</h3>
-
-    <p>
-      Cada semana Jorge elige algunos vídeos
-      del Club, los analiza y comparte sus
-      correcciones con todos.
+      Comparte tu misión. Cada semana Jorge selecciona
+      vídeos de miembros del Club y los analiza.
     </p>
 
     <p>
       <strong>
-        Tu baile. Sus ojos.
-        Una corrección que puede cambiarlo todo.
+        Una corrección puede cambiar tu forma de bailar.
       </strong>
     </p>
 
-  </div>
+    <button class="action" onclick="showComingSoon()">
+      ENVIAR MI VÍDEO →
+    </button>
+
+  </section>
 
 
-  <div class="bottom">
-    CLUB JORGE CAMAGÜEY · 2026
-  </div>
+  <section class="progress-card">
+
+    <div class="progress-head">
+      <span>🔥 TU CAMINO</span>
+      <span id="levelText">0 / 10</span>
+    </div>
+
+    <div class="progress-track">
+      <div
+        class="progress-bar"
+        id="progressBar">
+      </div>
+    </div>
+
+    <p
+      id="progressMessage"
+      style="font-size:13px;color:#77746D;margin:11px 0 0;">
+      Completa tu primera misión.
+    </p>
+
+  </section>
 
 </div>
 
 
+<div class="toast" id="toast"></div>
+
+
+<nav class="nav">
+
+  <div class="nav-item active">
+    <span class="nav-icon">🔥</span>
+    MISIÓN
+  </div>
+
+  <div class="nav-item">
+    <span class="nav-icon">🌍</span>
+    EQUIPO
+  </div>
+
+  <div class="nav-item">
+    <span class="nav-icon">👀</span>
+    JORGE
+  </div>
+
+</nav>
+
+
 <script>
 
-  const tg = window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 
-  tg.ready();
-  tg.expand();
+tg.ready();
+tg.expand();
 
-  // Nombre del usuario de Telegram
-
-  const user = tg.initDataUnsafe?.user;
-
-  if (user?.first_name) {
-    document.getElementById("welcome").innerText =
-      "Hola, " + user.first_name + " 👋";
-  }
+const user = tg.initDataUnsafe?.user;
 
 
-  // Progreso de misiones
+/* SOLO PRIMER NOMBRE */
 
-  let missions =
-    Number(localStorage.getItem("missions") || 0);
+if(user?.first_name){
 
+  const firstName =
+    user.first_name.split(/[\s\/]+/)[0];
 
-  function updateProgress() {
+  document.getElementById("welcome").innerText =
+    "Hola, " + firstName;
 
-    document.getElementById("progressText").innerText =
-      missions + (missions === 1
-        ? " misión completada"
-        : " misiones completadas");
+  document.getElementById("avatar").innerText =
+    firstName.charAt(0).toUpperCase();
 
-
-    const percentage =
-      Math.min((missions / 10) * 100, 100);
-
-    document.getElementById("progressBar").style.width =
-      percentage + "%";
+}
 
 
-    if (missions === 0) {
+/* DATOS LOCALES DE PRUEBA */
 
-      document.getElementById("nextLevel").innerText =
-        "Tu camino empieza aquí.";
+let missions =
+  Number(localStorage.getItem("missions") || 0);
 
-    } else if (missions < 10) {
-
-      const remaining = 10 - missions;
-
-      document.getElementById("nextLevel").innerText =
-        "Te faltan " + remaining +
-        " para CAMAGÜEY 10.";
-
-    } else {
-
-      document.getElementById("nextLevel").innerText =
-        "🏅 CAMAGÜEY 10 CONSEGUIDO";
-
-    }
-
-  }
+let completed =
+  localStorage.getItem("mission01completed") === "yes";
 
 
-  function completeMission() {
+function updateUI(){
 
-    const completed =
-      localStorage.getItem("mission01completed");
+  document.getElementById("missionCount").innerText =
+    missions;
 
-    if (completed === "yes") {
+  document.getElementById("levelText").innerText =
+    Math.min(missions,10) + " / 10";
 
-      alert("Esta misión ya está completada 🔥");
-      return;
+  const percent =
+    Math.min((missions / 10) * 100,100);
 
-    }
-
-
-    missions++;
-
-    localStorage.setItem(
-      "missions",
-      missions
-    );
-
-    localStorage.setItem(
-      "mission01completed",
-      "yes"
-    );
+  document.getElementById("progressBar").style.width =
+    percent + "%";
 
 
-    document.getElementById(
-      "missionButton"
-    ).innerText =
+  if(completed){
+
+    const button =
+      document.getElementById("missionButton");
+
+    button.innerText =
       "🔥 MISIÓN COMPLETADA";
 
+    button.classList.add("done");
 
-    updateProgress();
+  }
 
 
-    alert(
-      "🔥 ¡Misión completada! Tu progreso continúa."
+  if(missions === 0){
+
+    document.getElementById("progressMessage").innerText =
+      "Completa tu primera misión.";
+
+  }
+
+  else if(missions < 10){
+
+    const left = 10 - missions;
+
+    document.getElementById("progressMessage").innerText =
+      "Te faltan " + left +
+      " misiones para CAMAGÜEY 10.";
+
+  }
+
+  else{
+
+    document.getElementById("progressMessage").innerText =
+      "🏅 CAMAGÜEY 10 CONSEGUIDO";
+
+  }
+
+}
+
+
+function completeMission(){
+
+  if(completed){
+
+    showToast(
+      "Esta misión ya forma parte de tu camino 🔥"
     );
 
+    return;
   }
 
 
-  // Comprobar si ya hizo esta misión
+  missions++;
+  completed = true;
 
-  if (
-    localStorage.getItem(
-      "mission01completed"
-    ) === "yes"
-  ) {
+  localStorage.setItem(
+    "missions",
+    missions
+  );
 
-    document.getElementById(
-      "missionButton"
-    ).innerText =
-      "🔥 MISIÓN COMPLETADA";
+  localStorage.setItem(
+    "mission01completed",
+    "yes"
+  );
 
+  updateUI();
+
+  if(tg.HapticFeedback){
+    tg.HapticFeedback.notificationOccurred("success");
   }
 
+  showToast(
+    "🔥 Misión completada. Has sumado un punto a tu equipo."
+  );
 
-  updateProgress();
+}
+
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+  toast.style.display = "block";
+
+  setTimeout(()=>{
+    toast.style.display = "none";
+  },2600);
+
+}
+
+
+function showComingSoon(){
+
+  showToast(
+    "Muy pronto podrás enviar tu vídeo directamente desde el Club."
+  );
+
+}
+
+
+updateUI();
 
 </script>
 
