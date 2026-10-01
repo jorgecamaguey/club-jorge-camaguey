@@ -1691,25 +1691,23 @@ function updateUI(){
 
 function sendVideo(){
 
-  /*
-  En V4 abrimos el chat del bot.
+  const botUsername = "clubJorgeCamagueyBot";
 
-  En el siguiente paso conectaremos el bot
-  con una base de datos para detectar
-  automáticamente el vídeo recibido
-  y validar la misión.
-  */
+  try {
 
-  const botUrl =
-    "https://t.me/clubJorgeCamagueyBot";
+    const telegramUrl =
+      "https://t.me/" + botUsername + "?start=mission_video";
 
-  try{
+    if (tg && tg.openTelegramLink) {
+      tg.openTelegramLink(telegramUrl);
+    } else {
+      window.location.href = telegramUrl;
+    }
 
-    tg.openTelegramLink(botUrl);
+  } catch(error) {
 
-  }catch(e){
-
-    window.location.href = botUrl;
+    window.location.href =
+      "https://t.me/" + botUsername + "?start=mission_video";
 
   }
 
