@@ -1117,7 +1117,10 @@ button{
   <h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
-  <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3><div id="adminQuestions">Cargando preguntas…</div><h3 style="margin-top:24px;">EQUIPO</h3>
+  <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3>
+<div id="insightSummary" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;"></div>
+<div id="insightCategories" style="margin-bottom:16px;"></div>
+<div id="adminQuestions">Cargando preguntas…</div><h3 style="margin-top:24px;">EQUIPO</h3>
   <div id="adminTeam"></div>
 </section>
 
@@ -1702,6 +1705,17 @@ async function loadAdmin(){
     }).join(""):"Sin vídeos pendientes.";
 
     try{
+      const insights=await clubApi("admin_question_insights");
+      const summary=document.getElementById("insightSummary");
+      if(summary){
+        const cards=[["TOTAL",insights.summary.total],["30 DÍAS",insights.summary.last30],["PARA LIVE",insights.summary.for_live],["CONTENIDO",insights.summary.for_content]];
+        summary.innerHTML=cards.map(function(x){return '<div style="background:#171717;color:#fff;border-radius:16px;padding:13px 14px;"><div style="font-size:9px;opacity:.62;letter-spacing:1.1px;">'+x[0]+'</div><div style="font-size:27px;font-weight:900;margin-top:3px;">'+x[1]+'</div></div>';}).join("");
+      }
+      const cats=document.getElementById("insightCategories");
+      if(cats){
+        const top=(insights.categories||[]).slice(0,6);
+        cats.innerHTML='<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin:15px 0 5px;">LO QUE MÁS PREOCUPA AL CLUB</div>'+(top.length?top.map(function(x){return '<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid #e3ded4;"><span>'+escapeHtml(x.label)+'</span><strong>'+x.count+'</strong></div>';}).join(""):'<div style="font-size:12px;color:#777;padding:8px 0;">Clasifica las primeras preguntas para descubrir patrones.</div>');
+      }
       const qdata=await clubApi("admin_questions");
       const qbox=document.getElementById("adminQuestions");
       qbox.innerHTML=(qdata.questions||[]).length?(qdata.questions||[]).map(function(q){
