@@ -1117,7 +1117,7 @@ button{
   <h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
-  <h3 style="margin-top:24px;">EQUIPO</h3>
+  <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3><div id="adminQuestions">Cargando preguntas…</div><h3 style="margin-top:24px;">EQUIPO</h3>
   <div id="adminTeam"></div>
 </section>
 
@@ -1701,6 +1701,19 @@ async function loadAdmin(){
       '<button onclick="adminModerate('+v.id+',\'rejected\')">✕ RECHAZAR</button></div>';
     }).join(""):"Sin vídeos pendientes.";
 
+    try{
+      const qdata=await clubApi("admin_questions");
+      const qbox=document.getElementById("adminQuestions");
+      qbox.innerHTML=(qdata.questions||[]).length?(qdata.questions||[]).map(function(q){
+        const who=q.member?escapeHtml(q.member.first_name||"Miembro")+" · "+escapeHtml(q.member.city||"—"):"Miembro";
+        return '<div style="padding:14px 0;border-bottom:1px solid #ddd;"><div style="font-size:11px;color:#777;margin-bottom:5px;">'+who+'</div><strong>'+escapeHtml(q.question)+'</strong>'+
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;">'+
+        '<button onclick="adminQuestionToggle('+q.id+',\'selected_for_live\','+(!q.selected_for_live)+')">'+(q.selected_for_live?'✓ LIVE':'＋ LIVE')+'</button>'+
+        '<button onclick="adminQuestionToggle('+q.id+',\'selected_for_content\','+(!q.selected_for_content)+')">'+(q.selected_for_content?'✓ CONTENIDO':'＋ CONTENIDO')+'</button>'+
+        '<select onchange="adminQuestionField('+q.id+',\'category\',this.value)"><option value="">Categoría</option><option>Técnica</option><option>Musicalidad</option><option>Social</option><option>Psicología</option><option>Enseñanza</option><option>Cultura cubana</option><option>Otro</option></select></div></div>';
+      }).join(""):"Aún no hay preguntas.";
+    }catch(e){const qbox=document.getElementById("adminQuestions");if(qbox)qbox.innerText="No se pudieron cargar las preguntas.";}
+
     document.getElementById("adminTeam").innerHTML=(data.team||[]).map(function(m){
       let controls="";
       if(data.role==="owner" && m.role!=="owner"){
@@ -1727,6 +1740,9 @@ async function adminCreateMission(activate){
     await loadAdmin();
   }catch(e){showToast("No se pudo publicar.");}
 }
+async function adminQuestionToggle(id,field,value){try{const p={question_id:id};p[field]=value;await clubApi("admin_update_question",p);showToast("✓ Actualizado.");await loadAdmin();}catch(e){showToast("No se pudo actualizar.");}}
+async function adminQuestionField(id,field,value){try{const p={question_id:id};p[field]=value||null;await clubApi("admin_update_question",p);showToast("✓ Clasificado.");}catch(e){showToast("No se pudo actualizar.");}}
+
 async function adminSetRole(memberId,role){
   try{await clubApi("admin_set_role",{member_id:memberId,role:role});showToast("✅ Rol actualizado.");await loadAdmin();}
   catch(e){showToast("No se pudo cambiar el rol.");}
