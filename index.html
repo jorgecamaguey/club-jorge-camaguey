@@ -1635,26 +1635,38 @@ function updateUI(){
 
 /* VIDEO */
 
-function sendVideo(){
-
-  const botUsername = "clubJorgeCamagueyBot";
-  const telegramWebUrl =
-    "https://t.me/" + botUsername + "?start=mission_video";
+async function sendVideo(){
 
   try {
 
-    // Telegram Mini Apps reliably open t.me links through openLink.
-    if (tg && typeof tg.openLink === "function") {
-      tg.openLink(telegramWebUrl);
-      return;
+    showToast("Abriendo el chat para enviar tu vídeo...");
+
+    const response = await fetch(
+      "https://weniwhqudqzphxdmfxhw.supabase.co/functions/v1/swift-handler",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          initData: tg.initData,
+          action: "prepare_video_upload"
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Video upload unavailable");
     }
 
-    // Fallback for older Telegram clients.
-    window.open(telegramWebUrl, "_blank");
+    // The bot has just sent the user an instruction message.
+    // Closing the Mini App returns directly to this bot chat.
+    tg.close();
 
   } catch(error) {
 
-    window.location.href = telegramWebUrl;
+    console.error(error);
+    showToast("No se pudo abrir el chat. Inténtalo de nuevo.");
 
   }
 }
