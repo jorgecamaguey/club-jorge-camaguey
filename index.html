@@ -1117,7 +1117,17 @@ button{
   <h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
-  <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3>
+  <h3 style="margin-top:24px;">LIVE STUDIO</h3>
+<div style="background:#171717;color:white;border-radius:22px;padding:16px;margin:10px 0 22px;">
+  <div style="font-size:10px;letter-spacing:1px;opacity:.6;">PRÓXIMO JORGE LIVE</div>
+  <div id="adminLiveState" style="font-size:18px;font-weight:850;margin:7px 0 12px;">Sin programar</div>
+  <input id="liveTitle" placeholder="JORGE LIVE · Tema" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+  <input id="liveDate" type="datetime-local" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+  <textarea id="liveDescription" placeholder="Tema principal / enfoque" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;"></textarea>
+  <button onclick="adminCreateLive()" style="width:100%;margin-top:6px;padding:12px;border:0;border-radius:12px;font-weight:850;">PROGRAMAR LIVE</button>
+</div>
+<div id="liveQuestions"></div>
+<h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3>
 <div id="insightSummary" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;"></div>
 <div id="insightCategories" style="margin-bottom:16px;"></div>
 <div id="adminQuestions">Cargando preguntas…</div><h3 style="margin-top:24px;">EQUIPO</h3>
@@ -1705,6 +1715,7 @@ async function loadAdmin(){
     }).join(""):"Sin vídeos pendientes.";
 
     try{
+      await loadLiveStudio();
       const insights=await clubApi("admin_question_insights");
       const summary=document.getElementById("insightSummary");
       if(summary){
@@ -1754,6 +1765,22 @@ async function adminCreateMission(activate){
     await loadAdmin();
   }catch(e){showToast("No se pudo publicar.");}
 }
+async function loadLiveStudio(){
+  try{
+    const d=await clubApi("admin_live_workspace");
+    const state=document.getElementById("adminLiveState");
+    if(state) state.innerText=d.live?(d.live.title+" · "+new Date(d.live.starts_at).toLocaleString("es-ES")):"Sin programar";
+    const box=document.getElementById("liveQuestions");
+    if(box) box.innerHTML=(d.questions||[]).length?'<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin-bottom:7px;">GUION · PREGUNTAS SELECCIONADAS</div>'+(d.questions||[]).map(function(q,i){return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><span style="font-size:10px;color:#777;">'+(i+1)+' · '+escapeHtml(q.topic||q.category||"Sin clasificar")+'</span><div style="font-weight:750;margin-top:3px;">'+escapeHtml(q.question)+'</div></div>';}).join(""):'<div style="font-size:12px;color:#777;margin-bottom:16px;">Marca preguntas con LIVE para construir el guion.</div>';
+  }catch(e){}
+}
+async function adminCreateLive(){
+  const title=document.getElementById("liveTitle").value.trim()||"JORGE LIVE";
+  const raw=document.getElementById("liveDate").value;
+  if(!raw){showToast("Elige fecha y hora.");return;}
+  try{await clubApi("admin_create_live",{title:title,starts_at:new Date(raw).toISOString(),description:document.getElementById("liveDescription").value.trim()});showToast("✓ LIVE programado.");await loadLiveStudio();await loadClubState();}catch(e){showToast("No se pudo programar.");}
+}
+
 async function adminQuestionToggle(id,field,value){try{const p={question_id:id};p[field]=value;await clubApi("admin_update_question",p);showToast("✓ Actualizado.");await loadAdmin();}catch(e){showToast("No se pudo actualizar.");}}
 async function adminQuestionField(id,field,value){try{const p={question_id:id};p[field]=value||null;await clubApi("admin_update_question",p);showToast("✓ Clasificado.");}catch(e){showToast("No se pudo actualizar.");}}
 
