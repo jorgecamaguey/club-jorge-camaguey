@@ -595,12 +595,17 @@ button{
   background:rgba(243,240,232,.94);
   backdrop-filter:blur(14px);
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:repeat(4,1fr);
   gap:5px;
   border-top:1px solid var(--line);
 }
 
 .nav-item{
+  border:0;
+  background:transparent;
+  font-family:inherit;
+  cursor:pointer;
+  padding:2px 0;
   text-align:center;
   font-size:10px;
   font-weight:700;
@@ -994,7 +999,7 @@ button{
     02 · MI EQUIPO
   </div>
 
-  <section class="team">
+  <section class="team" id="teamSection">
 
     <div class="team-top">
 
@@ -1057,7 +1062,7 @@ button{
     03 · JORGE TE MIRA
   </div>
 
-  <section class="watch">
+  <section class="watch" id="jorgeSection">
 
     <h2>
       Tu baile.<br>
@@ -1136,22 +1141,18 @@ button{
 </section>
 
 <nav class="nav">
-
-  <div class="nav-item active">
-    <span class="nav-icon">🔥</span>
-    MISIÓN
-  </div>
-
-  <div class="nav-item">
-    <span class="nav-icon">🌍</span>
-    EQUIPO
-  </div>
-
-  <div class="nav-item">
-    <span class="nav-icon">👀</span>
-    JORGE
-  </div>
-
+  <button class="nav-item active" type="button" onclick="goSection('missionSection',this)">
+    <span class="nav-icon">🔥</span>MISIÓN
+  </button>
+  <button class="nav-item" type="button" onclick="goSection('teamSection',this)">
+    <span class="nav-icon">🌍</span>EQUIPO
+  </button>
+  <button class="nav-item" type="button" onclick="goSection('jorgeSection',this)">
+    <span class="nav-icon">👀</span>JORGE
+  </button>
+  <button class="nav-item" type="button" onclick="openCommunity()">
+    <span class="nav-icon">💬</span>COMUNIDAD
+  </button>
 </nav>
 
 </div>
@@ -1733,6 +1734,17 @@ async function adminSetRole(memberId,role){
 async function adminModerate(completionId,status){
   try{await clubApi("admin_moderate_video",{completion_id:completionId,status:status});showToast(status==="approved"?"✅ Vídeo aprobado. +1 para la ciudad.":"Vídeo rechazado.");await loadAdmin();await loadCityRanking();}
   catch(e){showToast("No se pudo moderar.");}
+}
+
+function goSection(id,button){
+  const target=document.getElementById(id);
+  if(!target)return;
+  document.querySelectorAll(".nav-item").forEach(function(item){item.classList.remove("active");});
+  if(button)button.classList.add("active");
+  target.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function openCommunity(){
+  showToast("💬 La comunidad se abrirá aquí cuando conectemos el grupo privado.");
 }
 
 /* VIDEO */
