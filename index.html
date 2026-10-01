@@ -1073,7 +1073,7 @@ button{
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
     <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo LIVE · se anunciará aquí</div>
     <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button>
-    <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Las preguntas más compartidas entran en el próximo LIVE.</div>
+    <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Pregunta durante el mes. El equipo agrupa las preguntas repetidas y Jorge responde una selección en el próximo LIVE.</div>
   </section>
 
   <!-- PERSONAL PROGRESS -->
@@ -1128,8 +1128,8 @@ button{
   <button class="nav-item" type="button" onclick="goSection('teamSection',this)">
     <span class="nav-icon">🌍</span>EQUIPO
   </button>
-  <button class="nav-item" type="button" onclick="goSection('jorgeSection',this)">
-    <span class="nav-icon">👀</span>JORGE
+  <button class="nav-item" type="button" onclick="goSection('liveSection',this)">
+    <span class="nav-icon">🔴</span>LIVE
   </button>
   <button class="nav-item" type="button" onclick="openCommunity()">
     <span class="nav-icon">💬</span>COMUNIDAD
@@ -1214,7 +1214,7 @@ button{
 
 <div class="modal-bg" id="questionModal"><div class="modal">
 <h2>Pregunta a Jorge</h2>
-<p style="color:var(--muted);line-height:1.5;">Escribe una pregunta que pueda ayudar también a otros miembros del Club.</p>
+<p style="color:var(--muted);line-height:1.5;">Haz una pregunta concreta sobre tu baile, técnica, musicalidad o aprendizaje. Antes del LIVE agruparemos las preguntas similares para que Jorge pueda responder lo que más ayuda al Club.</p>
 <textarea id="jorgeQuestion" maxlength="500" placeholder="Tu pregunta…" style="width:100%;min-height:130px;padding:15px;border:1px solid var(--line);border-radius:15px;font:inherit;resize:vertical;"></textarea>
 <button class="action" onclick="submitJorgeQuestion()">ENVIAR PREGUNTA</button>
 <button class="later-button" onclick="closeQuestion()">CANCELAR</button>
