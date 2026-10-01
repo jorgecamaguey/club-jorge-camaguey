@@ -1129,7 +1129,7 @@ button{
 <div id="liveQuestions"></div>
 <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3>
 <div id="insightSummary" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;"></div>
-<div id="insightCategories" style="margin-bottom:16px;"></div>
+<div id="insightCategories" style="margin-bottom:16px;"></div><div id="topProblems" style="margin:14px 0 20px;"></div>
 <div id="adminQuestions">Cargando preguntas…</div><h3 style="margin-top:24px;">CONTENT BANK</h3>
 <div style="background:#f0c93d;border-radius:22px;padding:16px;margin:10px 0 22px;">
   <div style="font-size:10px;font-weight:900;letter-spacing:1px;">DE PREGUNTA → A CONTENIDO</div>
@@ -1734,6 +1734,16 @@ async function loadAdmin(){
         const top=(insights.categories||[]).slice(0,6);
         cats.innerHTML='<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin:15px 0 5px;">LO QUE MÁS PREOCUPA AL CLUB</div>'+(top.length?top.map(function(x){return '<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid #e3ded4;"><span>'+escapeHtml(x.label)+'</span><strong>'+x.count+'</strong></div>';}).join(""):'<div style="font-size:12px;color:#777;padding:8px 0;">Clasifica las primeras preguntas para descubrir patrones.</div>');
       }
+      try{
+        const pd=await clubApi("admin_top_problems");
+        const pb=document.getElementById("topProblems");
+        if(pb){
+          pb.innerHTML='<div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:7px;">TOP PROBLEMAS DEL CLUB</div>'+(pd.problems||[]).slice(0,7).map(function(x,i){
+            const trend=x.growth>0?'↑ +'+x.growth:(x.growth<0?'↓ '+x.growth:'→');
+            return '<div style="display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #e3ded4;"><strong>'+(i+1)+'</strong><div><div style="font-weight:800;">'+escapeHtml(x.name)+'</div><div style="font-size:10px;color:#777;">'+x.questions+' preguntas · '+x.votes+' apoyos</div></div><strong style="font-size:12px;">'+trend+'</strong></div>';
+          }).join("");
+        }
+      }catch(e){}
       const qdata=await clubApi("admin_questions");
       const qbox=document.getElementById("adminQuestions");
       qbox.innerHTML=(qdata.questions||[]).length?(qdata.questions||[]).map(function(q){
