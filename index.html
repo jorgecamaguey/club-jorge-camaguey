@@ -1115,6 +1115,26 @@ button{
 </div>
 
 
+<section id="adminPanel" style="display:none;margin:24px 16px 100px;padding:18px;border:2px solid #171717;background:#fffaf0;">
+  <div class="section-label">⚙️ ADMIN</div>
+  <h2 style="margin-top:8px;">Panel del Club</h2>
+  <div id="adminRole" style="font-size:12px;margin-bottom:16px;"></div>
+
+  <div id="missionAdmin">
+    <h3>NUEVA MISIÓN</h3>
+    <input id="adminMissionTitle" placeholder="Título" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;">
+    <textarea id="adminMissionDescription" placeholder="Descripción" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;min-height:90px;"></textarea>
+    <input id="adminMissionVideo" placeholder="URL vídeo de Jorge (opcional)" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;">
+    <button class="action" type="button" onclick="adminCreateMission(true)">PUBLICAR MISIÓN</button>
+  </div>
+
+  <h3 style="margin-top:24px;">VÍDEOS</h3>
+  <div id="adminVideos">Sin vídeos pendientes.</div>
+
+  <h3 style="margin-top:24px;">EQUIPO</h3>
+  <div id="adminTeam"></div>
+</section>
+
 <nav class="nav">
 
   <div class="nav-item active">
@@ -1444,6 +1464,7 @@ function showClub(){
 
 
   loadCityRanking();
+  loadAdmin();
 
   updateUI();
 
@@ -1648,6 +1669,70 @@ function escapeHtml(value){
   return String(value).replace(/[&<>"']/g, function(char){
     return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
   });
+}
+
+async function clubApi(action, extra){
+  const response = await fetch("https://weniwhqudqzphxdmfxhw.supabase.co/functions/v1/swift-handler",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(Object.assign({initData:tg.initData,action:action},extra||{}))
+  });
+  const data=await response.json();
+  if(!response.ok) throw new Error(data.error||"Request failed");
+  return data;
+}
+
+async function loadAdmin(){
+  try{
+    const data=await clubApi("admin_state");
+    const panel=document.getElementById("adminPanel");
+    panel.style.display="block";
+    document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
+    if(data.role==="moderator") document.getElementById("missionAdmin").style.display="none";
+
+    const people={};
+    (data.team||[]).forEach(function(m){people[m.id]=m;});
+    const pending=(data.videos||[]).filter(function(v){return v.moderation_status==="pending";});
+    document.getElementById("adminVideos").innerHTML=pending.length?pending.map(function(v){
+      const m=people[v.member_id]||{};
+      return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><strong>'+escapeHtml(m.first_name||"Miembro")+'</strong> · '+escapeHtml(m.city||"—")+
+      '<br><button onclick="adminModerate('+v.id+',\'approved\')">✓ APROBAR</button> '+
+      '<button onclick="adminModerate('+v.id+',\'rejected\')">✕ RECHAZAR</button></div>';
+    }).join(""):"Sin vídeos pendientes.";
+
+    document.getElementById("adminTeam").innerHTML=(data.team||[]).map(function(m){
+      let controls="";
+      if(data.role==="owner" && m.role!=="owner"){
+        controls='<select onchange="adminSetRole('+m.id+',this.value)"><option value="member" '+(m.role==="member"?"selected":"")+'>Miembro</option><option value="moderator" '+(m.role==="moderator"?"selected":"")+'>Moderador</option><option value="admin" '+(m.role==="admin"?"selected":"")+'>Admin</option></select>';
+      }
+      return '<div style="padding:8px 0;border-bottom:1px solid #ddd;">'+escapeHtml(m.first_name||"Miembro")+' · '+escapeHtml(m.city||"—")+' <strong>'+String(m.role).toUpperCase()+'</strong> '+controls+'</div>';
+    }).join("");
+  }catch(error){
+    // Normal members simply do not see admin controls.
+  }
+}
+
+async function adminCreateMission(activate){
+  const title=document.getElementById("adminMissionTitle").value.trim();
+  if(!title){showToast("Escribe el título.");return;}
+  try{
+    await clubApi("admin_save_mission",{
+      title:title,
+      description:document.getElementById("adminMissionDescription").value.trim(),
+      jorge_video_url:document.getElementById("adminMissionVideo").value.trim(),
+      activate:activate
+    });
+    showToast("✅ Misión publicada.");
+    await loadAdmin();
+  }catch(e){showToast("No se pudo publicar.");}
+}
+async function adminSetRole(memberId,role){
+  try{await clubApi("admin_set_role",{member_id:memberId,role:role});showToast("✅ Rol actualizado.");await loadAdmin();}
+  catch(e){showToast("No se pudo cambiar el rol.");}
+}
+async function adminModerate(completionId,status){
+  try{await clubApi("admin_moderate_video",{completion_id:completionId,status:status});showToast(status==="approved"?"✅ Vídeo aprobado. +1 para la ciudad.":"Vídeo rechazado.");await loadAdmin();await loadCityRanking();}
+  catch(e){showToast("No se pudo moderar.");}
 }
 
 /* VIDEO */
