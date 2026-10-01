@@ -1798,9 +1798,10 @@ async function loadLiveStudio(){
     const state=document.getElementById("adminLiveState");
     if(state) state.innerText=d.live?(d.live.title+" · "+new Date(d.live.starts_at).toLocaleString("es-ES")):"Sin programar";
     const box=document.getElementById("liveQuestions");
-    if(box) box.innerHTML=(d.questions||[]).length?'<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin-bottom:7px;">GUION · PREGUNTAS SELECCIONADAS</div>'+(d.questions||[]).map(function(q,i){return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><span style="font-size:10px;color:#777;">'+(i+1)+' · '+escapeHtml(q.topic||q.category||"Sin clasificar")+'</span><div style="font-weight:750;margin-top:3px;">'+escapeHtml(q.question)+'</div></div>';}).join(""):'<div style="font-size:12px;color:#777;margin-bottom:16px;">Marca preguntas con LIVE para construir el guion.</div>';
+    if(box) box.innerHTML=(d.questions||[]).length?'<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin-bottom:7px;">GUION · PREGUNTAS SELECCIONADAS</div>'+(d.questions||[]).map(function(q,i){return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><span style="font-size:10px;color:#777;">'+(i+1)+' · '+escapeHtml(q.topic||q.category||"Sin clasificar")+'</span><div style="font-weight:750;margin-top:3px;">'+escapeHtml(q.question)+'</div><button onclick="resolveLiveQuestion('+q.id+')" style="margin-top:7px;border:0;border-radius:999px;padding:7px 10px;font-weight:800;">✓ RESPONDIDO</button></div>';}).join(""):'<div style="font-size:12px;color:#777;margin-bottom:16px;">Marca preguntas con LIVE para construir el guion.</div>';
   }catch(e){}
 }
+async function resolveLiveQuestion(id){try{await clubApi("admin_resolve_question",{question_id:id,resolution_type:"live"});showToast("✓ Guardado en el archivo.");await loadLiveStudio();}catch(e){showToast("No se pudo guardar.");}}
 async function adminCreateLive(){
   const title=document.getElementById("liveTitle").value.trim()||"JORGE LIVE";
   const raw=document.getElementById("liveDate").value;
