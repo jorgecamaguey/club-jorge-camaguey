@@ -937,7 +937,7 @@ button{
     01 · MI MISIÓN
   </div>
 
-  <section class="mission" id="missionCard">
+  <section class="mission" id="missionSection">
 
     <div class="mission-top">
 
@@ -984,11 +984,11 @@ button{
       class="video-button"
       type="button"
       onclick="sendVideo()">
-      📹 ENVIAR VÍDEO Y SUMAR +1
+      📹 ENVIAR VÍDEO DE LA MISIÓN
     </button>
 
     <div style="font-size:11px;line-height:1.4;opacity:.82;text-align:center;margin-top:9px;">
-      El vídeo confirma tu misión y suma para tu ciudad.
+      15–30 segundos · Tras aprobarse, suma para tu ciudad.
     </div>
 
   </section>
@@ -1058,43 +1058,23 @@ button{
 
   <!-- JORGE TE MIRA -->
 
-  <div class="section-label" style="margin-top:27px;">
-    03 · JORGE TE MIRA
-  </div>
-
+  <div class="section-label" style="margin-top:27px;">03 · JORGE TE MIRA</div>
   <section class="watch" id="jorgeSection">
-
-    <h2>
-      Tu baile.<br>
-      Los ojos de Jorge.
-    </h2>
-
-    <p>
-      Los vídeos enviados para confirmar las misiones
-      también pueden ser seleccionados por Jorge.
-    </p>
-
-    <p>
-      Cada semana elegirá algunos bailes,
-      los analizará y compartirá sus correcciones
-      con el Club.
-    </p>
-
-    <p>
-      <strong>
-        Un vídeo. Dos oportunidades:
-        ayudar a tu ciudad y aprender con Jorge.
-      </strong>
-    </p>
-
-    <button
-      class="action"
-      onclick="sendVideo()">
-      📹 ENVIAR MI VÍDEO
-    </button>
-
+    <h2>Jorge mira.<br>Todos aprendemos.</h2>
+    <p>Los vídeos de la misión pueden entrar en la selección semanal. El equipo filtra los casos más útiles y Jorge analiza algunos para todo el Club.</p>
+    <p><strong>No necesitas enviar otro vídeo.</strong> Haz la misión, envíala y ya estás participando.</p>
   </section>
 
+  <!-- MONTHLY LIVE -->
+  <div class="section-label" style="margin-top:27px;">04 · JORGE LIVE</div>
+  <section class="progress-card" id="liveSection">
+    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);">🔴 UNA VEZ AL MES</div>
+    <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
+    <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
+    <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo LIVE · se anunciará aquí</div>
+    <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button>
+    <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Las preguntas más compartidas entran en el próximo LIVE.</div>
+  </section>
 
   <!-- PERSONAL PROGRESS -->
 
@@ -1232,6 +1212,13 @@ button{
 </div>
 
 
+<div class="modal-bg" id="questionModal"><div class="modal">
+<h2>Pregunta a Jorge</h2>
+<p style="color:var(--muted);line-height:1.5;">Escribe una pregunta que pueda ayudar también a otros miembros del Club.</p>
+<textarea id="jorgeQuestion" maxlength="500" placeholder="Tu pregunta…" style="width:100%;min-height:130px;padding:15px;border:1px solid var(--line);border-radius:15px;font:inherit;resize:vertical;"></textarea>
+<button class="action" onclick="submitJorgeQuestion()">ENVIAR PREGUNTA</button>
+<button class="later-button" onclick="closeQuestion()">CANCELAR</button>
+</div></div>
 <div class="toast" id="toast"></div>
 
 
@@ -1806,6 +1793,30 @@ async function sendVideo(){
     showToast("No se pudo abrir el chat. Inténtalo de nuevo.");
 
   }
+}
+
+/* MONTHLY LIVE + QUESTIONS */
+function askJorge(){ document.getElementById("questionModal").classList.add("show"); }
+function closeQuestion(){ document.getElementById("questionModal").classList.remove("show"); }
+async function submitJorgeQuestion(){
+  const q=document.getElementById("jorgeQuestion").value.trim();
+  if(q.length<5){showToast("Escribe tu pregunta.");return;}
+  try{
+    await clubApi("submit_question",{question:q});
+    document.getElementById("jorgeQuestion").value="";
+    closeQuestion();
+    showToast("✓ Pregunta enviada a Jorge.");
+  }catch(e){showToast("No se pudo enviar la pregunta.");}
+}
+async function loadClubState(){
+  try{
+    const data=await clubApi("club_state");
+    const el=document.getElementById("nextLive");
+    if(data.live && el){
+      const d=new Date(data.live.starts_at);
+      el.innerText="Próximo LIVE · "+d.toLocaleDateString("es-ES",{day:"numeric",month:"long"})+" · "+d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+    }
+  }catch(e){}
 }
 
 /* RULES */
