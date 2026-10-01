@@ -1757,7 +1757,17 @@ function goSection(id,button){
   target.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function openCommunity(){
-  showToast("💬 La comunidad se abrirá aquí cuando conectemos el grupo privado.");
+  const communityUrl = "https://t.me/c/4298019994/1";
+  try{
+    if(tg.openTelegramLink){
+      tg.openTelegramLink(communityUrl);
+    }else{
+      window.location.href = communityUrl;
+    }
+  }catch(error){
+    console.error("Community navigation error", error);
+    showToast("No se pudo abrir la comunidad.");
+  }
 }
 
 /* VIDEO */
