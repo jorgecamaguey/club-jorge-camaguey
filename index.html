@@ -1714,6 +1714,7 @@ async function loadAdmin(){
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
+    if(data.role==="owner"){try{await clubApi("owner_configure_webhook");}catch(e){console.error("Telegram security sync failed",e);}}
     const webhookButton=document.getElementById("webhookSetupButton");
     if(webhookButton && data.role==="owner" && localStorage.getItem("telegramWebhookConfigured")!=="1") webhookButton.style.display="block";
     if(data.role==="moderator") document.getElementById("missionAdmin").style.display="none";
