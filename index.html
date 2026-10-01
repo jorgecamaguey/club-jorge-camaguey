@@ -1072,7 +1072,7 @@ button{
     <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
     <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo LIVE · se anunciará aquí</div>
-    <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button>
+    <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
     <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Pregunta durante el mes. El equipo agrupa las preguntas repetidas y Jorge responde una selección en el próximo LIVE.</div>
   </section>
 
@@ -1870,6 +1870,9 @@ async function sendVideo(){
 }
 
 /* MONTHLY LIVE + QUESTIONS */
+async function loadQuestionBoard(){try{const d=await clubApi("question_board");const b=document.getElementById("questionBoard");if(!b)return;b.innerHTML=(d.questions||[]).slice(0,5).map(function(q){return '<div style="padding:11px 0;border-bottom:1px solid rgba(0,0,0,.12);"><div style="font-size:13px;font-weight:700;line-height:1.35;">'+escapeHtml(q.question)+'</div><button onclick="toggleQuestionVote('+q.id+','+q.voted+')" style="margin-top:7px;border:0;border-radius:999px;padding:7px 10px;font-weight:800;">'+(q.voted?'✓ YO TAMBIÉN':'＋ YO TAMBIÉN')+' · '+q.votes+'</button></div>';}).join("")||'<div style="font-size:12px;opacity:.65;">Sé el primero en preguntar.</div>';}catch(e){}}
+async function toggleQuestionVote(id,voted){try{await clubApi("vote_question",{question_id:id,voted:!voted});await loadQuestionBoard();}catch(e){showToast("No se pudo guardar.");}}
+
 function askJorge(){ document.getElementById("questionModal").classList.add("show"); }
 function closeQuestion(){ document.getElementById("questionModal").classList.remove("show"); }
 async function submitJorgeQuestion(){
@@ -1880,6 +1883,7 @@ async function submitJorgeQuestion(){
     document.getElementById("jorgeQuestion").value="";
     closeQuestion();
     showToast("✓ Pregunta enviada a Jorge.");
+    await loadQuestionBoard();
   }catch(e){showToast("No se pudo enviar la pregunta.");}
 }
 async function loadClubState(){
