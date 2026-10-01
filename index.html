@@ -975,41 +975,18 @@ button{
       ¿CÓMO FUNCIONA?
     </button>
 
-  </section>
-
-
-  <!-- AFTER MISSION -->
-
-  <section class="confirm-box" id="confirmBox">
-
-    <div class="confirm-icon">🔥</div>
-
-    <h3>¡MISIÓN COMPLETADA!</h3>
-
-    <p>
-      Ya cuenta para tu progreso personal.
-    </p>
-
-    <p>
-      Ahora puedes confirmar tu misión con un vídeo
-      para sumar un punto a
-      <strong id="confirmCity">tu ciudad</strong>.
-    </p>
-
     <button
       class="video-button"
+      type="button"
       onclick="sendVideo()">
       📹 ENVIAR VÍDEO Y SUMAR +1
     </button>
 
-    <button
-      class="later-button"
-      onclick="hideConfirm()">
-      AHORA NO
-    </button>
+    <div style="font-size:11px;line-height:1.4;opacity:.82;text-align:center;margin-top:9px;">
+      El vídeo confirma tu misión y suma para tu ciudad.
+    </div>
 
   </section>
-
 
   <!-- TEAM -->
 
@@ -1500,18 +1477,7 @@ function showClub(){
 async function completeMission(){
 
   if(completed){
-
-    document
-      .getElementById("confirmBox")
-      .classList.add("show");
-
-    document
-      .getElementById("confirmBox")
-      .scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
-
+    showToast("🔥 Misión ya completada.");
     return;
   }
 
@@ -1548,7 +1514,6 @@ async function completeMission(){
       showToast(
         "No hemos podido guardar la misión. Inténtalo de nuevo."
       );
-
       return;
     }
 
@@ -1567,26 +1532,9 @@ async function completeMission(){
 
     updateUI();
 
-    document
-      .getElementById("confirmBox")
-      .classList.add("show");
-
-    setTimeout(()=>{
-
-      document
-        .getElementById("confirmBox")
-        .scrollIntoView({
-          behavior:"smooth",
-          block:"center"
-        });
-
-    },200);
-
     if(tg.HapticFeedback){
-
       tg.HapticFeedback
         .notificationOccurred("success");
-
     }
 
     showToast(
@@ -1692,36 +1640,35 @@ function updateUI(){
 function sendVideo(){
 
   const botUsername = "clubJorgeCamagueyBot";
+  const startParam = "mission_video";
+
+  const telegramAppUrl =
+    "tg://resolve?domain=" + botUsername + "&start=" + startParam;
+
+  const telegramWebUrl =
+    "https://t.me/" + botUsername + "?start=" + startParam;
 
   try {
 
-    const telegramUrl =
-      "https://t.me/" + botUsername + "?start=mission_video";
-
-    if (tg && tg.openTelegramLink) {
-      tg.openTelegramLink(telegramUrl);
-    } else {
-      window.location.href = telegramUrl;
+    // Close the Mini App first so Telegram can switch to the bot chat.
+    if (tg && typeof tg.close === "function") {
+      tg.close();
     }
+
+    // Open the Telegram app/chat directly.
+    window.location.href = telegramAppUrl;
+
+    // Fallback for clients where tg:// is not handled.
+    setTimeout(function(){
+      window.location.href = telegramWebUrl;
+    }, 700);
 
   } catch(error) {
 
-    window.location.href =
-      "https://t.me/" + botUsername + "?start=mission_video";
+    window.location.href = telegramWebUrl;
 
   }
-
 }
-
-
-function hideConfirm(){
-
-  document
-    .getElementById("confirmBox")
-    .classList.remove("show");
-
-}
-
 
 /* RULES */
 
