@@ -1638,26 +1638,19 @@ function updateUI(){
 function sendVideo(){
 
   const botUsername = "clubJorgeCamagueyBot";
-  const startParam = "mission_video";
-
-  const telegramAppUrl =
-    "tg://resolve?domain=" + botUsername + "&start=" + startParam;
-
   const telegramWebUrl =
-    "https://t.me/" + botUsername + "?start=" + startParam;
+    "https://t.me/" + botUsername + "?start=mission_video";
 
   try {
 
-    if (tg && typeof tg.openTelegramLink === "function") {
-      tg.openTelegramLink(telegramWebUrl);
+    // Telegram Mini Apps reliably open t.me links through openLink.
+    if (tg && typeof tg.openLink === "function") {
+      tg.openLink(telegramWebUrl);
       return;
     }
 
-    window.location.href = telegramAppUrl;
-
-    setTimeout(function(){
-      window.location.href = telegramWebUrl;
-    }, 700);
+    // Fallback for older Telegram clients.
+    window.open(telegramWebUrl, "_blank");
 
   } catch(error) {
 
