@@ -1441,12 +1441,6 @@ function showClub(){
 
 
     document
-      .getElementById("confirmCity")
-      .innerText =
-        profile.city;
-
-
-    document
       .getElementById("myTeamRace")
       .innerText =
         "🔵 " +
@@ -1654,15 +1648,13 @@ function sendVideo(){
 
   try {
 
-    // Close the Mini App first so Telegram can switch to the bot chat.
-    if (tg && typeof tg.close === "function") {
-      tg.close();
+    if (tg && typeof tg.openTelegramLink === "function") {
+      tg.openTelegramLink(telegramWebUrl);
+      return;
     }
 
-    // Open the Telegram app/chat directly.
     window.location.href = telegramAppUrl;
 
-    // Fallback for clients where tg:// is not handled.
     setTimeout(function(){
       window.location.href = telegramWebUrl;
     }, 700);
