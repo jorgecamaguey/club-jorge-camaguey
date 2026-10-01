@@ -931,6 +931,13 @@ button{
   </div>
 
 
+  <section id="accessCard" style="display:none;margin:18px 0 22px;background:#171717;color:#fff;border-radius:22px;padding:18px;">
+    <div style="font-size:10px;font-weight:900;letter-spacing:1.2px;opacity:.65;">MI ACCESO</div>
+    <div id="accessTitle" style="font-size:22px;font-weight:900;margin:5px 0 7px;">CLUB JORGE CAMAGÜEY</div>
+    <div id="accessText" style="font-size:13px;line-height:1.45;opacity:.82;"></div>
+    <button id="payClubButton" onclick="startSubscription()" style="display:none;width:100%;margin-top:13px;border:0;border-radius:14px;padding:14px;font-weight:900;">ACTIVAR · 9 € / MES →</button>
+  </section>
+
   <!-- MISSION -->
 
   <div class="section-label">
@@ -1472,6 +1479,7 @@ function showClub(){
 
 
   loadCityRanking();
+  loadAccessState();
   loadAdmin();
 
   updateUI();
@@ -1828,6 +1836,28 @@ function goSection(id,button){
   if(button)button.classList.add("active");
   target.scrollIntoView({behavior:"smooth",block:"start"});
 }
+async function loadAccessState(){
+  try{
+    const d=await clubApi("subscription_access");
+    const card=document.getElementById("accessCard"); if(!card)return;
+    card.style.display="block";
+    const pay=document.getElementById("payClubButton");
+    if(d.active){
+      document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":"MEMBRESÍA ACTIVA";
+      document.getElementById("accessText").innerText=d.staff?"Acceso interno del equipo.":"Tu acceso al Club está activo.";
+      pay.style.display="none";
+    }else{
+      document.getElementById("accessTitle").innerText="ACTIVA TU MEMBRESÍA";
+      document.getElementById("accessText").innerText="9 € al mes · El acceso se activa automáticamente después del pago.";
+      pay.style.display="block";
+    }
+  }catch(e){}
+}
+async function startSubscription(){
+  try{const d=await clubApi("payment_link");if(tg.openLink)tg.openLink(d.url);else window.location.href=d.url;}
+  catch(e){showToast("No se pudo abrir el pago.");}
+}
+
 async function openCommunity(){
   try{
     const d=await clubApi("access_links");
