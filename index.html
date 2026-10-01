@@ -1828,18 +1828,14 @@ function goSection(id,button){
   if(button)button.classList.add("active");
   target.scrollIntoView({behavior:"smooth",block:"start"});
 }
-function openCommunity(){
-  const communityUrl = "https://t.me/c/4298019994/1";
+async function openCommunity(){
   try{
-    if(tg.openTelegramLink){
-      tg.openTelegramLink(communityUrl);
-    }else{
-      window.location.href = communityUrl;
-    }
-  }catch(error){
-    console.error("Community navigation error", error);
-    showToast("No se pudo abrir la comunidad.");
-  }
+    const d=await clubApi("access_links");
+    if(!d.active){showToast("Activa tu membresía para entrar.");return;}
+    const u=d.links&&d.links.community_group;
+    if(!u)throw new Error("Access unavailable");
+    if(tg.openTelegramLink)tg.openTelegramLink(u);else window.location.href=u;
+  }catch(error){showToast("No se pudo abrir la comunidad.");}
 }
 
 /* VIDEO */
