@@ -1124,6 +1124,7 @@ button{
   <div class="section-label">⚙️ ADMIN</div>
   <h2 style="margin-top:8px;">Panel del Club</h2>
   <div id="adminRole" style="font-size:12px;margin-bottom:16px;"></div>
+  <button id="webhookSetupButton" class="action" type="button" onclick="configureTelegramWebhook()" style="display:none;margin-bottom:14px;">CONECTAR TELEGRAM</button>
 
   <div id="missionAdmin">
     <h3>NUEVA MISIÓN</h3>
@@ -1683,12 +1684,24 @@ async function clubApi(action, extra){
   return data;
 }
 
+async function configureTelegramWebhook(){
+  try{
+    await clubApi("owner_configure_webhook");
+    localStorage.setItem("telegramWebhookConfigured","1");
+    const b=document.getElementById("webhookSetupButton");
+    if(b)b.style.display="none";
+    showToast("✅ Telegram conectado.");
+  }catch(e){showToast("No se pudo conectar Telegram.");}
+}
+
 async function loadAdmin(){
   try{
     const data=await clubApi("admin_state");
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
+    const webhookButton=document.getElementById("webhookSetupButton");
+    if(webhookButton && data.role==="owner" && localStorage.getItem("telegramWebhookConfigured")!=="1") webhookButton.style.display="block";
     if(data.role==="moderator") document.getElementById("missionAdmin").style.display="none";
 
     const people={};
