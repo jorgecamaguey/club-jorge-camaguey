@@ -1477,8 +1477,9 @@ function showClub(){
 async function completeMission(){
 
   if(completed){
-    showToast("🔥 Misión ya completada.");
-    return;
+    // El teléfono puede recordar la misión aunque Supabase no la tenga.
+    // Permitimos volver a sincronizarla con el servidor.
+    showToast("Sincronizando misión con el Club...");
   }
 
   const button =
@@ -1517,7 +1518,10 @@ async function completeMission(){
       return;
     }
 
-    missions++;
+    if(!completed){
+      missions++;
+    }
+
     completed = true;
 
     localStorage.setItem(
@@ -1538,7 +1542,7 @@ async function completeMission(){
     }
 
     showToast(
-      "🔥 Misión completada. Ya cuenta para tu progreso."
+      "🔥 Misión sincronizada correctamente."
     );
 
   } catch(error) {
