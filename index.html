@@ -1026,24 +1026,11 @@ button{
 
     <div class="race">
 
-      <div class="race-row">
-        <span>🥇 Barcelona</span>
-        <strong>82%</strong>
-      </div>
-
-      <div class="race-row me">
-        <span id="myTeamRace">🔵 TU EQUIPO</span>
-        <strong>—</strong>
-      </div>
-
-      <div class="race-row">
-        <span>3 · Berlín</span>
-        <strong>71%</strong>
-      </div>
-
-      <div class="race-row">
-        <span>4 · París</span>
-        <strong>64%</strong>
+      <div id="cityRanking">
+        <div class="race-row">
+          <span>Calculando ciudades…</span>
+          <strong>—</strong>
+        </div>
       </div>
 
       <div class="race-note">
@@ -1440,12 +1427,7 @@ function showClub(){
         profile.city;
 
 
-    document
-      .getElementById("myTeamRace")
-      .innerText =
-        "🔵 " +
-        profile.city +
-        " · TU EQUIPO";
+    
 
 
     if(profile.school){
@@ -1460,6 +1442,8 @@ function showClub(){
 
   }
 
+
+  loadCityRanking();
 
   updateUI();
 
@@ -1632,6 +1616,39 @@ function updateUI(){
 
 }
 
+
+async function loadCityRanking(){
+  try {
+    const response = await fetch(
+      "https://weniwhqudqzphxdmfxhw.supabase.co/functions/v1/swift-handler",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ initData: tg.initData, action: "get_city_ranking" })
+      }
+    );
+    const data = await response.json();
+    if (!response.ok || !data.success) return;
+    const profileData = JSON.parse(localStorage.getItem("clubProfile") || "{}");
+    const myCity = String(profileData.city || "").trim().toLocaleLowerCase();
+    const container = document.getElementById("cityRanking");
+    if (!container) return;
+    container.innerHTML = data.ranking.length ? data.ranking.map(function(row){
+      const mine = row.city.toLocaleLowerCase() === myCity;
+      const prefix = row.position === 1 ? "🥇 " : row.position + " · ";
+      return '<div class="race-row' + (mine ? ' me' : '') + '"><span>' +
+        prefix + escapeHtml(row.city) + '</span><strong>' + row.rate + '%</strong></div>';
+    }).join("") : '<div class="race-row"><span>Aún no hay ciudades</span><strong>—</strong></div>';
+    const mine = data.ranking.find(function(row){ return row.city.toLocaleLowerCase() === myCity; });
+    const position = document.querySelector(".position");
+    if (position) position.innerText = mine ? "#" + mine.position : "#—";
+  } catch(error) { console.error("City ranking error", error); }
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g, function(char){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
+  });
+}
 
 /* VIDEO */
 
