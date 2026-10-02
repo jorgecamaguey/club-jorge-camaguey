@@ -1843,22 +1843,43 @@ function goSection(id,button){
   if(button)button.classList.add("active");
   target.scrollIntoView({behavior:"smooth",block:"start"});
 }
+let clubSpaceLinks={};
+let clubSpaceLinksLoadedAt=0;
+
+async function preloadClubSpaces(){
+  try{
+    const d=await clubApi("access_links");
+    if(d.active&&d.links){
+      clubSpaceLinks=d.links;
+      clubSpaceLinksLoadedAt=Date.now();
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+
 async function loadAccessState(){
   try{
     const d=await clubApi("subscription_access");
     const card=document.getElementById("accessCard"); if(!card)return;
     card.style.display="block";
     const pay=document.getElementById("payClubButton");
+    const spaces=document.getElementById("memberSpaces");
     if(d.active){
       document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":"MEMBRESÍA ACTIVA";
       document.getElementById("accessText").innerText=d.staff?"Acceso interno del equipo.":"Tu acceso al Club está activo.";
       pay.style.display="none";
-      const spaces=document.getElementById("memberSpaces"); if(spaces)spaces.style.display="block";
+      if(spaces)spaces.style.display="none";
+      // Prepare Telegram destinations before showing the buttons.
+      // This lets the actual tap call openTelegramLink synchronously,
+      // as required by Telegram/iOS.
+      await preloadClubSpaces();
+      if(spaces)spaces.style.display="block";
     }else{
       document.getElementById("accessTitle").innerText="ACTIVA TU MEMBRESÍA";
       document.getElementById("accessText").innerText="9 € al mes · El acceso se activa automáticamente después del pago.";
       pay.style.display="block";
-      const spaces=document.getElementById("memberSpaces"); if(spaces)spaces.style.display="none";
+      if(spaces)spaces.style.display="none";
     }
   }catch(e){}
 }
@@ -1867,28 +1888,35 @@ async function startSubscription(){
   catch(e){showToast("No se pudo abrir el pago.");}
 }
 
-async function openClubSpace(purpose){
+function openClubSpace(purpose){
   const isChannel=purpose==="official_channel";
-  try{
-    showToast(isChannel?"Abriendo el canal de Jorge...":"Abriendo la comunidad...");
-    const d=await clubApi("send_access_link",{purpose});
-    if(d.already_member&&d.direct_url){
-      if(tg.openTelegramLink) tg.openTelegramLink(d.direct_url);
-      else window.location.href=d.direct_url;
-      return;
-    }
+  const url=clubSpaceLinks[purpose];
+  if(url){
+    // IMPORTANT: no await/fetch before this call. Telegram iOS requires
+    // the deep link to be opened directly from the user's tap.
+    if(tg.openTelegramLink) tg.openTelegramLink(url);
+    else window.location.href=url;
+    // Refresh in the background for the next tap if this cache is old.
+    if(Date.now()-clubSpaceLinksLoadedAt>8*60*1000) preloadClubSpaces();
+    return;
+  }
+  // Rare fallback: prepare access through the bot rather than attempting
+  // a delayed deep-link open that iOS may ignore.
+  showToast(isChannel?"Preparando tu acceso al canal...":"Preparando tu acceso a la comunidad...");
+  clubApi("send_access_link",{purpose}).then(function(d){
     if(d.sent){
       showToast("Te hemos enviado el acceso en el chat del Club.");
       tg.close();
-      return;
+    }else{
+      preloadClubSpaces();
+      showToast("Pulsa de nuevo para abrir.");
     }
-    throw new Error("Telegram destination unavailable");
-  }catch(error){
+  }).catch(function(){
     showToast(isChannel?"No se pudo abrir el canal.":"No se pudo abrir la comunidad.");
-  }
+  });
 }
-function openOfficialChannel(){return openClubSpace("official_channel");}
-function openCommunity(){return openClubSpace("community_group");}
+function openOfficialChannel(){openClubSpace("official_channel");}
+function openCommunity(){openClubSpace("community_group");}
 
 /* VIDEO */
 
