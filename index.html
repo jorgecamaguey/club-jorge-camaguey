@@ -936,6 +936,12 @@ button{
     <div id="accessTitle" style="font-size:22px;font-weight:900;margin:5px 0 7px;">CLUB JORGE CAMAGÜEY</div>
     <div id="accessText" style="font-size:13px;line-height:1.45;opacity:.82;"></div>
     <button id="payClubButton" onclick="startSubscription()" style="display:none;width:100%;margin-top:13px;border:0;border-radius:14px;padding:14px;font-weight:900;">ACTIVAR · 9 € / MES →</button>
+    <div id="memberSpaces" style="display:none;margin-top:14px;gap:8px;">
+      <button onclick="openOfficialChannel()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">📢 CANAL DE JORGE →</button>
+      <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 10px;">Misiones, vídeos, LIVE y novedades de Jorge.</div>
+      <button onclick="openCommunity()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">💬 COMUNIDAD →</button>
+      <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 0;">Habla, comparte y conecta con otros miembros.</div>
+    </div>
   </section>
 
   <!-- MISSION -->
@@ -1847,16 +1853,28 @@ async function loadAccessState(){
       document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":"MEMBRESÍA ACTIVA";
       document.getElementById("accessText").innerText=d.staff?"Acceso interno del equipo.":"Tu acceso al Club está activo.";
       pay.style.display="none";
+      const spaces=document.getElementById("memberSpaces"); if(spaces)spaces.style.display="block";
     }else{
       document.getElementById("accessTitle").innerText="ACTIVA TU MEMBRESÍA";
       document.getElementById("accessText").innerText="9 € al mes · El acceso se activa automáticamente después del pago.";
       pay.style.display="block";
+      const spaces=document.getElementById("memberSpaces"); if(spaces)spaces.style.display="none";
     }
   }catch(e){}
 }
 async function startSubscription(){
   try{const d=await clubApi("payment_link");if(tg.openLink)tg.openLink(d.url);else window.location.href=d.url;}
   catch(e){showToast("No se pudo abrir el pago.");}
+}
+
+async function openOfficialChannel(){
+  try{
+    const d=await clubApi("access_links");
+    if(!d.active){showToast("Activa tu membresía para entrar.");return;}
+    const u=d.links&&d.links.official_channel;
+    if(!u)throw new Error("Access unavailable");
+    if(tg.openTelegramLink)tg.openTelegramLink(u);else window.location.href=u;
+  }catch(error){showToast("No se pudo abrir el canal de Jorge.");}
 }
 
 async function openCommunity(){
