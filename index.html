@@ -1870,7 +1870,11 @@ async function startSubscription(){
 async function openOfficialChannel(){
   try{
     showToast("Preparando tu acceso al canal...");
-    await clubApi("send_access_link",{purpose:"official_channel"});
+    const d=await clubApi("send_access_link",{purpose:"official_channel"});
+    if(d.already_member&&d.direct_url){
+      if(tg.openTelegramLink)tg.openTelegramLink(d.direct_url);else window.location.href=d.direct_url;
+      return;
+    }
     tg.close();
   }catch(error){showToast("No se pudo preparar el acceso al canal.");}
 }
