@@ -1873,7 +1873,7 @@ async function openOfficialChannel(){
     if(!d.active){showToast("Activa tu membresía para entrar.");return;}
     const u=d.links&&d.links.official_channel;
     if(!u)throw new Error("Access unavailable");
-    if(tg.openTelegramLink)tg.openTelegramLink(u);else window.location.href=u;
+    window.location.href=u;
   }catch(error){showToast("No se pudo abrir el canal de Jorge.");}
 }
 
@@ -1883,7 +1883,7 @@ async function openCommunity(){
     if(!d.active){showToast("Activa tu membresía para entrar.");return;}
     const u=d.links&&d.links.community_group;
     if(!u)throw new Error("Access unavailable");
-    if(tg.openTelegramLink)tg.openTelegramLink(u);else window.location.href=u;
+    window.location.href=u;
   }catch(error){showToast("No se pudo abrir la comunidad.");}
 }
 
