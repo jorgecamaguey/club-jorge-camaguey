@@ -1867,25 +1867,28 @@ async function startSubscription(){
   catch(e){showToast("No se pudo abrir el pago.");}
 }
 
-async function openOfficialChannel(){
+async function openClubSpace(purpose){
+  const isChannel=purpose==="official_channel";
   try{
-    showToast("Preparando tu acceso al canal...");
-    const d=await clubApi("send_access_link",{purpose:"official_channel"});
+    showToast(isChannel?"Abriendo el canal de Jorge...":"Abriendo la comunidad...");
+    const d=await clubApi("send_access_link",{purpose});
     if(d.already_member&&d.direct_url){
-      if(tg.openTelegramLink)tg.openTelegramLink(d.direct_url);else window.location.href=d.direct_url;
+      if(tg.openTelegramLink) tg.openTelegramLink(d.direct_url);
+      else window.location.href=d.direct_url;
       return;
     }
-    tg.close();
-  }catch(error){showToast("No se pudo preparar el acceso al canal.");}
+    if(d.sent){
+      showToast("Te hemos enviado el acceso en el chat del Club.");
+      tg.close();
+      return;
+    }
+    throw new Error("Telegram destination unavailable");
+  }catch(error){
+    showToast(isChannel?"No se pudo abrir el canal.":"No se pudo abrir la comunidad.");
+  }
 }
-
-async function openCommunity(){
-  try{
-    showToast("Preparando tu acceso a la comunidad...");
-    await clubApi("send_access_link",{purpose:"community_group"});
-    tg.close();
-  }catch(error){showToast("No se pudo preparar el acceso a la comunidad.");}
-}
+function openOfficialChannel(){return openClubSpace("official_channel");}
+function openCommunity(){return openClubSpace("community_group");}
 
 /* VIDEO */
 
