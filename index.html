@@ -9,16 +9,20 @@
 
 <style>
 :root{
-  --bg:#F3F0E8;
-  --paper:#FFFDF8;
-  --ink:#171717;
-  --muted:#77746D;
-  --line:#DDD8CE;
-  --red:#E34232;
-  --blue:#2457E6;
-  --yellow:#F4C84A;
-  --dark:#191919;
-  --green:#278A5B;
+  --bg:#081014;
+  --paper:#10191E;
+  --paper-2:#0C1418;
+  --ink:#F5F7F7;
+  --muted:#8B9AA2;
+  --line:#22343D;
+  --red:#FF2D78;
+  --blue:#18D7D2;
+  --yellow:#F1E90B;
+  --dark:#05090B;
+  --green:#35DCA0;
+  --cyan:#18D7D2;
+  --pink:#FF2D78;
+  --shadow:0 16px 45px rgba(0,0,0,.28);
 }
 
 *{box-sizing:border-box}
@@ -642,6 +646,330 @@ button{
 @media(min-width:700px){
   .app{padding-top:35px}
 }
+
+/* ===== VIP CLUB 2026 · NEON EDITORIAL REDESIGN ===== */
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(24,215,210,.10), transparent 28%),
+    radial-gradient(circle at 5% 36%, rgba(241,233,11,.07), transparent 25%),
+    linear-gradient(180deg,#091216 0%,#071014 55%,#050B0E 100%);
+  color:var(--ink);
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.13;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:26px 26px;
+  mask-image:linear-gradient(to bottom,black,transparent 70%);
+}
+
+.app,.onboarding{position:relative;z-index:1}
+
+.brand{
+  color:#F7F9F9;
+  letter-spacing:2.1px;
+}
+.brand:before{
+  content:"VIP CLUB";
+  display:inline-block;
+  margin-right:9px;
+  padding:5px 9px 4px;
+  border:1px solid var(--yellow);
+  border-radius:999px;
+  color:var(--yellow);
+  font-size:8px;
+  letter-spacing:1.6px;
+  vertical-align:1px;
+}
+
+.step,.sub,.section-label,.onboarding-intro,.onboarding-note{color:var(--muted)}
+
+.hello,.onboarding h1{
+  color:var(--ink);
+  text-shadow:0 10px 38px rgba(0,0,0,.35);
+}
+
+.onboarding h1{
+  font-size:48px;
+  text-transform:uppercase;
+}
+.onboarding h1:after{
+  content:"";
+  display:block;
+  width:72px;
+  height:4px;
+  margin-top:18px;
+  border-radius:99px;
+  background:linear-gradient(90deg,var(--yellow),var(--cyan));
+  box-shadow:0 0 22px rgba(24,215,210,.28);
+}
+
+.field label{color:#DDE4E7}
+.field input,.field select{
+  background:#0D171C;
+  color:#F6F8F8;
+  border-color:#20333C;
+  box-shadow:inset 0 1px rgba(255,255,255,.025);
+}
+.field input:focus,.field select:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(24,215,210,.10);
+}
+.field input::placeholder{color:#687982}
+.enter-button{
+  background:var(--yellow);
+  color:#081014;
+  box-shadow:0 8px 30px rgba(241,233,11,.13);
+}
+
+.avatar{
+  background:linear-gradient(145deg,#101C21,#071014);
+  color:var(--yellow);
+  border:1px solid #29414C;
+  box-shadow:0 0 0 3px rgba(24,215,210,.06),0 8px 24px rgba(0,0,0,.3);
+}
+
+.stats{gap:9px}
+.pill{
+  background:rgba(15,25,30,.84);
+  color:#DCE4E7;
+  border-color:#21353E;
+  backdrop-filter:blur(12px);
+}
+.pill:first-child{border-color:rgba(241,233,11,.4)}
+.pill:nth-child(3){border-color:rgba(24,215,210,.35)}
+
+.section-label{
+  color:#7F9199;
+  letter-spacing:2px;
+}
+.section-label:before{
+  content:"";
+  display:inline-block;
+  width:18px;
+  height:2px;
+  margin-right:8px;
+  background:var(--cyan);
+  vertical-align:middle;
+  box-shadow:0 0 12px rgba(24,215,210,.55);
+}
+
+/* Mission = hero area */
+.mission{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 98% 2%,rgba(241,233,11,.14),transparent 34%),
+    linear-gradient(145deg,#0D181D 0%,#091216 100%);
+  color:var(--ink);
+  border:1px solid rgba(24,215,210,.30);
+  box-shadow:var(--shadow),0 0 0 1px rgba(255,255,255,.015) inset;
+}
+.mission:after{
+  content:"";
+  position:absolute;
+  width:210px;
+  height:210px;
+  right:-95px;
+  top:-105px;
+  border:1px solid rgba(24,215,210,.24);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 24px rgba(24,215,210,.025),
+    0 0 0 48px rgba(241,233,11,.025);
+  pointer-events:none;
+}
+.mission-number{
+  color:var(--yellow);
+  opacity:1;
+}
+.timer{
+  background:#101D22;
+  color:#CFE0E6;
+  border:1px solid #29404A;
+}
+.mission h2{
+  position:relative;
+  z-index:1;
+  color:#F7F9FA;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.mission p{
+  position:relative;
+  z-index:1;
+  color:#AAB7BD;
+}
+.action{
+  position:relative;
+  z-index:1;
+  background:var(--yellow);
+  color:#061014;
+  box-shadow:0 9px 30px rgba(241,233,11,.16);
+}
+.action.done{
+  background:#142228;
+  color:var(--cyan);
+  border:1px solid rgba(24,215,210,.36);
+}
+.rules-button{color:#9AACB4}
+.video-button{
+  background:#0B191E;
+  color:var(--cyan);
+  border:1px solid rgba(24,215,210,.55);
+  box-shadow:0 0 24px rgba(24,215,210,.08);
+}
+
+/* Surfaces */
+.confirm-box,.progress-card,.modal{
+  background:rgba(15,25,30,.96);
+  color:var(--ink);
+  border-color:#223741;
+  box-shadow:var(--shadow);
+}
+.confirm-box p{color:var(--muted)}
+.confirm-icon{filter:drop-shadow(0 0 9px rgba(241,233,11,.28))}
+
+.team{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(24,215,210,.18),transparent 34%),
+    linear-gradient(150deg,#0A171C,#0B1216);
+  color:var(--ink);
+  border:1px solid rgba(24,215,210,.34);
+  box-shadow:var(--shadow);
+}
+.team:before{
+  content:"CITY RACE";
+  position:absolute;
+  right:17px;
+  top:16px;
+  color:var(--cyan);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:2px;
+  opacity:.7;
+}
+.position{color:var(--yellow)}
+.race{
+  background:rgba(4,10,12,.48);
+  border:1px solid rgba(255,255,255,.07);
+}
+.race-row+.race-row{border-top:1px solid rgba(255,255,255,.055)}
+.prize{border-top-color:rgba(24,215,210,.22)}
+
+.watch{
+  background:
+    radial-gradient(circle at 100% 50%,rgba(255,45,120,.08),transparent 35%),
+    #091115;
+  border:1px solid #24343C;
+  box-shadow:var(--shadow);
+}
+.watch p{color:#9EADB4}
+.watch strong{color:var(--cyan)}
+.watch:after{opacity:.10}
+
+.progress-track{background:#1B2930}
+.progress-bar{
+  background:linear-gradient(90deg,var(--cyan),#5DF4EA);
+  box-shadow:0 0 18px rgba(24,215,210,.30);
+}
+
+.modal-bg{background:rgba(0,0,0,.76);backdrop-filter:blur(10px)}
+.rule-number{
+  background:var(--yellow);
+  color:#071014;
+}
+.close-button{
+  background:#152229;
+  color:#F4F7F7;
+  border:1px solid #2A404A;
+}
+
+/* Inline modules used throughout the current app */
+#accessCard{
+  background:
+    radial-gradient(circle at 95% 0%,rgba(241,233,11,.11),transparent 32%),
+    #0B151A !important;
+  color:#F5F7F7 !important;
+  border:1px solid #243943;
+  box-shadow:var(--shadow);
+}
+#accessCard button{
+  background:#132229 !important;
+  color:#F3F7F8 !important;
+  border:1px solid #29414B !important;
+}
+#payClubButton{
+  background:var(--yellow) !important;
+  color:#081014 !important;
+  border:0 !important;
+}
+
+button{
+  transition:transform .16s ease,box-shadow .16s ease,opacity .16s ease;
+}
+button:active{transform:scale(.985)}
+
+.nav{
+  background:rgba(5,12,15,.92);
+  border-top-color:#1E3038;
+  box-shadow:0 -18px 38px rgba(0,0,0,.28);
+}
+.nav-item{color:#72848C}
+.nav-item.active{color:var(--yellow)}
+.nav-icon{filter:saturate(.92)}
+.nav-item:nth-child(3).active{color:var(--cyan)}
+
+.toast{
+  background:#101B20;
+  color:#F7F9F9;
+  border:1px solid #2A414B;
+  box-shadow:0 18px 44px rgba(0,0,0,.42);
+}
+
+/* Keep the tiny magenta accent only for alerts / micro emphasis */
+.topbar .avatar:after{
+  content:"";
+  width:7px;
+  height:7px;
+  position:absolute;
+  border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 0 12px rgba(255,45,120,.55);
+  transform:translate(15px,-15px);
+}
+.avatar{position:relative}
+
+/* Admin and legacy inline light cards: make them readable without changing logic */
+#adminPanel,#questionBoard,#topProblems,#contentBankClusters,#liveQuestions{
+  color:var(--ink);
+}
+#adminPanel input,#adminPanel textarea,#adminPanel select,
+#questionModal input,#questionModal textarea{
+  background:#0C171C !important;
+  color:#F5F7F7 !important;
+  border-color:#263A43 !important;
+}
+
+/* Selection + scrollbar */
+::selection{background:rgba(24,215,210,.28);color:white}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#243941;border-radius:999px}
+
+@media (max-width:380px){
+  .hello{font-size:34px}
+  .mission h2{font-size:30px}
+}
+
 </style>
 </head>
 
