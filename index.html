@@ -912,8 +912,8 @@ button{
 
   <h1 class="hello" id="welcome">Hola</h1>
 
-  <div class="sub">
-    Esta semana tienes una nueva misión.
+  <div class="sub" id="missionIntro">
+    Próximamente publicaremos la primera misión.
   </div>
 
   <div class="stats">
@@ -954,8 +954,8 @@ button{
 
     <div class="mission-top">
 
-      <div class="mission-number">
-        MISIÓN #01
+      <div class="mission-number" id="missionNumber">
+        SIN MISIÓN ACTIVA
       </div>
 
       <div class="timer">
@@ -964,26 +964,21 @@ button{
 
     </div>
 
-    <h2>
-      MENOS PASOS.<br>
-      MÁS MÚSICA.
+    <h2 id="missionTitle">
+      NUEVA MISIÓN<br>
+      PRÓXIMAMENTE.
     </h2>
 
-    <p>
-      Baila una canción completa utilizando solamente
-      cinco movimientos.
-    </p>
-
-    <p>
-      No intentes impresionar.
-      Escucha. Respira.
-      Deja espacio a la música.
+    <p id="missionDescription">
+      Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.
     </p>
 
     <button
       class="action"
       id="missionButton"
-      onclick="completeMission()">
+      onclick="completeMission()"
+      disabled
+      style="display:none;">
       ✓ HE HECHO LA MISIÓN
     </button>
 
@@ -995,8 +990,10 @@ button{
 
     <button
       class="video-button"
+      id="missionVideoButton"
       type="button"
-      onclick="sendVideo()">
+      onclick="sendVideo()"
+      style="display:none;">
       📹 ENVIAR VÍDEO DE LA MISIÓN
     </button>
 
@@ -1334,15 +1331,9 @@ try{
 
 /* MISSION DATA */
 
-let missions =
-  Number(
-    localStorage.getItem("missions") || 0
-  );
-
-let completed =
-  localStorage.getItem(
-    "mission01completed"
-  ) === "yes";
+let missions = 0;
+let completed = false;
+let activeMission = null;
 
 
 /* START */
@@ -1525,13 +1516,52 @@ function showClub(){
   loadCityRanking();
   loadAccessState();
   loadAdmin();
-
-  updateUI();
+  loadMemberHomeState();
 
 }
 
 
 /* PERSONAL MISSION */
+
+async function loadMemberHomeState(){
+  try{
+    const data=await clubApi("member_home_state");
+    activeMission=data.active_mission||null;
+    missions=Number(data.mission_count||0);
+    completed=!!data.active_completed;
+
+    const intro=document.getElementById("missionIntro");
+    const number=document.getElementById("missionNumber");
+    const title=document.getElementById("missionTitle");
+    const description=document.getElementById("missionDescription");
+    const button=document.getElementById("missionButton");
+    const videoButton=document.getElementById("missionVideoButton");
+
+    if(activeMission){
+      if(intro) intro.innerText="Esta semana tienes una nueva misión.";
+      if(number) number.innerText="MISIÓN ACTIVA";
+      if(title) title.innerText=String(activeMission.title||"NUEVA MISIÓN");
+      if(description) description.innerText=String(activeMission.description||"");
+      if(button){
+        button.style.display="block";
+        button.disabled=completed;
+        button.innerText=completed?"🔥 MISIÓN COMPLETADA":"✓ HE HECHO LA MISIÓN";
+        button.classList.toggle("done",completed);
+      }
+      if(videoButton) videoButton.style.display="block";
+    }else{
+      if(intro) intro.innerText="Próximamente publicaremos la primera misión.";
+      if(number) number.innerText="SIN MISIÓN ACTIVA";
+      if(title) title.innerText="NUEVA MISIÓN\nPRÓXIMAMENTE.";
+      if(description) description.innerText="Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.";
+      if(button) button.style.display="none";
+      if(videoButton) videoButton.style.display="none";
+    }
+    updateUI();
+  }catch(e){
+    console.error("Member home state error",e);
+  }
+}
 
 async function completeMission(){
 
@@ -1576,23 +1606,7 @@ async function completeMission(){
       return;
     }
 
-    if(!completed){
-      missions++;
-    }
-
-    completed = true;
-
-    localStorage.setItem(
-      "missions",
-      missions
-    );
-
-    localStorage.setItem(
-      "mission01completed",
-      "yes"
-    );
-
-    updateUI();
+    await loadMemberHomeState();
 
     if(tg.HapticFeedback){
       tg.HapticFeedback
@@ -1654,11 +1668,13 @@ function updateUI(){
         "missionButton"
       );
 
-    button.innerText =
-      "🔥 MISIÓN COMPLETADA";
+    if(button){
+      button.innerText =
+        "🔥 MISIÓN COMPLETADA";
 
-    button.classList.add("done");
-    button.disabled = true;
+      button.classList.add("done");
+      button.disabled = true;
+    }
 
   }
 
