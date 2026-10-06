@@ -1220,6 +1220,310 @@ input,select,textarea{font-size:16px !important}
   *,*:before,*:after{scroll-behavior:auto !important;transition:none !important;animation:none !important}
 }
 
+
+/* ===== LIGHT LUXURY REDESIGN · OCT 2026 ===== */
+:root{
+  --bg:#F5F2EA;
+  --paper:#FFFFFF;
+  --paper-2:#F0ECE3;
+  --ink:#132126;
+  --muted:#708087;
+  --line:#D9E0DE;
+  --dark:#132126;
+  --cyan:#12B8B0;
+  --blue:#12B8B0;
+  --gold:#C9A861;
+  --gold-soft:#E8D9AE;
+  --yellow:#C9A861;
+  --pink:#E56A91;
+  --red:#E56A91;
+  --shadow:0 18px 42px rgba(20,37,43,.08);
+}
+
+body{
+  background:
+    radial-gradient(circle at 95% 1%,rgba(18,184,176,.08),transparent 31%),
+    radial-gradient(circle at 0% 22%,rgba(201,168,97,.10),transparent 30%),
+    linear-gradient(180deg,#FBFAF6 0%,#F4F1E9 52%,#F7F5EF 100%);
+  color:var(--ink);
+}
+body:before{
+  opacity:.24;
+  background-image:
+    linear-gradient(rgba(19,33,38,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(19,33,38,.018) 1px,transparent 1px);
+  background-size:30px 30px;
+  mask-image:linear-gradient(to bottom,black,transparent 62%);
+}
+
+.topbar{
+  background:linear-gradient(180deg,rgba(251,250,246,.96),rgba(251,250,246,.76),transparent);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.brand{color:#142329}
+.brand:before{
+  color:#8C6E2E;
+  border-color:rgba(201,168,97,.60);
+  background:rgba(201,168,97,.09);
+}
+.hello,.onboarding h1{
+  color:#122127;
+  text-shadow:none;
+}
+.sub,.step,.onboarding-intro,.onboarding-note,.section-label{color:var(--muted)}
+.avatar{
+  background:#FFFFFF;
+  color:#876B31;
+  border-color:#D9DFDC;
+  box-shadow:0 8px 22px rgba(20,37,43,.08);
+}
+.topbar .avatar:after{
+  background:var(--pink);
+  box-shadow:none;
+}
+
+.field label{color:#34464D}
+.field input,.field select{
+  background:rgba(255,255,255,.92);
+  color:#132126;
+  border-color:#D8E0DE;
+  box-shadow:0 1px 0 rgba(255,255,255,.65),0 7px 20px rgba(20,37,43,.035);
+}
+.field input::placeholder{color:#98A5AA}
+.field input:focus,.field select:focus{
+  border-color:rgba(18,184,176,.72);
+  box-shadow:0 0 0 3px rgba(18,184,176,.10);
+}
+.onboarding h1:after{
+  background:linear-gradient(90deg,var(--gold),var(--cyan));
+  box-shadow:none;
+}
+.enter-button{
+  background:linear-gradient(135deg,#D4B873,#BE9850);
+  color:#132126;
+  box-shadow:0 12px 30px rgba(170,132,54,.13);
+}
+
+/* compact, calm header stats */
+.stats{margin-bottom:25px}
+.pill{
+  background:rgba(255,255,255,.88);
+  color:#32464D;
+  border-color:#DCE3E0;
+  backdrop-filter:blur(12px);
+  box-shadow:0 5px 15px rgba(20,37,43,.03);
+}
+.pill:first-child{border-color:rgba(201,168,97,.42)}
+.pill:nth-child(3){border-color:rgba(18,184,176,.32)}
+
+.section-label{
+  color:#819096;
+}
+.section-label:before{
+  background:linear-gradient(90deg,var(--gold),var(--cyan));
+  box-shadow:none;
+}
+
+/* mission = principal premium card */
+.mission{
+  color:#F8FBFA;
+  background:
+    radial-gradient(circle at 95% 0%,rgba(232,217,174,.19),transparent 34%),
+    radial-gradient(circle at 0% 100%,rgba(18,184,176,.14),transparent 38%),
+    linear-gradient(150deg,#183139 0%,#10252C 52%,#0D1F25 100%);
+  border-color:rgba(255,255,255,.08);
+  box-shadow:0 18px 42px rgba(17,38,45,.14);
+}
+.mission:after{
+  border-color:rgba(232,217,174,.25);
+  box-shadow:
+    0 0 0 24px rgba(232,217,174,.025),
+    0 0 0 48px rgba(18,184,176,.025);
+}
+.mission-number{color:#EADBAE}
+.mission h2{color:#FFFFFF}
+.mission p{color:#C9D5D8}
+.timer{
+  background:rgba(255,255,255,.07);
+  color:#E8DDC1;
+  border-color:rgba(232,217,174,.21);
+}
+.action{
+  background:linear-gradient(135deg,#EADAA8,#CDA85C);
+  color:#132126;
+  box-shadow:0 10px 26px rgba(201,168,97,.15);
+}
+.action.done{
+  background:rgba(255,255,255,.10);
+  color:#70E3DB;
+  border-color:rgba(112,227,219,.33);
+}
+.rules-button{color:#C4D1D4}
+.video-button{
+  background:rgba(18,184,176,.10);
+  color:#D4FBF7;
+  border-color:rgba(91,222,213,.34);
+  box-shadow:none;
+}
+
+/* light content cards */
+.team,.watch,.progress-card,#accessCard,.confirm-box,.modal{
+  background:#FFFFFF !important;
+  color:#132126 !important;
+  border:1px solid #DDE4E1 !important;
+  box-shadow:var(--shadow);
+}
+.team{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(18,184,176,.10),transparent 35%),
+    radial-gradient(circle at 0% 100%,rgba(201,168,97,.09),transparent 32%),
+    #FFFFFF !important;
+}
+.team:before{color:#90805C}
+.team h2,.watch h2{color:#132126}
+.position{color:#A9853F}
+.team-copy,.watch p,.confirm-box p{color:#697A81 !important}
+.school-line{color:#7A8A90}
+.race{
+  background:#F5F7F5;
+  border:1px solid #E2E7E5;
+}
+.race-row+.race-row{border-top-color:#E3E8E6}
+.prize{
+  color:#31464D;
+  border-top-color:#D7E0DD;
+}
+.watch{
+  background:
+    radial-gradient(circle at 100% 8%,rgba(229,106,145,.055),transparent 32%),
+    #FFFFFF !important;
+}
+.watch strong{color:#0E918A}
+.watch:after{opacity:.055}
+.progress-track{background:#E7ECE9}
+.progress-bar{
+  background:linear-gradient(90deg,#C6A45D,#28BFB7);
+  box-shadow:none;
+}
+.progress-head{color:#273A41}
+#progressMessage{color:#718087 !important}
+
+#accessCard{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(201,168,97,.11),transparent 34%),
+    linear-gradient(150deg,#FFFFFF,#FAF8F2) !important;
+}
+#accessCard #accessTitle{color:#132126}
+#accessCard #accessText{color:#66777E}
+#accessCard button{
+  background:#F1F5F3 !important;
+  color:#21353C !important;
+  border-color:#D9E1DE !important;
+}
+#payClubButton{
+  background:linear-gradient(135deg,#D9C184,#C6A156) !important;
+  color:#132126 !important;
+}
+#memberSpaces button{
+  background:#F3F6F5 !important;
+  color:#1E333A !important;
+}
+
+/* navigation — airy, iPhone-friendly */
+.nav{
+  background:rgba(255,255,255,.92);
+  border-color:#DDE5E2;
+  box-shadow:0 14px 40px rgba(20,37,43,.14);
+}
+.nav-item{color:#859298}
+.nav-item.active{
+  color:#8E7135;
+  background:rgba(201,168,97,.11);
+}
+.nav-item:nth-child(3).active{
+  color:#0C8E88;
+  background:rgba(18,184,176,.09);
+}
+.nav-icon{filter:none}
+
+/* modal */
+.modal-bg{
+  background:rgba(12,25,30,.42);
+  backdrop-filter:blur(10px);
+}
+.modal h2{color:#132126}
+.rule-number{
+  background:#163039;
+  color:#FFFFFF;
+}
+.close-button{
+  background:#183139;
+  color:#FFFFFF;
+  border-color:#183139;
+}
+.later-button{color:#6F7F85}
+#questionModal textarea{
+  background:#F7F9F7 !important;
+  color:#132126 !important;
+  border-color:#D8E0DD !important;
+}
+
+/* admin — visually part of the same product */
+#adminPanel{
+  background:#FFFFFF !important;
+  color:#132126 !important;
+  border-color:#DCE4E1 !important;
+}
+#adminPanel h2,#adminPanel h3{color:#132126}
+#adminPanel input,#adminPanel textarea,#adminPanel select,
+#questionModal input,#questionModal textarea{
+  background:#F8FAF8 !important;
+  color:#132126 !important;
+  border-color:#D8E0DD !important;
+}
+#adminPanel button:not(.action){
+  background:#EEF3F1 !important;
+  color:#20343B !important;
+  border-color:#D9E1DE !important;
+}
+#ownerAccessTools{
+  background:linear-gradient(150deg,#193139,#10262D) !important;
+  color:#F8FBFA !important;
+  border-color:rgba(201,168,97,.24) !important;
+}
+#ownerAccessTools input,#ownerAccessTools select{
+  background:#F8FAF8 !important;
+  color:#132126 !important;
+}
+#contentBankClusters>div{
+  background:#F5F7F5 !important;
+  color:#132126 !important;
+  border-color:#DEE5E2 !important;
+}
+#questionBoard>div,#adminVideos>div,#adminTeam>div,#adminQuestions>div,#liveQuestions>div{
+  border-bottom-color:#E1E7E4 !important;
+}
+#liveSection>div:first-child{color:#C84E79 !important}
+
+.toast{
+  background:#173038;
+  color:#FFFFFF;
+  border-color:#23434D;
+  box-shadow:0 14px 34px rgba(20,37,43,.20);
+}
+
+::selection{background:rgba(18,184,176,.18);color:#132126}
+::-webkit-scrollbar-thumb{background:#CCD8D4}
+
+/* slightly more breathable typography */
+.mission p,.team-copy,.watch p,.progress-card p{line-height:1.55}
+.app{padding-left:17px;padding-right:17px}
+@media(max-width:380px){
+  .app{padding-left:14px;padding-right:14px}
+  .topbar{margin-left:-14px;margin-right:-14px;padding-left:14px;padding-right:14px}
+}
+
 </style>
 </head>
 
