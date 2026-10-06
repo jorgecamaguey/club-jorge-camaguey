@@ -1079,12 +1079,12 @@ button{
   </section>
 
   <!-- MONTHLY LIVE -->
-  <div class="section-label" style="margin-top:27px;">04 · JORGE LIVE</div>
+  <div class="section-label" style="margin-top:27px;">04 · JORGE EN DIRECTO</div>
   <section class="progress-card" id="liveSection">
     <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);">🔴 UNA VEZ AL MES</div>
     <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
-    <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo LIVE · se anunciará aquí</div>
+    <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo directo · se anunciará aquí</div>
     <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
     <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Pregunta durante el mes. El equipo agrupa las preguntas repetidas y Jorge responde una selección en el próximo LIVE.</div>
   </section>
@@ -1130,14 +1130,14 @@ button{
   <h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
-  <h3 style="margin-top:24px;">LIVE STUDIO</h3>
+  <h3 style="margin-top:24px;">ESTUDIO DEL DIRECTO</h3>
 <div style="background:#171717;color:white;border-radius:22px;padding:16px;margin:10px 0 22px;">
-  <div style="font-size:10px;letter-spacing:1px;opacity:.6;">PRÓXIMO JORGE LIVE</div>
+  <div style="font-size:10px;letter-spacing:1px;opacity:.6;">PRÓXIMO DIRECTO DE JORGE</div>
   <div id="adminLiveState" style="font-size:18px;font-weight:850;margin:7px 0 12px;">Sin programar</div>
-  <input id="liveTitle" placeholder="JORGE LIVE · Tema" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+  <input id="liveTitle" placeholder="JORGE EN DIRECTO · Tema" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
   <input id="liveDate" type="datetime-local" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
   <textarea id="liveDescription" placeholder="Tema principal / enfoque" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;"></textarea>
-  <button onclick="adminCreateLive()" style="width:100%;margin-top:6px;padding:12px;border:0;border-radius:12px;font-weight:850;">PROGRAMAR LIVE</button>
+  <button onclick="adminCreateLive()" style="width:100%;margin-top:6px;padding:12px;border:0;border-radius:12px;font-weight:850;">PROGRAMAR DIRECTO</button>
 </div>
 <div id="liveQuestions"></div>
 <h3 style="margin-top:24px;">PREGUNTAS · INSIGHTS</h3>
@@ -1284,7 +1284,7 @@ button{
 
 <div class="modal-bg" id="questionModal"><div class="modal">
 <h2>Pregunta a Jorge</h2>
-<p style="color:var(--muted);line-height:1.5;">Haz una pregunta concreta sobre tu baile, técnica, musicalidad o aprendizaje. Antes del LIVE agruparemos las preguntas similares para que Jorge pueda responder lo que más ayuda al Club.</p>
+<p style="color:var(--muted);line-height:1.5;">Haz una pregunta concreta sobre tu baile, técnica, musicalidad o aprendizaje. Antes del directo agruparemos las preguntas similares para que Jorge pueda responder lo que más ayuda al Club.</p>
 <textarea id="jorgeQuestion" maxlength="500" placeholder="Tu pregunta…" style="width:100%;min-height:130px;padding:15px;border:1px solid var(--line);border-radius:15px;font:inherit;resize:vertical;"></textarea>
 <button class="action" onclick="submitJorgeQuestion()">ENVIAR PREGUNTA</button>
 <button class="later-button" onclick="closeQuestion()">CANCELAR</button>
@@ -1781,7 +1781,7 @@ async function loadAdmin(){
       const insights=await clubApi("admin_question_insights");
       const summary=document.getElementById("insightSummary");
       if(summary){
-        const cards=[["TOTAL",insights.summary.total],["30 DÍAS",insights.summary.last30],["PARA LIVE",insights.summary.for_live],["CONTENIDO",insights.summary.for_content]];
+        const cards=[["TOTAL",insights.summary.total],["30 DÍAS",insights.summary.last30],["PARA DIRECTO",insights.summary.for_live],["CONTENIDO",insights.summary.for_content]];
         summary.innerHTML=cards.map(function(x){return '<div style="background:#171717;color:#fff;border-radius:16px;padding:13px 14px;"><div style="font-size:9px;opacity:.62;letter-spacing:1.1px;">'+x[0]+'</div><div style="font-size:27px;font-weight:900;margin-top:3px;">'+x[1]+'</div></div>';}).join("");
       }
       const cats=document.getElementById("insightCategories");
@@ -1805,7 +1805,7 @@ async function loadAdmin(){
         const who=q.member?escapeHtml(q.member.first_name||"Miembro")+" · "+escapeHtml(q.member.city||"—"):"Miembro";
         return '<div style="padding:14px 0;border-bottom:1px solid #ddd;"><div style="font-size:11px;color:#777;margin-bottom:5px;">'+who+'</div><strong>'+escapeHtml(q.question)+'</strong>'+
         '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;">'+
-        '<button onclick="adminQuestionToggle('+q.id+',\'selected_for_live\','+(!q.selected_for_live)+')">'+(q.selected_for_live?'✓ LIVE':'＋ LIVE')+'</button>'+
+        '<button onclick="adminQuestionToggle('+q.id+',\'selected_for_live\','+(!q.selected_for_live)+')">'+(q.selected_for_live?'✓ DIRECTO':'＋ DIRECTO')+'</button>'+
         '<button onclick="adminQuestionToggle('+q.id+',\'selected_for_content\','+(!q.selected_for_content)+')">'+(q.selected_for_content?'✓ CONTENIDO':'＋ CONTENIDO')+'</button>'+
         '<select onchange="adminQuestionField('+q.id+',\'category\',this.value)"><option value="">Categoría</option><option>Técnica</option><option>Musicalidad</option><option>Social</option><option>Psicología</option><option>Enseñanza</option><option>Cultura cubana</option><option>Otro</option></select></div></div>';
       }).join(""):"Aún no hay preguntas.";
@@ -1857,15 +1857,15 @@ async function loadLiveStudio(){
     const state=document.getElementById("adminLiveState");
     if(state) state.innerText=d.live?(d.live.title+" · "+new Date(d.live.starts_at).toLocaleString("es-ES")):"Sin programar";
     const box=document.getElementById("liveQuestions");
-    if(box) box.innerHTML=(d.questions||[]).length?'<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin-bottom:7px;">GUION · PREGUNTAS SELECCIONADAS</div>'+(d.questions||[]).map(function(q,i){return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><span style="font-size:10px;color:#777;">'+(i+1)+' · '+escapeHtml(q.topic||q.category||"Sin clasificar")+'</span><div style="font-weight:750;margin-top:3px;">'+escapeHtml(q.question)+'</div><button onclick="resolveLiveQuestion('+q.id+')" style="margin-top:7px;border:0;border-radius:999px;padding:7px 10px;font-weight:800;">✓ RESPONDIDO</button></div>';}).join(""):'<div style="font-size:12px;color:#777;margin-bottom:16px;">Marca preguntas con LIVE para construir el guion.</div>';
+    if(box) box.innerHTML=(d.questions||[]).length?'<div style="font-size:10px;font-weight:850;letter-spacing:1px;margin-bottom:7px;">GUION · PREGUNTAS SELECCIONADAS</div>'+(d.questions||[]).map(function(q,i){return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><span style="font-size:10px;color:#777;">'+(i+1)+' · '+escapeHtml(q.topic||q.category||"Sin clasificar")+'</span><div style="font-weight:750;margin-top:3px;">'+escapeHtml(q.question)+'</div><button onclick="resolveLiveQuestion('+q.id+')" style="margin-top:7px;border:0;border-radius:999px;padding:7px 10px;font-weight:800;">✓ RESPONDIDO</button></div>';}).join(""):'<div style="font-size:12px;color:#777;margin-bottom:16px;">Marca preguntas para el DIRECTO para construir el guion.</div>';
   }catch(e){}
 }
 async function resolveLiveQuestion(id){try{await clubApi("admin_resolve_question",{question_id:id,resolution_type:"live"});showToast("✓ Guardado en el archivo.");await loadLiveStudio();}catch(e){showToast("No se pudo guardar.");}}
 async function adminCreateLive(){
-  const title=document.getElementById("liveTitle").value.trim()||"JORGE LIVE";
+  const title=document.getElementById("liveTitle").value.trim()||"JORGE EN DIRECTO";
   const raw=document.getElementById("liveDate").value;
   if(!raw){showToast("Elige fecha y hora.");return;}
-  try{await clubApi("admin_create_live",{title:title,starts_at:new Date(raw).toISOString(),description:document.getElementById("liveDescription").value.trim()});showToast("✓ LIVE programado.");await loadLiveStudio();await loadClubState();}catch(e){showToast("No se pudo programar.");}
+  try{await clubApi("admin_create_live",{title:title,starts_at:new Date(raw).toISOString(),description:document.getElementById("liveDescription").value.trim()});showToast("✓ DIRECTO programado.");await loadLiveStudio();await loadClubState();}catch(e){showToast("No se pudo programar.");}
 }
 
 async function adminQuestionToggle(id,field,value){try{const p={question_id:id};p[field]=value;await clubApi("admin_update_question",p);showToast("✓ Actualizado.");await loadAdmin();}catch(e){showToast("No se pudo actualizar.");}}
@@ -2084,7 +2084,7 @@ async function loadClubState(){
     const el=document.getElementById("nextLive");
     if(data.live && el){
       const d=new Date(data.live.starts_at);
-      el.innerText="Próximo LIVE · "+d.toLocaleDateString("es-ES",{day:"numeric",month:"long"})+" · "+d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
+      el.innerText="Próximo directo · "+d.toLocaleDateString("es-ES",{day:"numeric",month:"long"})+" · "+d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
     }
   }catch(e){}
 }
