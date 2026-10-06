@@ -17,7 +17,9 @@
   --line:#22343D;
   --red:#FF2D78;
   --blue:#18D7D2;
-  --yellow:#F1E90B;
+  --yellow:#D9B76A;
+  --gold:#D9B76A;
+  --gold-soft:#F0D99A;
   --dark:#05090B;
   --green:#35DCA0;
   --cyan:#18D7D2;
@@ -968,6 +970,254 @@ button:active{transform:scale(.985)}
 @media (max-width:380px){
   .hello{font-size:34px}
   .mission h2{font-size:30px}
+}
+
+
+/* ===== VIP LUXURY UX PASS · OCT 2026 ===== */
+:root{
+  --radius-xl:28px;
+  --radius-lg:22px;
+  --tap:52px;
+  --glass:rgba(12,22,27,.88);
+}
+
+body{
+  background:
+    radial-gradient(circle at 88% 4%,rgba(24,215,210,.08),transparent 28%),
+    radial-gradient(circle at 0% 24%,rgba(217,183,106,.07),transparent 26%),
+    linear-gradient(180deg,#071014 0%,#081216 48%,#050A0D 100%);
+}
+
+.app{padding-top:max(22px,env(safe-area-inset-top))}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:80;
+  margin:calc(-1 * max(22px,env(safe-area-inset-top))) -18px 24px;
+  padding:max(15px,env(safe-area-inset-top)) 18px 12px;
+  background:linear-gradient(180deg,rgba(5,12,15,.96),rgba(5,12,15,.70),transparent);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.brand:before{
+  border-color:rgba(217,183,106,.72);
+  color:var(--gold-soft);
+  background:rgba(217,183,106,.05);
+}
+.hello{
+  font-size:clamp(34px,9vw,42px);
+  font-weight:900;
+  letter-spacing:-1.8px;
+}
+.sub{max-width:430px;line-height:1.45}
+
+.pill{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  background:rgba(12,23,28,.86);
+  border-color:#213842;
+}
+.pill:first-child{border-color:rgba(217,183,106,.42)}
+
+.section-label{
+  margin-top:2px;
+  color:#8799A0;
+}
+.section-label:before{
+  background:linear-gradient(90deg,var(--gold),var(--cyan));
+  box-shadow:0 0 12px rgba(217,183,106,.18);
+}
+
+.mission,.team,.watch,.progress-card,#accessCard{
+  border-radius:var(--radius-xl) !important;
+}
+.mission{
+  background:
+    radial-gradient(circle at 92% 4%,rgba(217,183,106,.16),transparent 31%),
+    radial-gradient(circle at 8% 100%,rgba(24,215,210,.07),transparent 35%),
+    linear-gradient(145deg,#0E1A1F,#081115);
+  border-color:rgba(217,183,106,.26);
+}
+.mission:after{
+  border-color:rgba(217,183,106,.23);
+  box-shadow:
+    0 0 0 24px rgba(217,183,106,.022),
+    0 0 0 48px rgba(24,215,210,.02);
+}
+.mission-number{color:var(--gold-soft)}
+.mission h2{
+  font-size:clamp(29px,8.5vw,36px);
+  letter-spacing:-1.45px;
+}
+.timer{
+  border-color:rgba(217,183,106,.22);
+  background:rgba(217,183,106,.06);
+  color:#E9D8AC;
+}
+
+.action,.video-button,.enter-button,.close-button{
+  min-height:var(--tap);
+  border-radius:16px;
+}
+.action{
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  color:#071014;
+  box-shadow:0 10px 30px rgba(217,183,106,.13);
+}
+.action.done{
+  background:#122126;
+  color:var(--cyan);
+  box-shadow:none;
+}
+.video-button{
+  background:rgba(24,215,210,.06);
+  border-color:rgba(24,215,210,.42);
+}
+.rules-button{min-height:44px}
+
+.team{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(24,215,210,.15),transparent 34%),
+    linear-gradient(155deg,#0B171C,#081115);
+}
+.team:before{color:var(--gold-soft)}
+.position{color:var(--gold-soft)}
+.race{border-radius:19px}
+
+.watch{
+  background:
+    radial-gradient(circle at 100% 15%,rgba(255,45,120,.07),transparent 34%),
+    radial-gradient(circle at 0% 100%,rgba(217,183,106,.05),transparent 28%),
+    #091216;
+}
+.watch strong{color:var(--gold-soft)}
+.watch:after{opacity:.08}
+
+.progress-card{
+  background:linear-gradient(145deg,rgba(15,26,31,.98),rgba(10,18,22,.98));
+}
+.progress-bar{
+  background:linear-gradient(90deg,var(--gold),var(--cyan));
+  box-shadow:0 0 20px rgba(24,215,210,.22);
+}
+#progressMessage{color:var(--muted) !important}
+
+#accessCard{
+  padding:20px !important;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(217,183,106,.12),transparent 32%),
+    linear-gradient(145deg,#0D181D,#081115) !important;
+  border-color:rgba(217,183,106,.25) !important;
+}
+#payClubButton{
+  min-height:var(--tap);
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold)) !important;
+}
+#memberSpaces{
+  display:grid;
+  gap:8px;
+}
+#memberSpaces button{
+  min-height:50px;
+  text-align:left;
+  padding-left:16px !important;
+}
+
+/* premium bottom nav */
+.nav{
+  width:calc(100% - 18px);
+  bottom:8px;
+  border:1px solid #20333B;
+  border-radius:22px;
+  padding:7px 8px calc(7px + env(safe-area-inset-bottom));
+  background:rgba(7,15,18,.91);
+  box-shadow:0 18px 55px rgba(0,0,0,.44);
+}
+.nav-item{
+  min-height:51px;
+  border-radius:15px;
+  transition:background .18s ease,color .18s ease,transform .16s ease;
+}
+.nav-item.active{
+  color:var(--gold-soft);
+  background:rgba(217,183,106,.075);
+}
+.nav-item:nth-child(3).active{
+  color:var(--cyan);
+  background:rgba(24,215,210,.065);
+}
+.nav-icon{font-size:19px}
+
+/* ADMIN: remove legacy light surfaces and make controls thumb-friendly */
+#adminPanel{
+  max-width:520px;
+  margin:24px auto 120px !important;
+  padding:20px !important;
+  border:1px solid #243A44 !important;
+  border-radius:28px !important;
+  background:linear-gradient(155deg,#0D181D,#081115) !important;
+  box-shadow:var(--shadow);
+}
+#adminPanel h2,#adminPanel h3{color:#F4F7F8}
+#adminPanel h3{
+  margin-bottom:10px;
+  font-size:13px;
+  letter-spacing:.8px;
+}
+#adminPanel input,#adminPanel textarea,#adminPanel select{
+  min-height:48px;
+  border:1px solid #29414B !important;
+  border-radius:13px !important;
+  background:#0B161B !important;
+  color:#F5F7F7 !important;
+}
+#adminPanel textarea{padding-top:12px}
+#adminPanel button:not(.action){
+  min-height:42px;
+  border-radius:12px !important;
+  border:1px solid #2A414A !important;
+  background:#122128 !important;
+  color:#F5F7F7 !important;
+}
+#ownerAccessTools{
+  background:linear-gradient(145deg,#111E24,#0A1317) !important;
+  border:1px solid rgba(217,183,106,.22);
+}
+#contentBankClusters>div{
+  background:#101E24 !important;
+  border:1px solid #233A44;
+}
+#questionBoard>div,#adminVideos>div,#adminTeam>div,#adminQuestions>div,#liveQuestions>div{
+  border-bottom-color:#243943 !important;
+}
+#liveSection>div:first-child{color:#FF5A91 !important}
+
+/* Modals */
+.modal{
+  padding:25px 22px max(25px,env(safe-area-inset-bottom));
+  border:1px solid #28404A;
+}
+.modal textarea{color:#F5F7F7;background:#0B161B}
+.modal-bg{align-items:flex-end}
+
+/* keyboard, touch, accessibility */
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:2px;
+}
+button{-webkit-tap-highlight-color:transparent}
+input,select,textarea{font-size:16px !important}
+
+@media(max-width:380px){
+  .mission,.team,.watch,.progress-card,#accessCard{border-radius:24px !important}
+  .mission{padding:22px}
+  .team,.watch{padding:21px}
+  .nav{width:calc(100% - 12px)}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto !important;transition:none !important;animation:none !important}
 }
 
 </style>
