@@ -1149,7 +1149,45 @@ button{
   <div id="contentBankSummary" style="font-size:28px;font-weight:900;margin:5px 0 10px;">0 ideas</div>
   <div id="contentBankClusters"></div>
 </div>
-<h3 style="margin-top:24px;">EQUIPO</h3>
+<h3 style="margin-top:24px;">EQUIPO Y ACCESOS</h3>
+
+  <div id="ownerAccessTools" style="display:none;background:#171717;color:white;border-radius:22px;padding:16px;margin:10px 0 18px;">
+    <div style="font-size:10px;font-weight:900;letter-spacing:1px;opacity:.65;">AÑADIR SIN PAGO</div>
+    <div style="font-size:19px;font-weight:900;margin:5px 0 12px;">Usuario o invitación</div>
+
+    <div style="font-size:11px;opacity:.72;margin-bottom:7px;">SI CONOCES SU TELEGRAM ID</div>
+    <input id="manualTelegramId" inputmode="numeric" placeholder="Telegram ID" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+    <input id="manualFirstName" placeholder="Nombre (opcional)" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:4px;">
+      <select id="manualRole" onchange="syncManualAccessType()" style="width:100%;padding:11px;border-radius:11px;border:0;">
+        <option value="member">Miembro</option>
+        <option value="moderator">Moderador</option>
+        <option value="admin">Admin</option>
+      </select>
+      <select id="manualAccessType" style="width:100%;padding:11px;border-radius:11px;border:0;">
+        <option value="gift">Regalo</option>
+        <option value="free">Gratis</option>
+        <option value="staff">Equipo</option>
+      </select>
+    </div>
+
+    <label style="display:block;font-size:10px;opacity:.7;margin:10px 0 4px;">ACCESO HASTA · VACÍO = SIN FECHA</label>
+    <input id="manualAccessUntil" type="date" style="width:100%;box-sizing:border-box;margin:4px 0;padding:11px;border-radius:11px;border:0;">
+    <button onclick="adminAddManualUser()" style="width:100%;margin-top:7px;padding:12px;border:0;border-radius:12px;font-weight:850;">AÑADIR USUARIO</button>
+
+    <div style="height:1px;background:rgba(255,255,255,.18);margin:18px 0;"></div>
+
+    <div style="font-size:11px;opacity:.72;margin-bottom:7px;">SI NO SABES SU TELEGRAM ID</div>
+    <div style="font-size:12px;line-height:1.45;opacity:.8;margin-bottom:9px;">Crea una invitación personal. La persona abre el enlace y recibe el acceso automáticamente.</div>
+    <button onclick="adminCreateAccessInvite()" style="width:100%;padding:12px;border:0;border-radius:12px;font-weight:850;background:#f0c93d;color:#171717;">CREAR ENLACE DE INVITACIÓN</button>
+    <div id="inviteResult" style="display:none;margin-top:10px;">
+      <input id="inviteLink" readonly style="width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:0;font-size:11px;">
+      <button onclick="copyInviteLink()" style="width:100%;margin-top:6px;padding:10px;border:0;border-radius:10px;font-weight:850;">COPIAR ENLACE</button>
+      <div style="font-size:10px;opacity:.62;margin-top:7px;">La invitación dura 7 días y se usa una sola vez.</div>
+    </div>
+  </div>
+
   <div id="adminTeam"></div>
 </section>
 
@@ -1720,6 +1758,8 @@ async function loadAdmin(){
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
+    const accessTools=document.getElementById("ownerAccessTools");
+    if(accessTools) accessTools.style.display=data.role==="owner"?"block":"none";
     if(data.role==="owner"){try{await clubApi("owner_configure_webhook");}catch(e){console.error("Telegram security sync failed",e);}}
     const webhookButton=document.getElementById("webhookSetupButton");
     if(webhookButton && data.role==="owner" && localStorage.getItem("telegramWebhookConfigured")!=="1") webhookButton.style.display="block";
@@ -1776,7 +1816,11 @@ async function loadAdmin(){
       if(data.role==="owner" && m.role!=="owner"){
         controls='<select onchange="adminSetRole('+m.id+',this.value)"><option value="member" '+(m.role==="member"?"selected":"")+'>Miembro</option><option value="moderator" '+(m.role==="moderator"?"selected":"")+'>Moderador</option><option value="admin" '+(m.role==="admin"?"selected":"")+'>Admin</option></select>';
       }
-      return '<div style="padding:8px 0;border-bottom:1px solid #ddd;">'+escapeHtml(m.first_name||"Miembro")+' · '+escapeHtml(m.city||"—")+' <strong>'+String(m.role).toUpperCase()+'</strong> '+controls+'</div>';
+      const access=String(m.access_type||"—").toUpperCase();
+      const until=m.access_expires_at?new Date(m.access_expires_at).toLocaleDateString("es-ES"):"sin fecha";
+      return '<div style="padding:10px 0;border-bottom:1px solid #ddd;"><strong>'+escapeHtml(m.first_name||"Miembro")+'</strong> · '+escapeHtml(m.city||"—")+
+        '<div style="font-size:10px;color:#777;margin:3px 0;">TG '+escapeHtml(m.telegram_id||"—")+' · '+access+' · '+until+'</div>'+
+        '<div><strong>'+String(m.role).toUpperCase()+'</strong> '+controls+'</div></div>';
     }).join("");
   }catch(error){
     // Normal members simply do not see admin controls.
@@ -1827,6 +1871,64 @@ async function adminCreateLive(){
 async function adminQuestionToggle(id,field,value){try{const p={question_id:id};p[field]=value;await clubApi("admin_update_question",p);showToast("✓ Actualizado.");await loadAdmin();}catch(e){showToast("No se pudo actualizar.");}}
 async function adminQuestionField(id,field,value){try{const p={question_id:id};p[field]=value||null;await clubApi("admin_update_question",p);showToast("✓ Clasificado.");}catch(e){showToast("No se pudo actualizar.");}}
 
+function syncManualAccessType(){
+  const role=document.getElementById("manualRole").value;
+  const access=document.getElementById("manualAccessType");
+  if(role==="moderator" || role==="admin") access.value="staff";
+  else if(access.value==="staff") access.value="gift";
+}
+
+function manualAccessPayload(){
+  const rawDate=document.getElementById("manualAccessUntil").value;
+  return {
+    role:document.getElementById("manualRole").value,
+    access_type:document.getElementById("manualAccessType").value,
+    access_expires_at:rawDate ? new Date(rawDate+"T23:59:59").toISOString() : null
+  };
+}
+
+async function adminAddManualUser(){
+  const telegramId=document.getElementById("manualTelegramId").value.trim();
+  if(!/^\d+$/.test(telegramId)){showToast("Escribe el Telegram ID.");return;}
+  const payload=manualAccessPayload();
+  payload.telegram_id=telegramId;
+  payload.first_name=document.getElementById("manualFirstName").value.trim();
+  try{
+    await clubApi("admin_add_user",payload);
+    document.getElementById("manualTelegramId").value="";
+    document.getElementById("manualFirstName").value="";
+    showToast("✅ Usuario añadido.");
+    await loadAdmin();
+  }catch(e){showToast("No se pudo añadir el usuario.");}
+}
+
+async function adminCreateAccessInvite(){
+  const payload=manualAccessPayload();
+  payload.note="Invitación creada desde Admin";
+  try{
+    const d=await clubApi("admin_create_invite",payload);
+    const box=document.getElementById("inviteResult");
+    const input=document.getElementById("inviteLink");
+    input.value=d.link;
+    box.style.display="block";
+    input.focus();
+    input.select();
+    showToast("✅ Invitación creada.");
+  }catch(e){showToast("No se pudo crear la invitación.");}
+}
+
+async function copyInviteLink(){
+  const input=document.getElementById("inviteLink");
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(input.value);
+    else { input.focus(); input.select(); document.execCommand("copy"); }
+    showToast("✅ Enlace copiado.");
+  }catch(e){
+    input.focus(); input.select();
+    showToast("Mantén pulsado y copia el enlace.");
+  }
+}
+
 async function adminSetRole(memberId,role){
   try{await clubApi("admin_set_role",{member_id:memberId,role:role});showToast("✅ Rol actualizado.");await loadAdmin();}
   catch(e){showToast("No se pudo cambiar el rol.");}
@@ -1866,8 +1968,11 @@ async function loadAccessState(){
     const pay=document.getElementById("payClubButton");
     const spaces=document.getElementById("memberSpaces");
     if(d.active){
-      document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":"MEMBRESÍA ACTIVA";
-      document.getElementById("accessText").innerText=d.staff?"Acceso interno del equipo.":"Tu acceso al Club está activo.";
+      const manualLabel=d.access_type==="gift"?"ACCESO DE REGALO":(d.access_type==="free"?"ACCESO INVITADO":"MEMBRESÍA ACTIVA");
+      document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":manualLabel;
+      let accessCopy=d.staff?"Acceso interno del equipo.":(d.manual?"Tu acceso al Club está activo sin pago.":"Tu acceso al Club está activo.");
+      if(d.access_expires_at) accessCopy+=" Hasta "+new Date(d.access_expires_at).toLocaleDateString("es-ES")+".";
+      document.getElementById("accessText").innerText=accessCopy;
       pay.style.display="none";
       if(spaces)spaces.style.display="none";
       // Prepare Telegram destinations before showing the buttons.
