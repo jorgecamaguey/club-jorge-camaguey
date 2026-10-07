@@ -5135,7 +5135,7 @@ async function loadAccessState(){
       if(spaces)spaces.style.display="block";
     }else{
       document.getElementById("accessTitle").innerText="ACTIVA TU MEMBRESÍA";
-      document.getElementById("accessText").innerText="9 € al mes · El acceso se activa automáticamente después del pago.";
+      document.getElementById("accessText").innerText="9 € al mes · Después del pago recibirás automáticamente en Telegram los accesos privados al canal y a la comunidad.";
       pay.style.display="block";
       if(spaces)spaces.style.display="none";
     }
@@ -5306,6 +5306,18 @@ function showToast(message){
 
 }
 
+
+// When the user returns from Stripe to Telegram, refresh membership immediately.
+document.addEventListener("visibilitychange",function(){
+  if(!document.hidden && document.getElementById("club")?.classList.contains("show")){
+    loadAccessState();
+  }
+});
+window.addEventListener("focus",function(){
+  if(document.getElementById("club")?.classList.contains("show")){
+    loadAccessState();
+  }
+});
 
 startApp();
 
