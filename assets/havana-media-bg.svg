@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1600" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#315262"/>
+    <stop offset=".22" stop-color="#243940"/>
+    <stop offset=".46" stop-color="#2B2520"/>
+    <stop offset=".67" stop-color="#C77D31"/>
+    <stop offset=".82" stop-color="#171A1B"/>
+    <stop offset="1" stop-color="#090B0C"/>
+  </linearGradient>
+  <radialGradient id="sun" cx=".58" cy=".53" r=".48">
+    <stop offset="0" stop-color="#FFCD76" stop-opacity=".68"/>
+    <stop offset=".35" stop-color="#F0A545" stop-opacity=".25"/>
+    <stop offset="1" stop-color="#F0A545" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#14292E"/>
+    <stop offset=".58" stop-color="#123B42"/>
+    <stop offset="1" stop-color="#081416"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#B9782C"/>
+    <stop offset=".45" stop-color="#F2C76F"/>
+    <stop offset=".75" stop-color="#FFF0B7"/>
+    <stop offset="1" stop-color="#C98B35"/>
+  </linearGradient>
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="18"/>
+  </filter>
+</defs>
+
+<!-- atmospheric base -->
+<rect width="800" height="1600" fill="url(#sky)"/>
+<rect width="800" height="1600" fill="url(#sun)"/>
+<ellipse cx="480" cy="870" rx="390" ry="280" fill="#E9973E" opacity=".13" filter="url(#soft)"/>
+<ellipse cx="105" cy="440" rx="220" ry="300" fill="#24D7D1" opacity=".055" filter="url(#soft)"/>
+
+<!-- stars -->
+<g fill="#F7D98C" opacity=".65" filter="url(#glow)">
+  <circle cx="110" cy="126" r="2"/><circle cx="640" cy="180" r="2.2"/><circle cx="705" cy="312" r="1.8"/>
+  <circle cx="530" cy="98" r="1.4"/><circle cx="288" cy="214" r="1.5"/><circle cx="382" cy="142" r="1.2"/>
+</g>
+
+<!-- palm upper right -->
+<g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-width="5" opacity=".58" filter="url(#glow)">
+  <path d="M742 0 C704 94 684 183 679 292"/>
+  <path d="M699 108 C630 49 567 39 506 58 C573 67 631 91 681 135"/>
+  <path d="M699 112 C744 52 776 34 800 36"/>
+  <path d="M690 128 C618 117 561 136 524 168 C591 153 644 157 684 177"/>
+  <path d="M692 130 C741 120 776 129 800 151"/>
+</g>
+
+<!-- left colonial wall and lantern -->
+<g opacity=".70">
+  <path d="M0 160 L106 112 L122 110 L122 976 L0 1040 Z" fill="#151718" opacity=".62"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="4" filter="url(#glow)">
+    <path d="M22 250 H96"/><path d="M25 252 C48 268 69 269 96 252"/>
+    <path d="M79 269 V365"/>
+    <path d="M58 348 L80 328 L102 348 L97 425 L80 449 L63 425 Z"/>
+    <path d="M65 359 H95 M62 383 H98 M66 423 H94"/>
+    <circle cx="80" cy="387" r="12" fill="#F8C65F" stroke="none" opacity=".72"/>
+  </g>
+</g>
+
+<!-- skyline / Havana -->
+<g fill="#111516" opacity=".88">
+  <path d="M70 1040 L70 950 L110 950 L110 1000 L150 1000 L150 908 L205 908 L205 1000 L248 1000 L248 870 L312 870 L312 1000 L365 1000 L365 825 L430 825 L430 1000 L492 1000 L492 900 L548 900 L548 1000 L605 1000 L605 862 L667 862 L667 1000 L740 1000 L740 930 L800 930 L800 1120 L70 1120 Z"/>
+</g>
+<g fill="none" stroke="url(#gold)" stroke-width="3" opacity=".82" filter="url(#glow)">
+  <path d="M70 1040 L70 950 L110 950 L110 1000 L150 1000 L150 908 L205 908 L205 1000 L248 1000 L248 870 L312 870 L312 1000 L365 1000 L365 825 L430 825 L430 1000 L492 1000 L492 900 L548 900 L548 1000 L605 1000 L605 862 L667 862 L667 1000 L740 1000 L740 930 L800 930"/>
+  <!-- Capitol dome -->
+  <path d="M366 825 C368 777 383 746 397 735 C412 724 438 724 453 735 C468 746 482 777 484 825"/>
+  <path d="M389 735 C391 706 407 687 425 674 C443 687 459 706 461 735"/>
+  <path d="M425 674 V646 M413 646 H437"/>
+  <!-- lighthouse -->
+  <path d="M165 908 V856 H190 V908 M170 856 L178 835 L185 856"/>
+  <!-- arcades -->
+  <path d="M505 900 C512 880 528 867 546 867 C565 867 579 881 585 900"/>
+  <path d="M610 862 C619 839 635 828 650 828 C666 828 681 839 690 862"/>
+</g>
+
+<!-- sea -->
+<path d="M0 1085 C180 1056 330 1081 492 1066 C626 1054 710 1055 800 1040 V1600 H0Z" fill="url(#sea)"/>
+<g fill="none" stroke="#32DAD6" stroke-width="3" opacity=".40">
+  <path d="M80 1130 C220 1106 358 1140 514 1114 C630 1095 716 1102 800 1086"/>
+  <path d="M104 1196 C245 1171 381 1201 526 1180 C647 1162 731 1168 800 1152"/>
+  <path d="M162 1275 C300 1250 431 1277 566 1258 C666 1244 739 1248 800 1236"/>
+</g>
+<g fill="none" stroke="url(#gold)" stroke-width="3" opacity=".52" filter="url(#glow)">
+  <path d="M268 1096 C292 1112 314 1120 350 1112"/>
+  <path d="M416 1104 C446 1118 474 1120 506 1111"/>
+  <path d="M603 1083 C626 1095 651 1096 681 1087"/>
+  <path d="M325 1168 C358 1180 387 1179 420 1169"/>
+</g>
+
+<!-- conga + maracas foreground -->
+<g transform="translate(18 1110)" fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+  <ellipse cx="118" cy="90" rx="68" ry="22" stroke-width="5"/>
+  <path d="M50 90 C57 170 64 277 80 368 C102 383 134 383 156 368 C172 277 179 170 186 90" stroke-width="5"/>
+  <path d="M63 155 C100 169 136 169 173 155 M70 237 C101 247 135 247 166 237 M79 321 C103 330 132 330 157 321" stroke-width="3"/>
+  <path d="M88 116 L98 355 M148 116 L138 355" stroke-width="3"/>
+  <!-- maraca 1 -->
+  <path d="M206 277 C202 249 219 228 245 224 C270 220 291 237 295 263 C298 288 282 309 256 313 C230 317 210 302 206 277Z" stroke-width="4"/>
+  <path d="M271 307 L323 374" stroke-width="5"/>
+  <!-- maraca 2 -->
+  <path d="M151 331 C149 311 162 295 181 292 C200 290 216 302 219 321 C222 340 210 356 191 359 C172 362 154 350 151 331Z" stroke-width="4"/>
+  <path d="M201 353 L240 406" stroke-width="5"/>
+</g>
+
+<!-- small turquoise accents -->
+<g fill="#31DAD6" opacity=".72" filter="url(#glow)">
+  <circle cx="640" cy="410" r="4"/><circle cx="596" cy="1014" r="3"/><circle cx="192" cy="728" r="3"/>
+</g>
+
+<!-- calm center veil for text readability -->
+<rect x="110" y="210" width="580" height="610" rx="90" fill="#0C1215" opacity=".12"/>
+</svg>
