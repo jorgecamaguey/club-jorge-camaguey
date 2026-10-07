@@ -2742,6 +2742,293 @@ textarea:focus-visible{
   .nav-icon{width:22px;height:22px}
 }
 
+
+/* ===== TYPOGRAPHY + SPACING POLISH · OCT 2026 ===== */
+
+/* Global type rhythm */
+body{
+  font-size:16px;
+  line-height:1.52;
+}
+
+.hello{
+  font-size:clamp(38px,9.6vw,44px) !important;
+  line-height:1.02 !important;
+  font-weight:800 !important;
+  letter-spacing:-1.35px !important;
+}
+
+.sub{
+  font-size:16px !important;
+  line-height:1.48 !important;
+  color:#F1ECE4 !important;
+  margin-bottom:22px !important;
+}
+
+/* Small labels keep caps; content headings become calmer */
+.section-label,
+.mission-number,
+#accessCard > div:first-child,
+.watch:before{
+  letter-spacing:1.35px !important;
+}
+
+#accessTitle,
+.mission h2,
+.team h2,
+.watch h2,
+#liveSection h2{
+  font-weight:750 !important;
+  letter-spacing:-.7px !important;
+}
+
+#accessTitle{
+  font-size:24px !important;
+  line-height:1.12 !important;
+}
+
+.mission h2{
+  font-size:clamp(30px,8vw,36px) !important;
+  line-height:1.02 !important;
+  margin:18px 0 13px !important;
+}
+
+/* Empty mission should not dominate the screen */
+.mission:has(#missionButton[style*="display:none"]) h2{
+  font-size:30px !important;
+  line-height:1.08 !important;
+  font-weight:700 !important;
+  text-transform:none !important;
+  letter-spacing:-.5px !important;
+  margin:16px 0 10px !important;
+}
+
+.mission:has(#missionButton[style*="display:none"]) p{
+  margin-bottom:8px !important;
+}
+
+.mission:has(#missionButton[style*="display:none"]) .rules-button{
+  margin-top:2px !important;
+}
+
+/* Statistics: guaranteed visual separation between number and label */
+.pill{
+  gap:7px !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+}
+
+.pill span[id]{
+  display:inline-block;
+  margin-right:1px;
+}
+
+/* Team header: prevent overlap between meta and position */
+.team{
+  padding-top:30px !important;
+}
+
+.team:before{
+  top:18px !important;
+  right:24px !important;
+  font-size:9.5px !important;
+  letter-spacing:1.45px !important;
+  opacity:.95 !important;
+}
+
+.team-top{
+  padding-top:18px !important;
+  align-items:flex-start !important;
+}
+
+.team-top > div:last-child{
+  min-width:92px;
+  text-align:right;
+  padding-top:4px;
+}
+
+.team h2{
+  font-size:31px !important;
+  line-height:1.05 !important;
+  margin:6px 0 2px !important;
+}
+
+.position{
+  font-size:38px !important;
+  line-height:1 !important;
+  font-weight:800 !important;
+  color:var(--gold-light) !important;
+}
+
+/* When no ranking exists, #— is visually quieter */
+.position:not(:empty){
+  letter-spacing:-1px;
+}
+
+/* Ranking row and loader text */
+.race-row{
+  align-items:center;
+  font-size:15px !important;
+  line-height:1.35 !important;
+}
+
+#cityRanking .race-row:first-child span{
+  color:#E5D3A7 !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere;
+}
+
+.race-note{
+  font-size:13px !important;
+  line-height:1.5 !important;
+  color:#D8D2C8 !important;
+}
+
+/* Prize hierarchy */
+.prize{
+  font-size:15px !important;
+  line-height:1.42 !important;
+  color:#F0E5CF !important;
+}
+
+.prize-kicker{
+  display:flex !important;
+  align-items:center;
+  gap:7px;
+  margin-bottom:14px;
+  color:var(--gold-light) !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  font-weight:800 !important;
+  letter-spacing:1px;
+}
+
+.prize{
+  font-weight:500 !important;
+}
+
+.prize br + br{
+  display:none;
+}
+
+.prize{
+  letter-spacing:0 !important;
+}
+
+/* Make "24 HORAS CON JORGE" visually dominant */
+.prize{
+  font-size:15px !important;
+}
+.prize::first-letter{}
+
+/* Secondary section headings */
+.watch h2,
+#liveSection h2{
+  font-size:30px !important;
+  line-height:1.08 !important;
+  font-weight:700 !important;
+}
+
+.watch p,
+#liveSection p,
+.progress-card p,
+#accessText{
+  color:#D7D1C7 !important;
+  font-size:15px !important;
+  line-height:1.55 !important;
+}
+
+/* Live label: gold, not pink */
+#liveSection > div:first-child{
+  color:var(--gold-light) !important;
+}
+
+/* Primary CTA doesn't need ultra-heavy copy */
+.action,
+#payClubButton,
+.enter-button{
+  font-weight:750 !important;
+  letter-spacing:.15px !important;
+}
+
+#liveSection .action{
+  font-size:14px !important;
+}
+
+/* Progress block breathing room */
+.progress-card{
+  padding:22px !important;
+}
+
+.progress-head{
+  margin-bottom:4px;
+}
+
+.progress-track{
+  margin-top:15px !important;
+  margin-bottom:15px;
+}
+
+#progressMessage{
+  margin-top:0 !important;
+  color:#D7D1C7 !important;
+}
+
+/* Better contrast for muted body copy */
+.school-line,
+.rules-button,
+.later-button{
+  color:#CEC7BC !important;
+}
+
+/* Keep top content from visually colliding with Telegram chrome while scrolling */
+body{
+  --top-scrim-h:calc(env(safe-area-inset-top, 0px) + 14px);
+}
+
+.club:before{
+  content:"";
+  position:fixed;
+  z-index:4;
+  top:0;
+  left:0;
+  right:0;
+  height:var(--top-scrim-h);
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(31,33,31,.70),rgba(31,33,31,0));
+}
+
+/* Slightly more vertical rhythm between sections */
+.section-label[style*="margin-top:27px"]{
+  margin-top:32px !important;
+}
+
+@media(max-width:380px){
+  .hello{font-size:38px !important}
+  .mission h2{font-size:31px !important}
+  .mission:has(#missionButton[style*="display:none"]) h2{font-size:28px !important}
+  .team h2{font-size:29px !important}
+  .position{font-size:36px !important}
+}
+
+
+.prize-title{
+  margin-top:2px;
+  color:#F6E4B5;
+  font-size:22px;
+  line-height:1.12;
+  font-weight:800;
+  letter-spacing:-.3px;
+}
+.prize-copy{
+  margin-top:7px;
+  color:#E2DBD0;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:500;
+}
 </style>
 </head>
 
@@ -3109,14 +3396,14 @@ textarea:focus-visible{
       <span class="premium-icon premium-icon--gold" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M12.3 2.8c.7 2.8-.4 4.5-1.9 6.1-1.2 1.3-2.4 2.6-2.4 4.7a4.4 4.4 0 0 0 8.8 0c0-1.5-.6-2.9-1.8-4.3.1 2.2-1 3.4-2.3 4.2.2-2.8-.9-5.5-3.2-7.4"/><path d="M8.4 17.3c.8 2.2 2.2 3.3 4.1 3.3 2.5 0 4.4-1.7 4.7-4.2"/></svg>
       </span>
-      <span id="streak">1</span> semana
+      <span id="streak">1</span>&nbsp;semana
     </div>
 
     <div class="pill">
       <span class="premium-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>
       </span>
-      <span id="missionCount">0</span> misiones
+      <span id="missionCount">0</span>&nbsp;misiones
     </div>
 
     <div class="pill">
@@ -3162,8 +3449,7 @@ textarea:focus-visible{
     </div>
 
     <h2 id="missionTitle">
-      NUEVA MISIÓN<br>
-      PRÓXIMAMENTE.
+      Próximamente
     </h2>
 
     <p id="missionDescription">
@@ -3252,10 +3538,8 @@ textarea:focus-visible{
 
       <div class="prize">
         <span class="prize-kicker"><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8v3c0 3-1.7 5.5-4 5.5S8 10 8 7V4Z"/><path d="M8 6H5v1c0 2 1.2 3.5 3 4M16 6h3v1c0 2-1.2 3.5-3 4M12 12.5V17M9 20h6M10 17h4"/></svg></span>PREMIO DEL RETO</span>
-        <br><br>
-        24 HORAS CON JORGE
-        <br>
-        Masterclass · baile · comunidad · experiencia
+        <div class="prize-title">24 HORAS CON JORGE</div>
+        <div class="prize-copy">Masterclass · baile · comunidad · experiencia</div>
       </div>
 
     </div>
@@ -3275,7 +3559,7 @@ textarea:focus-visible{
   <!-- MONTHLY LIVE -->
   <div class="section-label" style="margin-top:27px;">04 · JORGE EN DIRECTO</div>
   <section class="progress-card" id="liveSection">
-    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);"><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 9a5 5 0 0 0 0 6M5 6a9 9 0 0 0 0 12M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/><circle cx="12" cy="12" r="1.6"/></svg></span> UNA VEZ AL MES</div>
+    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--gold-light);"><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 9a5 5 0 0 0 0 6M5 6a9 9 0 0 0 0 12M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/><circle cx="12" cy="12" r="1.6"/></svg></span> UNA VEZ AL MES</div>
     <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
     <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo directo · se anunciará aquí</div>
@@ -3753,7 +4037,7 @@ async function loadMemberHomeState(){
     }else{
       if(intro) intro.innerText="Próximamente publicaremos la primera misión.";
       if(number) number.innerText="SIN MISIÓN ACTIVA";
-      if(title) title.innerText="NUEVA MISIÓN\nPRÓXIMAMENTE.";
+      if(title) title.innerText="Próximamente";
       if(description) description.innerText="Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.";
       if(button) button.style.display="none";
       if(videoButton) videoButton.style.display="none";
@@ -3939,7 +4223,7 @@ async function loadCityRanking(){
     }).join("") : '<div class="race-row"><span>Aún no hay ciudades</span><strong>—</strong></div>';
     const mine = data.ranking.find(function(row){ return row.city.toLocaleLowerCase() === myCity; });
     const position = document.querySelector(".position");
-    if (position) position.innerText = mine ? "#" + mine.position : "#—";
+    if (position) position.innerText = mine ? "#" + mine.position : "—";
   } catch(error) { console.error("City ranking error", error); }
 }
 function escapeHtml(value){
