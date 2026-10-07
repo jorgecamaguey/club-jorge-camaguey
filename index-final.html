@@ -3087,6 +3087,53 @@ body{
   }
 }
 
+
+/* ===== LONG CITY NAME WRAP · OCT 2026 ===== */
+
+/* Long city names wrap inside the third stat pill instead of overflowing */
+.stats{
+  align-items:start !important;
+}
+
+.stats .pill:last-child{
+  height:auto !important;
+  min-height:40px;
+  white-space:normal !important;
+  text-align:center;
+  line-height:1.15;
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+}
+
+#cityLabel{
+  display:block;
+  min-width:0;
+  max-width:100%;
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  hyphens:auto;
+  line-height:1.15;
+}
+
+/* Keep the icon aligned nicely when the city uses two lines */
+.stats .pill:last-child .premium-icon{
+  align-self:center;
+}
+
+@media(max-width:390px){
+  .stats .pill:last-child{
+    padding-left:7px !important;
+    padding-right:7px !important;
+  }
+
+  #cityLabel{
+    font-size:12.5px;
+  }
+}
+
 </style>
 </head>
 
