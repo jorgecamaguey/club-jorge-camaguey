@@ -4397,6 +4397,7 @@ tg.expand();
 /* TELEGRAM USER */
 
 const user = tg.initDataUnsafe?.user;
+const startParam = String(tg.initDataUnsafe?.start_param || "");
 
 let firstName = "Bailador";
 
@@ -4437,6 +4438,15 @@ let activeSeason = null;
 
 /* START */
 
+function focusSubscriptionIntent(){
+  if(startParam!=="subscribe") return;
+  setTimeout(function(){
+    const card=document.getElementById("accessCard");
+    if(card) card.scrollIntoView({behavior:"smooth",block:"center"});
+    showToast("Activa tu membresía para recibir el canal y la comunidad privada.");
+  },450);
+}
+
 function startApp(){
 
   if(
@@ -4446,6 +4456,7 @@ function startApp(){
   ){
 
     showClub();
+    focusSubscriptionIntent();
 
   }else{
 
@@ -4547,6 +4558,7 @@ try {
 
 
   showClub();
+  focusSubscriptionIntent();
 
 
   if(tg.HapticFeedback){
