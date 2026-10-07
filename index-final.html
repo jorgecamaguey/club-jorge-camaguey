@@ -7,6 +7,10 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --bg:#081014;
@@ -3156,6 +3160,184 @@ body{
 }
 
 /* Keep the main CTA gold so turquoise remains an accent, not a second CTA color */
+
+
+/* ===== 2026 TYPOGRAPHY SYSTEM · INSTRUMENT SANS + GEIST ===== */
+
+:root{
+  --font-body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-display:"Geist","Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* Body copy: open, highly readable, calmer than the previous system font stack */
+body,
+button,
+input,
+select,
+textarea{
+  font-family:var(--font-body) !important;
+  font-optical-sizing:auto;
+}
+
+/* Display hierarchy: precise contemporary grotesk for a more premium 2026 UI */
+.brand,
+.hello,
+.onboarding h1,
+.section-label,
+.mission-number,
+.mission h2,
+.team h2,
+.watch h2,
+#accessTitle,
+.modal h2,
+.progress-head,
+.prize-title,
+.prize-kicker,
+#nextLive,
+#adminPanel h2,
+#adminPanel h3,
+.nav-item{
+  font-family:var(--font-display) !important;
+}
+
+/* Major headings */
+.hello{
+  font-weight:700 !important;
+  letter-spacing:-1.65px !important;
+}
+
+.onboarding h1{
+  font-weight:700 !important;
+  letter-spacing:-1.8px !important;
+}
+
+.mission h2,
+.team h2,
+.watch h2,
+#accessTitle,
+.modal h2,
+.prize-title{
+  font-weight:700 !important;
+  letter-spacing:-.8px !important;
+}
+
+/* Small uppercase labels: crisp, not over-bold */
+.brand,
+.section-label,
+.mission-number,
+.prize-kicker,
+.progress-head{
+  font-weight:700 !important;
+  letter-spacing:1.18px !important;
+}
+
+/* Body copy */
+.sub,
+.mission p,
+.team-copy,
+.watch p,
+#accessText,
+.confirm-box p,
+.race-note,
+.school-line,
+#progressMessage,
+.onboarding-intro,
+.onboarding-note,
+.rule-text{
+  font-family:var(--font-body) !important;
+  font-weight:450 !important;
+  letter-spacing:-.08px;
+}
+
+/* Buttons: strong but less aggressive */
+.action,
+.enter-button,
+#payClubButton,
+#memberSpaces button,
+.video-button,
+.close-button,
+.later-button{
+  font-family:var(--font-display) !important;
+  font-weight:650 !important;
+  letter-spacing:.08px !important;
+}
+
+/* Navigation: slightly narrower visual rhythm */
+.nav-item{
+  font-weight:650 !important;
+  letter-spacing:.35px !important;
+}
+
+/* Stats and rankings benefit from tabular numbers */
+.pill,
+.position,
+.timer,
+#levelText,
+.race-row strong,
+#adminSeasonState{
+  font-family:var(--font-display) !important;
+  font-variant-numeric:tabular-nums;
+}
+
+.pill{
+  font-weight:600 !important;
+  letter-spacing:-.05px;
+}
+
+.position{
+  font-weight:700 !important;
+  letter-spacing:-1.2px !important;
+}
+
+.timer{
+  font-weight:650 !important;
+  letter-spacing:.15px;
+}
+
+#levelText{
+  font-weight:650 !important;
+}
+
+/* Inputs stay comfortably readable on iPhone */
+.field input,
+.field select,
+#adminPanel input,
+#adminPanel textarea,
+#adminPanel select,
+#questionModal input,
+#questionModal textarea{
+  font-family:var(--font-body) !important;
+  font-size:16px !important;
+  font-weight:450 !important;
+  letter-spacing:0 !important;
+}
+
+/* More refined Spanish text rhythm */
+p{
+  text-wrap:pretty;
+}
+
+h1,h2,h3{
+  text-wrap:balance;
+}
+
+/* Avoid synthetic weights that looked too heavy in the old design */
+[style*="font-weight:850"],
+[style*="font-weight:900"]{
+  font-weight:700 !important;
+}
+
+@media(max-width:390px){
+  .brand,
+  .section-label,
+  .mission-number{
+    letter-spacing:1.05px !important;
+  }
+
+  .hello{
+    letter-spacing:-1.45px !important;
+  }
+}
 
 </style>
 </head>
