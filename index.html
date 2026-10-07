@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Club Jorge Camagüey</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 :root{
@@ -2566,536 +2566,6 @@ textarea:focus-visible{
   }
 }
 
-
-/* ===== EDITORIAL MINIMAL 30+ FINAL SYSTEM · OCT 2026 ===== */
-:root{
-  --bg:#0B0B0C;
-  --card:#111112;
-  --card-2:#151516;
-  --text:#F2EDE4;
-  --muted:#A8A39A;
-  --gold:#C8A96A;
-  --gold-soft:rgba(200,169,106,.15);
-  --line:rgba(200,169,106,.15);
-  --line-neutral:rgba(242,237,228,.10);
-}
-
-html{
-  background:var(--bg) !important;
-  color-scheme:dark;
-}
-
-body{
-  margin:0;
-  background:var(--bg) !important;
-  color:var(--text) !important;
-  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif !important;
-  font-size:16px;
-  line-height:1.5;
-}
-
-body::before,
-body::after,
-.cuban-decor{
-  display:none !important;
-  content:none !important;
-}
-
-/* Telegram/iOS safe area: no collision with clock / native controls */
-.app{
-  padding:
-    calc(env(safe-area-inset-top, 0px) + 18px)
-    20px
-    calc(104px + env(safe-area-inset-bottom, 0px)) !important;
-}
-
-.onboarding{
-  padding:
-    calc(env(safe-area-inset-top, 0px) + 22px)
-    20px
-    calc(38px + env(safe-area-inset-bottom, 0px)) !important;
-}
-
-.topbar,
-.onboarding-top{
-  min-height:46px;
-  margin:0 0 34px !important;
-  padding:0 !important;
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  backdrop-filter:none !important;
-  -webkit-backdrop-filter:none !important;
-}
-
-.topbar::after,
-.onboarding-top::after,
-.brand::before{
-  display:none !important;
-}
-
-.brand{
-  color:var(--text) !important;
-  font-size:12px !important;
-  font-weight:600 !important;
-  letter-spacing:.08em !important;
-  text-transform:none !important;
-}
-
-.avatar{
-  width:38px;
-  height:38px;
-  background:transparent !important;
-  color:var(--text) !important;
-  border:1px solid var(--line) !important;
-  box-shadow:none !important;
-}
-.topbar .avatar::after{display:none !important}
-
-/* Headings: serif, normal case, restrained weight */
-.hello,
-.mission h2,
-.team h2,
-.watch h2,
-.modal h2,
-.onboarding h1,
-#accessTitle,
-#liveSection h2{
-  font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif !important;
-  color:var(--text) !important;
-  font-weight:500 !important;
-  text-transform:none !important;
-  letter-spacing:-.025em !important;
-}
-
-.hello{
-  font-size:44px !important;
-  line-height:1.02 !important;
-  margin:0 0 7px !important;
-  text-shadow:none !important;
-}
-
-.sub{
-  color:var(--muted) !important;
-  font-size:16px !important;
-  line-height:1.5 !important;
-  margin-bottom:12px !important;
-}
-
-/* One quiet stats line */
-.summary-line{
-  display:flex !important;
-  align-items:center;
-  gap:7px !important;
-  overflow:visible !important;
-  margin:0 0 36px !important;
-  color:var(--muted) !important;
-  font-size:14px !important;
-  white-space:normal;
-}
-.summary-line strong{
-  color:var(--text);
-  font-weight:500;
-}
-.summary-dot{color:rgba(200,169,106,.7)}
-
-/* Uppercase + tracking only for small metadata */
-.section-label,
-.mission-number,
-.step,
-.field label,
-#accessCard > div:first-child,
-.watch::before{
-  font-family:"Inter",sans-serif !important;
-  font-size:10px !important;
-  font-weight:600 !important;
-  letter-spacing:.12em !important;
-  text-transform:uppercase !important;
-  color:var(--muted) !important;
-}
-
-.section-label{
-  margin:0 0 10px !important;
-}
-.section-label::before{display:none !important}
-
-.timer{
-  background:transparent !important;
-  border:0 !important;
-  color:var(--muted) !important;
-  padding:0 !important;
-  font-size:12px !important;
-  font-weight:500 !important;
-  text-transform:none !important;
-}
-
-/* Flat cards: one surface, one radius, one thin line */
-.mission,
-.team,
-.watch,
-.progress-card,
-#accessCard,
-.confirm-box,
-.modal{
-  background:var(--card) !important;
-  border:1px solid var(--line) !important;
-  border-radius:20px !important;
-  box-shadow:none !important;
-  backdrop-filter:none !important;
-  -webkit-backdrop-filter:none !important;
-}
-
-.mission::before,
-.mission::after,
-.team::after,
-.watch::after{
-  display:none !important;
-}
-
-.mission,
-.team,
-.watch{
-  padding:24px !important;
-}
-
-.mission h2{
-  font-size:36px !important;
-  line-height:1.06 !important;
-  margin:20px 0 10px !important;
-  max-width:none !important;
-}
-
-.mission p,
-.team-copy,
-.watch p,
-#accessText,
-.confirm-box p,
-.progress-card p{
-  color:#D8D3CB !important;
-  font-family:"Inter",sans-serif !important;
-  font-size:16px !important;
-  line-height:1.55 !important;
-}
-
-/* Empty mission becomes a quiet compact card */
-.mission:has(#missionButton[style*="display:none"]) {
-  padding:22px 24px !important;
-}
-.mission:has(#missionButton[style*="display:none"]) h2{
-  font-size:31px !important;
-  margin:16px 0 7px !important;
-}
-.mission:has(#missionButton[style*="display:none"]) p{
-  margin-bottom:6px;
-}
-.mission:has(#missionButton[style*="display:none"]) .rules-button{
-  margin-top:4px !important;
-}
-
-/* One strong CTA */
-.action,
-.enter-button,
-#payClubButton{
-  min-height:50px !important;
-  border:1px solid var(--gold) !important;
-  border-radius:14px !important;
-  background:var(--gold) !important;
-  color:#0B0B0C !important;
-  box-shadow:none !important;
-  font-family:"Inter",sans-serif !important;
-  font-size:14px !important;
-  font-weight:600 !important;
-  text-transform:none !important;
-  letter-spacing:0 !important;
-}
-
-.action.done{
-  background:transparent !important;
-  color:var(--gold) !important;
-  border-color:rgba(200,169,106,.45) !important;
-}
-
-.rules-button,
-.later-button{
-  color:var(--muted) !important;
-  text-decoration:none !important;
-  font-size:13px !important;
-  font-weight:500 !important;
-  text-transform:none !important;
-}
-
-.video-button{
-  min-height:46px !important;
-  background:transparent !important;
-  color:var(--text) !important;
-  border:1px solid var(--line-neutral) !important;
-  border-radius:14px !important;
-  box-shadow:none !important;
-  font-weight:500 !important;
-  text-transform:none !important;
-}
-.video-button::before{display:none !important}
-
-/* Access: membership actions become list rows, not giant buttons */
-#accessCard{
-  padding:22px !important;
-  margin:0 0 34px !important;
-}
-#accessTitle{
-  font-size:29px !important;
-  margin:8px 0 6px !important;
-}
-#memberSpaces{
-  margin-top:16px !important;
-}
-#memberSpaces button{
-  display:flex !important;
-  align-items:center;
-  justify-content:space-between;
-  min-height:48px !important;
-  padding:12px 0 !important;
-  background:transparent !important;
-  color:var(--text) !important;
-  border:0 !important;
-  border-top:1px solid var(--line-neutral) !important;
-  border-radius:0 !important;
-  font-size:15px !important;
-  font-weight:500 !important;
-  text-align:left;
-}
-#memberSpaces div{
-  color:var(--muted) !important;
-  font-size:12px !important;
-  opacity:1 !important;
-}
-
-/* Team / prize */
-.team h2{
-  font-size:32px !important;
-  margin:4px 0 !important;
-}
-.position{
-  color:var(--gold) !important;
-  font-family:"Cormorant Garamond",Georgia,serif !important;
-  font-size:42px !important;
-  font-weight:500 !important;
-}
-.team [style*="opacity:.7"]{
-  color:var(--muted) !important;
-  opacity:1 !important;
-  font-size:11px !important;
-}
-.race{
-  margin-top:22px !important;
-  padding:0 !important;
-  background:transparent !important;
-  border:0 !important;
-  border-radius:0 !important;
-  box-shadow:none !important;
-}
-.race-row{
-  min-width:0;
-  padding:11px 0 !important;
-  color:#D8D3CB !important;
-  border-bottom:1px solid var(--line-neutral) !important;
-}
-.race-row span{
-  flex:1;
-  min-width:0;
-  overflow-wrap:anywhere;
-}
-.race-row strong{flex:none}
-.race-row.me,
-.race-row:first-child{
-  color:var(--text) !important;
-}
-.race-note{
-  color:var(--muted) !important;
-  font-size:12px !important;
-  line-height:1.5 !important;
-  padding-top:14px !important;
-}
-.prize{
-  margin:22px -1px 0 !important;
-  padding:20px 0 0 !important;
-  border-top:1px solid var(--gold) !important;
-  color:var(--text) !important;
-  font-family:"Cormorant Garamond",Georgia,serif !important;
-  font-size:25px !important;
-  line-height:1.12 !important;
-  font-weight:500 !important;
-}
-.prize::first-line{
-  color:var(--gold);
-  font-family:"Inter",sans-serif;
-  font-size:10px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-
-/* Secondary sections: more air */
-.watch,
-.progress-card{
-  margin-top:18px !important;
-}
-.watch::before{
-  content:"Disciplina · Comunidad · Resultados" !important;
-  color:var(--muted) !important;
-}
-.watch h2,
-#liveSection h2{
-  font-size:31px !important;
-  line-height:1.08 !important;
-}
-.watch strong{color:var(--text) !important}
-
-.progress-card{
-  padding:22px !important;
-}
-.progress-head{
-  color:var(--text) !important;
-  font-size:14px !important;
-  font-weight:500 !important;
-}
-.progress-track{
-  background:#282829 !important;
-  height:5px !important;
-}
-.progress-bar{
-  background:var(--gold) !important;
-  box-shadow:none !important;
-}
-
-/* Live: remove red / emoji feeling */
-#liveSection > div:first-child{
-  color:var(--muted) !important;
-}
-#liveSection .action{
-  margin-top:10px;
-}
-
-/* Onboarding */
-.onboarding h1{
-  font-size:48px !important;
-  line-height:1.02 !important;
-}
-.onboarding h1::after{display:none !important}
-.onboarding-intro{
-  color:#D8D3CB !important;
-  font-size:16px !important;
-}
-.field input,.field select{
-  background:var(--card) !important;
-  color:var(--text) !important;
-  border:1px solid var(--line-neutral) !important;
-  border-radius:14px !important;
-}
-.field input:focus,.field select:focus{
-  border-color:rgba(200,169,106,.55) !important;
-  box-shadow:none !important;
-}
-
-/* Bottom navigation: line icons, normal case, gold active hairline */
-.nav{
-  z-index:20 !important;
-  grid-template-columns:repeat(4,1fr) !important;
-  padding:
-    8px 12px
-    calc(8px + env(safe-area-inset-bottom, 0px)) !important;
-  background:rgba(11,11,12,.96) !important;
-  border-top:1px solid var(--line-neutral) !important;
-  box-shadow:none !important;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-}
-.nav-item{
-  position:relative;
-  min-height:54px !important;
-  color:#8F8A83 !important;
-  font-size:11px !important;
-  font-weight:500 !important;
-  text-transform:none !important;
-}
-.nav-item.active{
-  color:var(--gold) !important;
-}
-.nav-item.active::before{
-  content:"";
-  position:absolute;
-  top:-9px;
-  left:26%;
-  right:26%;
-  height:1px;
-  background:var(--gold);
-}
-.nav-icon{
-  display:block;
-  height:22px;
-  margin-bottom:4px !important;
-}
-.nav-icon svg{
-  width:21px;
-  height:21px;
-  fill:none;
-  stroke:currentColor;
-  stroke-width:1.5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-/* Modal */
-.modal-bg{
-  background:rgba(0,0,0,.72) !important;
-}
-.modal h2{font-size:31px !important}
-.rule-number{
-  background:transparent !important;
-  color:var(--gold) !important;
-  border:1px solid rgba(200,169,106,.35);
-}
-.rule-text{
-  color:#D8D3CB !important;
-  font-size:15px !important;
-}
-
-/* Remove excessive decorative motion */
-*{
-  animation-duration:.22s;
-  animation-timing-function:ease;
-}
-.club.show .app,
-.onboarding.show{
-  animation:clubFade .22s ease both;
-}
-@keyframes clubFade{
-  from{opacity:0;transform:translateY(4px)}
-  to{opacity:1;transform:none}
-}
-@media(prefers-reduced-motion:reduce){
-  .club.show .app,.onboarding.show{animation:none !important}
-}
-
-/* Admin follows same palette, but functionality unchanged */
-#adminPanel{
-  background:var(--bg) !important;
-  border:1px solid var(--line) !important;
-}
-#adminPanel h2,#adminPanel h3{color:var(--text) !important}
-#adminPanel input,#adminPanel textarea,#adminPanel select,
-#questionModal input,#questionModal textarea{
-  background:var(--card) !important;
-  color:var(--text) !important;
-  border:1px solid var(--line-neutral) !important;
-}
-
-/* Small-screen safeguards */
-@media(max-width:380px){
-  .app{padding-left:17px !important;padding-right:17px !important}
-  .hello{font-size:40px !important}
-  .mission h2{font-size:32px !important}
-  .mission,.team,.watch{padding:21px !important}
-}
-
 </style>
 </head>
 
@@ -3458,12 +2928,18 @@ body::after,
     Próximamente publicaremos la primera misión.
   </div>
 
-  <div class="stats summary-line" aria-label="Resumen de progreso">
-    <span>Semana <strong id="streak">1</strong></span>
-    <span class="summary-dot">·</span>
-    <span><strong id="missionCount">0</strong> misiones</span>
-    <span class="summary-dot">·</span>
-    <span id="cityLabel">Mi ciudad</span>
+  <div class="stats">
+    <div class="pill">
+      🔥 <span id="streak">1</span> semana
+    </div>
+
+    <div class="pill">
+      ✓ <span id="missionCount">0</span> misiones
+    </div>
+
+    <div class="pill">
+      🌍 <span id="cityLabel">Mi ciudad</span>
+    </div>
   </div>
 
 
@@ -3473,9 +2949,9 @@ body::after,
     <div id="accessText" style="font-size:13px;line-height:1.45;opacity:.82;"></div>
     <button id="payClubButton" onclick="startSubscription()" style="display:none;width:100%;margin-top:13px;border:0;border-radius:14px;padding:14px;font-weight:900;">ACTIVAR · 9 € / MES →</button>
     <div id="memberSpaces" style="display:none;margin-top:14px;gap:8px;">
-      <button onclick="openOfficialChannel()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">Canal de Jorge <span aria-hidden="true">→</span></button>
+      <button onclick="openOfficialChannel()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">📢 CANAL DE JORGE →</button>
       <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 10px;">Misiones, vídeos, LIVE y novedades de Jorge.</div>
-      <button onclick="openCommunity()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">Comunidad <span aria-hidden="true">→</span></button>
+      <button onclick="openCommunity()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">💬 COMUNIDAD →</button>
       <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 0;">Habla, comparte y conecta con otros miembros.</div>
     </div>
   </section>
@@ -3495,7 +2971,7 @@ body::after,
       </div>
 
       <div class="timer">
-        Esta semana
+        ⏱ ESTA SEMANA
       </div>
 
     </div>
@@ -3515,7 +2991,7 @@ body::after,
       onclick="completeMission()"
       disabled
       style="display:none;">
-      He hecho la misión
+      ✓ HE HECHO LA MISIÓN
     </button>
 
     <button
@@ -3530,7 +3006,7 @@ body::after,
       type="button"
       onclick="sendVideo()"
       style="display:none;">
-      Enviar vídeo de la misión
+      📹 ENVIAR VÍDEO DE LA MISIÓN
     </button>
 
     <div style="font-size:11px;line-height:1.4;opacity:.82;text-align:center;margin-top:9px;">
@@ -3590,7 +3066,7 @@ body::after,
       </div>
 
       <div class="prize">
-        PREMIO DEL RETO
+        🏆 PREMIO DEL RETO
         <br><br>
         24 HORAS CON JORGE
         <br>
@@ -3614,11 +3090,11 @@ body::after,
   <!-- MONTHLY LIVE -->
   <div class="section-label" style="margin-top:27px;">04 · JORGE EN DIRECTO</div>
   <section class="progress-card" id="liveSection">
-    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--muted);">UNA VEZ AL MES</div>
+    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);">🔴 UNA VEZ AL MES</div>
     <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
     <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo directo · se anunciará aquí</div>
-    <button class="action" type="button" onclick="askJorge()">Pregunta a Jorge</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
+    <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
     <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Pregunta durante el mes. El equipo agrupa las preguntas repetidas y Jorge responde una selección en el próximo LIVE.</div>
   </section>
 
@@ -3627,7 +3103,7 @@ body::after,
   <section class="progress-card">
 
     <div class="progress-head">
-      <span>Tu camino</span>
+      <span>🔥 TU CAMINO</span>
       <span id="levelText">0 / 10</span>
     </div>
 
@@ -3726,16 +3202,16 @@ body::after,
 
 <nav class="nav">
   <button class="nav-item active" type="button" onclick="goSection('missionSection',this)">
-    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg></span><span>Misión</span>
+    <span class="nav-icon">🔥</span>MISIÓN
   </button>
   <button class="nav-item" type="button" onclick="goSection('teamSection',this)">
-    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18c1-3 3-5 6-5s5 2 6 5M10 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM16 9h4M18 7v4"/></svg></span><span>Equipo</span>
+    <span class="nav-icon">🌍</span>EQUIPO
   </button>
   <button class="nav-item" type="button" onclick="goSection('liveSection',this)">
-    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 9a5 5 0 0 0 0 6M5 6a9 9 0 0 0 0 12M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12M12 10v4"/></svg></span><span>Directo</span>
+    <span class="nav-icon">🔴</span>LIVE
   </button>
   <button class="nav-item" type="button" onclick="openCommunity()">
-    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4V5z"/></svg></span><span>Comunidad</span>
+    <span class="nav-icon">💬</span>COMUNIDAD
   </button>
 </nav>
 
@@ -4081,14 +3557,14 @@ async function loadMemberHomeState(){
       if(button){
         button.style.display="block";
         button.disabled=completed;
-        button.innerText=completed?"Misión completada":"He hecho la misión";
+        button.innerText=completed?"🔥 MISIÓN COMPLETADA":"✓ HE HECHO LA MISIÓN";
         button.classList.toggle("done",completed);
       }
       if(videoButton) videoButton.style.display="block";
     }else{
       if(intro) intro.innerText="Próximamente publicaremos la primera misión.";
       if(number) number.innerText="SIN MISIÓN ACTIVA";
-      if(title) title.innerText="Próximamente";
+      if(title) title.innerText="NUEVA MISIÓN\nPRÓXIMAMENTE.";
       if(description) description.innerText="Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.";
       if(button) button.style.display="none";
       if(videoButton) videoButton.style.display="none";
@@ -4102,7 +3578,7 @@ async function loadMemberHomeState(){
 async function completeMission(){
 
   if(completed){
-    showToast("Esta misión ya está completada.");
+    showToast("🔥 Esta misión ya está completada.");
     return;
   }
 
