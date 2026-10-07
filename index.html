@@ -2607,6 +2607,141 @@ textarea:focus-visible{
   }
 }
 
+
+/* ===== PREMIUM LINE ICON SYSTEM · OCT 2026 ===== */
+
+/* 2026 premium line-icon language: precise, light, mature */
+.premium-icon,
+.mini-icon,
+.button-icon,
+.inline-link-icon,
+.nav-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  color:currentColor;
+}
+
+.premium-icon svg,
+.mini-icon svg,
+.button-icon svg,
+.inline-link-icon svg,
+.nav-icon svg{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.55;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+.premium-icon{
+  width:19px;
+  height:19px;
+  margin-right:7px;
+  color:#E9DDC4;
+  opacity:.94;
+}
+
+.premium-icon svg{width:19px;height:19px}
+.premium-icon--gold{color:var(--gold-light)}
+.premium-icon--cyan{color:var(--cyan)}
+
+.mini-icon{
+  width:17px;
+  height:17px;
+  vertical-align:-3px;
+  margin-right:5px;
+  color:var(--gold-light);
+}
+.mini-icon svg{width:17px;height:17px}
+
+.button-icon{
+  width:18px;
+  height:18px;
+  margin-right:7px;
+  vertical-align:-4px;
+}
+.button-icon svg{width:18px;height:18px}
+
+.inline-link-icon{
+  width:19px;
+  height:19px;
+  color:var(--gold-light);
+}
+.inline-link-icon svg{width:19px;height:19px}
+
+.inline-arrow{
+  margin-left:auto;
+  color:var(--gold-light);
+  font-size:17px;
+  font-weight:500;
+}
+
+/* Access actions read as elegant rows rather than emoji buttons */
+#memberSpaces button{
+  display:flex !important;
+  align-items:center;
+  gap:10px;
+}
+
+/* Prize label becomes a graphic kicker */
+.prize-kicker{
+  display:inline-flex;
+  align-items:center;
+  color:var(--gold-light);
+}
+
+/* Bottom nav icons: thin, sharp and consistent */
+.nav-icon{
+  width:23px;
+  height:23px;
+  margin:0 auto 4px !important;
+  font-size:0 !important;
+  opacity:.88;
+  transition:opacity .2s ease, transform .2s ease, color .2s ease;
+}
+
+.nav-icon svg{
+  width:22px;
+  height:22px;
+  stroke-width:1.45;
+}
+
+.nav-item.active .nav-icon{
+  color:var(--gold-light);
+  opacity:1;
+  filter:none !important;
+  transform:translateY(-1px);
+}
+
+.nav-item:not(.active) .nav-icon{
+  color:#D2CCC1;
+}
+
+/* Keep stats aligned after replacing emoji glyphs */
+.pill{
+  display:inline-flex;
+  align-items:center;
+}
+
+/* No emoji-like glow: all icons stay crisp */
+.premium-icon,
+.mini-icon,
+.button-icon,
+.inline-link-icon,
+.nav-icon{
+  text-shadow:none !important;
+  filter:none;
+}
+
+@media(max-width:380px){
+  .premium-icon{width:18px;height:18px;margin-right:6px}
+  .premium-icon svg{width:18px;height:18px}
+  .nav-icon{width:22px;height:22px}
+}
+
 </style>
 </head>
 
@@ -2971,15 +3106,24 @@ textarea:focus-visible{
 
   <div class="stats">
     <div class="pill">
-      🔥 <span id="streak">1</span> semana
+      <span class="premium-icon premium-icon--gold" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12.3 2.8c.7 2.8-.4 4.5-1.9 6.1-1.2 1.3-2.4 2.6-2.4 4.7a4.4 4.4 0 0 0 8.8 0c0-1.5-.6-2.9-1.8-4.3.1 2.2-1 3.4-2.3 4.2.2-2.8-.9-5.5-3.2-7.4"/><path d="M8.4 17.3c.8 2.2 2.2 3.3 4.1 3.3 2.5 0 4.4-1.7 4.7-4.2"/></svg>
+      </span>
+      <span id="streak">1</span> semana
     </div>
 
     <div class="pill">
-      ✓ <span id="missionCount">0</span> misiones
+      <span class="premium-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>
+      </span>
+      <span id="missionCount">0</span> misiones
     </div>
 
     <div class="pill">
-      🌍 <span id="cityLabel">Mi ciudad</span>
+      <span class="premium-icon premium-icon--cyan" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5S14.2 18.1 12 20.5C9.8 18.1 8.7 15.3 8.7 12S9.8 5.9 12 3.5Z"/></svg>
+      </span>
+      <span id="cityLabel">Mi ciudad</span>
     </div>
   </div>
 
@@ -2990,9 +3134,9 @@ textarea:focus-visible{
     <div id="accessText" style="font-size:13px;line-height:1.45;opacity:.82;"></div>
     <button id="payClubButton" onclick="startSubscription()" style="display:none;width:100%;margin-top:13px;border:0;border-radius:14px;padding:14px;font-weight:900;">ACTIVAR · 9 € / MES →</button>
     <div id="memberSpaces" style="display:none;margin-top:14px;gap:8px;">
-      <button onclick="openOfficialChannel()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">📢 CANAL DE JORGE →</button>
+      <button onclick="openOfficialChannel()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;"><span class="inline-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h3l8-4v8l-8-4H5Z"/><path d="M8 12v5"/><path d="M18 9.5v5"/></svg></span><span>CANAL DE JORGE</span><span class="inline-arrow">→</span></button>
       <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 10px;">Misiones, vídeos, LIVE y novedades de Jorge.</div>
-      <button onclick="openCommunity()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;">💬 COMUNIDAD →</button>
+      <button onclick="openCommunity()" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:900;background:#fff;color:#171717;"><span class="inline-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5.5h14v9H10l-5 4v-13Z"/></svg></span><span>COMUNIDAD</span><span class="inline-arrow">→</span></button>
       <div style="font-size:11px;line-height:1.35;opacity:.68;margin:5px 2px 0;">Habla, comparte y conecta con otros miembros.</div>
     </div>
   </section>
@@ -3012,7 +3156,7 @@ textarea:focus-visible{
       </div>
 
       <div class="timer">
-        ⏱ ESTA SEMANA
+        <span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 13V9M9 3h6M12 5v1"/></svg></span> ESTA SEMANA
       </div>
 
     </div>
@@ -3047,7 +3191,7 @@ textarea:focus-visible{
       type="button"
       onclick="sendVideo()"
       style="display:none;">
-      📹 ENVIAR VÍDEO DE LA MISIÓN
+      <span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="11" height="12" rx="2"/><path d="m15 10 5-3v10l-5-3"/></svg></span> ENVIAR VÍDEO DE LA MISIÓN
     </button>
 
     <div style="font-size:11px;line-height:1.4;opacity:.82;text-align:center;margin-top:9px;">
@@ -3107,7 +3251,7 @@ textarea:focus-visible{
       </div>
 
       <div class="prize">
-        🏆 PREMIO DEL RETO
+        <span class="prize-kicker"><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8v3c0 3-1.7 5.5-4 5.5S8 10 8 7V4Z"/><path d="M8 6H5v1c0 2 1.2 3.5 3 4M16 6h3v1c0 2-1.2 3.5-3 4M12 12.5V17M9 20h6M10 17h4"/></svg></span>PREMIO DEL RETO</span>
         <br><br>
         24 HORAS CON JORGE
         <br>
@@ -3131,11 +3275,11 @@ textarea:focus-visible{
   <!-- MONTHLY LIVE -->
   <div class="section-label" style="margin-top:27px;">04 · JORGE EN DIRECTO</div>
   <section class="progress-card" id="liveSection">
-    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);">🔴 UNA VEZ AL MES</div>
+    <div style="font-size:11px;font-weight:850;letter-spacing:1.2px;color:var(--red);"><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 9a5 5 0 0 0 0 6M5 6a9 9 0 0 0 0 12M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/><circle cx="12" cy="12" r="1.6"/></svg></span> UNA VEZ AL MES</div>
     <h2 style="font-size:27px;margin:8px 0 10px;">Jorge en directo.</h2>
     <p style="font-size:14px;line-height:1.5;color:var(--muted);">Tema del mes · aprendizajes de las misiones · preguntas del Club.</p>
     <div id="nextLive" style="font-weight:800;margin:14px 0;">Próximo directo · se anunciará aquí</div>
-    <button class="action" type="button" onclick="askJorge()">❓ PREGUNTA A JORGE</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
+    <button class="action" type="button" onclick="askJorge()"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 17.2v.1M9.8 9.2a2.4 2.4 0 1 1 3.4 2.2c-.8.4-1.2 1-1.2 2"/><circle cx="12" cy="12" r="8.5"/></svg></span> PREGUNTA A JORGE</button><div style="margin-top:18px;"><div style="font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:8px;">TAMBIÉN QUIERO SABER</div><div id="questionBoard"></div></div>
     <div style="font-size:11px;line-height:1.4;color:var(--muted);text-align:center;margin-top:9px;">Pregunta durante el mes. El equipo agrupa las preguntas repetidas y Jorge responde una selección en el próximo LIVE.</div>
   </section>
 
@@ -3144,7 +3288,7 @@ textarea:focus-visible{
   <section class="progress-card">
 
     <div class="progress-head">
-      <span>🔥 TU CAMINO</span>
+      <span><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17 9 13l3 2 6-7"/><path d="M14 8h4v4"/></svg></span> TU CAMINO</span>
       <span id="levelText">0 / 10</span>
     </div>
 
@@ -3243,16 +3387,20 @@ textarea:focus-visible{
 
 <nav class="nav">
   <button class="nav-item active" type="button" onclick="goSection('missionSection',this)">
-    <span class="nav-icon">🔥</span>MISIÓN
+    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4 14 8l4.5.7-3.2 3.2.8 4.6L12 14.3l-4.1 2.2.8-4.6-3.2-3.2L10 8l2-4Z"/></svg></span>
+    <span>MISIÓN</span>
   </button>
   <button class="nav-item" type="button" onclick="goSection('teamSection',this)">
-    <span class="nav-icon">🌍</span>EQUIPO
+    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.2 2.4 3.3 5.2 3.3 8.5S14.2 18.1 12 20.5C9.8 18.1 8.7 15.3 8.7 12S9.8 5.9 12 3.5Z"/></svg></span>
+    <span>EQUIPO</span>
   </button>
   <button class="nav-item" type="button" onclick="goSection('liveSection',this)">
-    <span class="nav-icon">🔴</span>LIVE
+    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 9a5 5 0 0 0 0 6M5 6a9 9 0 0 0 0 12M16 9a5 5 0 0 1 0 6M19 6a9 9 0 0 1 0 12"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+    <span>LIVE</span>
   </button>
   <button class="nav-item" type="button" onclick="openCommunity()">
-    <span class="nav-icon">💬</span>COMUNIDAD
+    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5.5h14v9H10l-5 4v-13Z"/></svg></span>
+    <span>COMUNIDAD</span>
   </button>
 </nav>
 
@@ -3598,7 +3746,7 @@ async function loadMemberHomeState(){
       if(button){
         button.style.display="block";
         button.disabled=completed;
-        button.innerText=completed?"🔥 MISIÓN COMPLETADA":"✓ HE HECHO LA MISIÓN";
+        button.innerText=completed?"MISIÓN COMPLETADA":"HE HECHO LA MISIÓN";
         button.classList.toggle("done",completed);
       }
       if(videoButton) videoButton.style.display="block";
@@ -3619,7 +3767,7 @@ async function loadMemberHomeState(){
 async function completeMission(){
 
   if(completed){
-    showToast("🔥 Esta misión ya está completada.");
+    showToast("Esta misión ya está completada.");
     return;
   }
 
