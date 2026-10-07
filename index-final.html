@@ -3660,8 +3660,8 @@ body{
       </div>
 
       <div class="race-note">
-        El ranking se basará en la participación de los
-        miembros de cada ciudad, no solo en el tamaño del equipo.
+        El ranking compara el porcentaje de misiones confirmadas
+        de cada ciudad. Así, una ciudad pequeña puede superar a una grande.
       </div>
 
       <div class="prize">
@@ -3700,8 +3700,8 @@ body{
   <section class="progress-card">
 
     <div class="progress-head">
-      <span><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17 9 13l3 2 6-7"/><path d="M14 8h4v4"/></svg></span> TU CAMINO</span>
-      <span id="levelText">0 / 10</span>
+      <span><span class="mini-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17 9 13l3 2 6-7"/><path d="M14 8h4v4"/></svg></span> <span id="seasonLabel">TU CAMINO</span></span>
+      <span id="levelText">0 / 12</span>
     </div>
 
     <div class="progress-track">
@@ -3724,6 +3724,13 @@ body{
   <h2 style="margin-top:8px;">Panel del Club</h2>
   <div id="adminRole" style="font-size:12px;margin-bottom:16px;"></div>
   <button id="webhookSetupButton" class="action" type="button" onclick="configureTelegramWebhook()" style="display:none;margin-bottom:14px;">CONECTAR TELEGRAM</button>
+
+  <div id="seasonAdmin" style="background:#171717;color:white;border-radius:22px;padding:16px;margin:10px 0 20px;">
+    <div style="font-size:10px;font-weight:900;letter-spacing:1px;opacity:.65;">TEMPORADA ACTUAL</div>
+    <div id="adminSeasonState" style="font-size:18px;font-weight:850;margin:6px 0 10px;">Cargando…</div>
+    <div style="font-size:11px;line-height:1.45;opacity:.72;">12 misiones · 3 meses · el ranking se calcula por porcentaje de participación verificada.</div>
+    <button id="closeSeasonButton" type="button" onclick="adminCloseSeason()" style="display:none;width:100%;margin-top:12px;padding:12px;border:0;border-radius:12px;font-weight:850;background:#f0c93d;color:#171717;">CERRAR TEMPORADA Y ABRIR NUEVA</button>
+  </div>
 
   <div id="missionAdmin">
     <h3>NUEVA MISIÓN</h3>
@@ -3945,8 +3952,10 @@ try{
 /* MISSION DATA */
 
 let missions = 0;
+let missionTarget = 12;
 let completed = false;
 let activeMission = null;
+let activeSeason = null;
 
 
 /* START */
@@ -4140,8 +4149,17 @@ async function loadMemberHomeState(){
   try{
     const data=await clubApi("member_home_state");
     activeMission=data.active_mission||null;
+    activeSeason=data.season||null;
     missions=Number(data.mission_count||0);
+    missionTarget=Number(data.mission_target||12);
     completed=!!data.active_completed;
+
+    const seasonLabel=document.getElementById("seasonLabel");
+    if(seasonLabel){
+      seasonLabel.innerText=activeSeason?.title
+        ? "TU CAMINO · " + String(activeSeason.title).toUpperCase()
+        : "TU CAMINO";
+    }
 
     const intro=document.getElementById("missionIntro");
     const number=document.getElementById("missionNumber");
@@ -4257,13 +4275,13 @@ function updateUI(){
   document
     .getElementById("levelText")
     .innerText =
-      Math.min(missions,10) +
-      " / 10";
+      Math.min(missions,missionTarget) +
+      " / " + missionTarget;
 
 
   const percent =
     Math.min(
-      (missions / 10) * 100,
+      (missions / missionTarget) * 100,
       100
     );
 
@@ -4301,17 +4319,17 @@ function updateUI(){
 
   }
 
-  else if(missions < 10){
+  else if(missions < missionTarget){
 
     const left =
-      10 - missions;
+      missionTarget - missions;
 
     document
       .getElementById("progressMessage")
       .innerText =
         "Te faltan " +
         left +
-        " misiones para CAMAGÜEY 10.";
+        " misiones para completar la temporada.";
 
   }
 
@@ -4320,7 +4338,7 @@ function updateUI(){
     document
       .getElementById("progressMessage")
       .innerText =
-        "🏅 CAMAGÜEY 10 CONSEGUIDO";
+        "Temporada completada.";
 
   }
 
@@ -4387,6 +4405,17 @@ async function loadAdmin(){
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
+    const seasonState=document.getElementById("adminSeasonState");
+    const closeSeasonButton=document.getElementById("closeSeasonButton");
+    if(seasonState){
+      const season=data.season;
+      const count=Number(data.season_mission_count||0);
+      const target=Number(season?.mission_target||12);
+      seasonState.innerText=season ? String(season.title)+" · "+count+" / "+target+" misiones" : "Sin temporada activa";
+      if(closeSeasonButton){
+        closeSeasonButton.style.display=(season && count>=target && ["owner","admin"].includes(data.role))?"block":"none";
+      }
+    }
     const accessTools=document.getElementById("ownerAccessTools");
     if(accessTools) accessTools.style.display=data.role==="owner"?"block":"none";
     if(data.role==="owner"){try{await clubApi("owner_configure_webhook");}catch(e){console.error("Telegram security sync failed",e);}}
@@ -4453,6 +4482,24 @@ async function loadAdmin(){
     }).join("");
   }catch(error){
     // Normal members simply do not see admin controls.
+  }
+}
+
+async function adminCloseSeason(){
+  const ok=window.confirm("¿Cerrar esta temporada, guardar el ganador y empezar una nueva temporada de 12 misiones?");
+  if(!ok) return;
+  try{
+    const data=await clubApi("admin_close_season");
+    const winner=data.winner?.city ? " · Ganador: "+data.winner.city+" ("+data.winner.rate+"%)" : "";
+    showToast("Temporada cerrada"+winner);
+    missions=0;
+    missionTarget=Number(data.new_season?.mission_target||12);
+    activeSeason=data.new_season||null;
+    await loadMemberHomeState();
+    await loadCityRanking();
+    await loadAdmin();
+  }catch(e){
+    showToast("No se pudo cerrar la temporada. Comprueba que ya existen las 12 misiones.");
   }
 }
 
