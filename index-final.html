@@ -2435,6 +2435,137 @@ body::after{
   border-color:#626A6D !important;
 }
 
+
+/* ===== LUXURY GOLD BORDER PASS · OCT 2026 ===== */
+
+/* More visible champagne-gold framing without turning neon */
+:root{
+  --lux-border:#DDBA72;
+  --lux-border-light:#F4DFA9;
+  --lux-border-deep:#A47C3B;
+}
+
+/* Main content blocks */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard,
+.confirm-box,
+.modal{
+  border:1.5px solid rgba(221,186,114,.68) !important;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.23),
+    0 0 0 1px rgba(244,223,169,.055),
+    inset 0 1px rgba(255,248,228,.055) !important;
+}
+
+/* Most important cards get a richer gold edge */
+.mission,
+#accessCard{
+  border-color:rgba(231,195,113,.84) !important;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.24),
+    0 0 18px rgba(221,186,114,.075),
+    inset 0 1px rgba(255,247,224,.07) !important;
+}
+
+/* Ranking/card hierarchy */
+.team{
+  border-color:rgba(221,186,114,.74) !important;
+}
+
+/* Inner ranking panel */
+.race{
+  border:1px solid rgba(221,186,114,.42) !important;
+  box-shadow:inset 0 1px rgba(255,247,224,.035);
+}
+
+/* Buttons/spaces inside access section */
+#memberSpaces button{
+  border:1px solid rgba(221,186,114,.46) !important;
+}
+
+/* Pills get subtle premium outlines */
+.pill{
+  border-color:rgba(221,186,114,.36) !important;
+}
+
+.pill:first-child{
+  border-color:rgba(244,223,169,.72) !important;
+}
+
+.pill:nth-child(3){
+  border-color:rgba(56,212,207,.46) !important;
+}
+
+/* Input frames */
+.field input,
+.field select{
+  border:1px solid rgba(221,186,114,.38) !important;
+}
+
+/* Golden top and bottom separators */
+.topbar,
+.onboarding-top{
+  border-bottom:1px solid rgba(244,223,169,.42) !important;
+}
+
+.nav{
+  border-top:1px solid rgba(244,223,169,.42) !important;
+}
+
+/* Highlight important labels with precise gold hairlines */
+.section-label:before{
+  height:2px;
+  background:linear-gradient(90deg,#F4DFA9,#DDBA72 62%,#38D4CF) !important;
+}
+
+.mission-number{
+  border-color:rgba(238,228,93,.78) !important;
+}
+
+/* Rules/modal controls */
+.close-button{
+  border:1px solid rgba(221,186,114,.52) !important;
+}
+
+/* More luxurious focus state */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid rgba(244,223,169,.90) !important;
+  outline-offset:2px;
+}
+
+/* Fine gold sheen on card edges */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard{
+  position:relative;
+}
+
+.mission::marker,
+.team::marker,
+.watch::marker{
+  color:var(--lux-border);
+}
+
+@media(max-width:380px){
+  .mission,
+  .team,
+  .watch,
+  .progress-card,
+  #accessCard,
+  .confirm-box,
+  .modal{
+    border-width:1.25px !important;
+  }
+}
+
 </style>
 </head>
 
