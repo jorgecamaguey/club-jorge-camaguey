@@ -3513,6 +3513,81 @@ h1,h2,h3{
   color:#7DE7E2 !important;
 }
 
+
+/* ===== MISSION HOW-TO CLARITY · OCT 2026 ===== */
+
+.mission-help{
+  margin-top:14px;
+  padding:14px 14px 13px;
+  border:1px solid rgba(125,231,226,.42);
+  border-radius:16px;
+  background:rgba(9,23,25,.22);
+  color:#F7FFFF;
+}
+
+.mission-help-row{
+  display:grid;
+  grid-template-columns:24px 1fr;
+  gap:9px;
+  align-items:start;
+  font-size:12px;
+  line-height:1.42;
+}
+
+.mission-help-row + .mission-help-row{
+  margin-top:10px;
+}
+
+.mission-help-step{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#7DE7E2;
+  color:#101415;
+  font-family:var(--font-display) !important;
+  font-size:11px;
+  font-weight:700;
+  margin-top:1px;
+}
+
+.mission-help strong{
+  color:#9AF0EC;
+  font-family:var(--font-display) !important;
+  font-weight:700;
+}
+
+.mission-help b{
+  color:#FFFFFF;
+  font-weight:700;
+}
+
+.mission-help-prize{
+  margin-top:11px;
+  padding-top:10px;
+  border-top:1px solid rgba(125,231,226,.22);
+  color:#9AF0EC;
+  font-size:11px;
+  line-height:1.4;
+  font-weight:650;
+}
+
+.mission-rule-extra{
+  padding-top:13px;
+  border-top:1px solid rgba(125,231,226,.18);
+}
+
+.mission-rule-extra .rule-number{
+  background:#7DE7E2 !important;
+  color:#111315 !important;
+}
+
+.mission-rule-extra .rule-text strong{
+  color:#7DE7E2 !important;
+}
+
 </style>
 </head>
 
@@ -3964,8 +4039,18 @@ h1,h2,h3{
       <span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="11" height="12" rx="2"/><path d="m15 10 5-3v10l-5-3"/></svg></span> ENVIAR VÍDEO DE LA MISIÓN
     </button>
 
-    <div style="font-size:11px;line-height:1.4;opacity:.82;text-align:center;margin-top:9px;">
-      15–30 segundos · Privado por defecto · Tras aprobarse, suma para tu ciudad.
+    <div class="mission-help">
+      <div class="mission-help-row">
+        <span class="mission-help-step">1</span>
+        <div><strong>¿Ya hiciste la misión?</strong> Pulsa <b>HE HECHO LA MISIÓN</b>. Es tu control personal de progreso.</div>
+      </div>
+      <div class="mission-help-row">
+        <span class="mission-help-step">2</span>
+        <div><strong>¿Quieres sumar puntos para tu ciudad?</strong> Envíame un vídeo de 15–30 segundos mostrando la misión o contándome cómo la hiciste. El vídeo es privado y solo lo vemos Jorge y el equipo autorizado.</div>
+      </div>
+      <div class="mission-help-prize">
+        Cada vídeo aprobado suma para tu ciudad. Si vuestra ciudad gana la temporada, viajaré allí por mi cuenta.
+      </div>
     </div>
 
   </section>
