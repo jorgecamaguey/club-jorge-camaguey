@@ -2216,6 +2216,225 @@ body::after{
 
 .modal-bg,.toast{z-index:10}
 
+
+/* ===== SIMPLE WARM GOLD GRADIENT BACKGROUND · OCT 2026 ===== */
+:root{
+  --bg:#2B3032;
+  --surface:#202527;
+  --surface-2:#272D30;
+  --surface-3:#31383C;
+
+  --text:#FFF9F1;
+  --text-2:#EEE6DA;
+  --text-3:#D5C9B9;
+
+  --gold:#DDBA72;
+  --gold-light:#F5DFA9;
+  --gold-deep:#A77F3E;
+  --yellow:#EEE45D;
+  --cyan:#38D4CF;
+}
+
+/* Remove the illustrated media background completely */
+body{
+  background:
+    radial-gradient(circle at 50% -8%,rgba(243,228,198,.34),transparent 30%),
+    radial-gradient(circle at 90% 12%,rgba(221,186,114,.22),transparent 26%),
+    radial-gradient(circle at 8% 38%,rgba(56,212,207,.07),transparent 25%),
+    linear-gradient(180deg,
+      #8A918F 0%,
+      #6F7472 8%,
+      #555A58 18%,
+      #3C4242 34%,
+      #2A3031 58%,
+      #1B2022 100%) !important;
+  color:var(--text);
+}
+
+/* No photo / no illustration layer */
+body::before{
+  content:"" !important;
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(180deg,
+      rgba(255,246,228,.14) 0%,
+      rgba(246,224,181,.06) 18%,
+      transparent 46%),
+    radial-gradient(circle at 78% 14%,rgba(235,204,143,.13),transparent 22%),
+    radial-gradient(circle at 16% 28%,rgba(255,255,255,.06),transparent 20%) !important;
+  opacity:1 !important;
+  filter:none !important;
+}
+
+body::after{
+  content:"" !important;
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,244,220,.06),transparent 28%),
+    radial-gradient(circle at 12% 62%,rgba(56,212,207,.045),transparent 22%);
+  mix-blend-mode:screen;
+  opacity:.9;
+}
+
+/* Keep decorative illustration layer off for a cleaner, calmer interface */
+.cuban-decor{
+  display:none !important;
+}
+
+/* Light glass header */
+.topbar,.onboarding-top{
+  background:
+    linear-gradient(180deg,rgba(255,248,235,.08),rgba(42,48,49,.26),transparent) !important;
+  border-bottom-color:rgba(245,223,169,.28) !important;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+/* Cards: softer graphite, warmer and less black */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard,
+.confirm-box,
+.modal{
+  background:
+    linear-gradient(160deg,rgba(47,54,57,.94),rgba(27,32,34,.96)) !important;
+  border:1px solid rgba(236,211,159,.28) !important;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.24),
+    inset 0 1px rgba(255,255,255,.04) !important;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.mission{
+  background:
+    radial-gradient(circle at 96% 8%,rgba(221,186,114,.18),transparent 28%),
+    linear-gradient(155deg,rgba(52,59,61,.96),rgba(27,32,34,.98)) !important;
+  border-color:rgba(221,186,114,.50) !important;
+}
+
+.team{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(221,186,114,.15),transparent 30%),
+    radial-gradient(circle at 0% 100%,rgba(56,212,207,.07),transparent 30%),
+    linear-gradient(155deg,rgba(49,56,59,.95),rgba(27,32,34,.98)) !important;
+}
+
+.watch{
+  background:
+    radial-gradient(circle at 100% 12%,rgba(221,186,114,.12),transparent 28%),
+    linear-gradient(155deg,rgba(47,54,57,.95),rgba(27,32,34,.98)) !important;
+}
+
+/* Brighter, warmer copy */
+.hello,.brand,.mission h2,.team h2,.watch h2,#accessTitle,.modal h2{
+  color:#FFF9F1 !important;
+}
+
+.sub,
+.mission p,
+.team-copy,
+.watch p,
+#accessText,
+.confirm-box p,
+.race-note,
+.school-line,
+#progressMessage{
+  color:#EEE7DC !important;
+}
+
+/* Gold becomes the main premium accent */
+.action,
+.enter-button,
+#payClubButton{
+  background:linear-gradient(180deg,#F5DFA9 0%,#DDBA72 100%) !important;
+  color:#111 !important;
+  border-color:rgba(255,243,213,.58) !important;
+  box-shadow:
+    0 9px 24px rgba(221,186,114,.20),
+    inset 0 1px rgba(255,255,255,.52) !important;
+}
+
+.mission-number,
+.brand:before,
+.watch:before{
+  color:#F0E761 !important;
+}
+
+.position,
+.timer,
+.prize,
+.race-row:first-child,
+.race-row.me,
+.watch strong{
+  color:#F4DFA9 !important;
+}
+
+/* Turquoise only as a clean secondary contrast */
+.video-button{
+  background:linear-gradient(180deg,rgba(56,212,207,.10),rgba(28,33,35,.96)) !important;
+  border-color:rgba(56,212,207,.45) !important;
+  color:#FAFFFF !important;
+}
+
+.progress-bar{
+  background:linear-gradient(90deg,#30C8C3,#38D4CF,#82E8E4) !important;
+  box-shadow:0 0 14px rgba(56,212,207,.16) !important;
+}
+
+.pill{
+  background:rgba(38,44,46,.88) !important;
+  border-color:#596062 !important;
+  color:#F3ECE2 !important;
+}
+
+.pill:first-child{
+  color:#F3DDA6 !important;
+  border-color:rgba(221,186,114,.46) !important;
+}
+
+.pill:nth-child(3){
+  color:#E8FFFF !important;
+  border-color:rgba(56,212,207,.40) !important;
+}
+
+/* Lighter navigation, still premium */
+.nav{
+  background:
+    linear-gradient(180deg,rgba(43,49,51,.96),rgba(24,29,31,.985)) !important;
+  border-top:1px solid rgba(236,211,159,.24) !important;
+  box-shadow:0 -12px 32px rgba(0,0,0,.22) !important;
+}
+
+.nav-item{
+  color:#DDD5C9 !important;
+}
+
+.nav-item.active{
+  color:#F0E761 !important;
+}
+
+/* Inputs match the lighter palette */
+.field input,
+.field select,
+#adminPanel input,
+#adminPanel textarea,
+#adminPanel select,
+#questionModal input,
+#questionModal textarea{
+  background:#2B3134 !important;
+  color:#FFF9F1 !important;
+  border-color:#626A6D !important;
+}
+
 </style>
 </head>
 
