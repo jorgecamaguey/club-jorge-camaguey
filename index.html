@@ -1354,6 +1354,250 @@ textarea:focus-visible{
   }
 }
 
+
+/* ===== WARM HAVANA DAYLIGHT PASS · OCT 2026 ===== */
+
+/* Warmer, brighter atmosphere inspired by the approved Havana reference */
+:root{
+  --warm-sand:#E7C99A;
+  --warm-amber:#D99B4B;
+  --warm-sky:#6F9FB6;
+  --warm-cream:#F3E7D2;
+  --turquoise:#22D8D2;
+}
+
+/* Background is no longer flat black: warm sky + sunset + dark luxury */
+body{
+  background:
+    radial-gradient(circle at 50% -8%, rgba(111,159,182,.32), transparent 34%),
+    radial-gradient(circle at 12% 6%, rgba(243,231,210,.16), transparent 26%),
+    radial-gradient(circle at 90% 10%, rgba(217,155,75,.22), transparent 28%),
+    radial-gradient(circle at 12% 45%, rgba(34,216,210,.085), transparent 28%),
+    linear-gradient(180deg,
+      #253944 0%,
+      #19272D 12%,
+      #141719 27%,
+      #0A0C0D 58%,
+      #050607 100%);
+}
+
+/* warm horizon wash behind first viewport */
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(180deg,
+      rgba(245,213,163,.12) 0%,
+      rgba(232,174,94,.08) 16%,
+      transparent 42%),
+    radial-gradient(ellipse at 50% 8%, rgba(255,221,163,.12), transparent 42%);
+  mix-blend-mode:screen;
+  opacity:.8;
+}
+
+/* More depth, less cave-like darkness */
+.app,.onboarding{
+  position:relative;
+  z-index:1;
+}
+
+.topbar,.onboarding-top{
+  background:
+    linear-gradient(180deg,rgba(22,31,35,.88),rgba(10,12,13,.70),transparent);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+/* Cards: warmer surface treatment and more separation */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard,
+.confirm-box,
+.modal{
+  box-shadow:
+    0 18px 44px rgba(0,0,0,.32),
+    0 1px 0 rgba(255,234,194,.025) inset;
+}
+
+.mission{
+  background:
+    linear-gradient(180deg,rgba(231,201,154,.055),transparent 27%),
+    radial-gradient(circle at 95% 10%,rgba(217,155,75,.22),transparent 28%),
+    radial-gradient(circle at 10% 100%,rgba(34,216,210,.11),transparent 36%),
+    linear-gradient(145deg,#171B1D 0%,#0B0E10 72%);
+}
+
+.team{
+  background:
+    linear-gradient(180deg,rgba(231,201,154,.04),transparent 25%),
+    radial-gradient(circle at 98% 0%,rgba(217,155,75,.17),transparent 31%),
+    radial-gradient(circle at 0% 100%,rgba(34,216,210,.10),transparent 31%),
+    linear-gradient(150deg,#121719,#080A0B);
+}
+
+.watch{
+  background:
+    radial-gradient(circle at 100% 10%,rgba(217,155,75,.12),transparent 30%),
+    radial-gradient(circle at 0% 100%,rgba(34,216,210,.085),transparent 28%),
+    linear-gradient(150deg,#151A1C,#0A0D0F);
+}
+
+.progress-card{
+  background:
+    linear-gradient(180deg,rgba(111,159,182,.055),transparent 40%),
+    linear-gradient(155deg,#14191B,#0A0D0F);
+}
+
+/* Two bright families: gold + turquoise */
+.section-label:before{
+  background:linear-gradient(90deg,var(--gold),var(--turquoise));
+}
+
+.pill:nth-child(2){
+  border-color:rgba(231,201,154,.22);
+}
+
+.pill:nth-child(3){
+  color:#DDFBFA;
+  border-color:rgba(34,216,210,.42);
+  background:rgba(34,216,210,.045);
+}
+
+.video-button{
+  background:
+    linear-gradient(180deg,rgba(34,216,210,.075),rgba(8,11,13,.95));
+  border-color:rgba(34,216,210,.48);
+}
+
+.progress-bar{
+  background:linear-gradient(90deg,#16BEBB,#22D8D2,#6DE7E2);
+  box-shadow:0 0 16px rgba(34,216,210,.16);
+}
+
+.nav{
+  background:
+    linear-gradient(180deg,rgba(13,17,19,.94),rgba(5,6,7,.975));
+  border-top-color:rgba(231,201,154,.24);
+}
+
+.nav-item.active{
+  color:var(--yellow);
+}
+
+.nav-item:nth-child(3).active{
+  color:var(--turquoise);
+}
+
+/* Warm gold buttons, less yellow-neon */
+.action,
+.enter-button,
+#payClubButton{
+  background:linear-gradient(180deg,#F2DDA7 0%,#D9AD59 100%) !important;
+  color:#090A0A !important;
+  border-color:rgba(255,239,202,.48) !important;
+}
+
+.action{
+  box-shadow:
+    0 10px 28px rgba(217,155,75,.16),
+    inset 0 1px rgba(255,255,255,.40);
+}
+
+/* Warmer text accents */
+.mission-number,
+.brand:before{
+  color:#F2EA35;
+}
+
+.timer,
+.position,
+.watch strong,
+.race-row:first-child,
+.race-row.me,
+.prize{
+  color:#F1DDAA;
+}
+
+/* Slight blue-sky lift on top content without reducing readability */
+.hello{
+  text-shadow:0 8px 28px rgba(0,0,0,.30);
+}
+
+.sub{
+  color:#ECE8DF;
+}
+
+.mission p,
+.team-copy,
+.watch p,
+#accessText,
+.confirm-box p{
+  color:#E1DDD5 !important;
+}
+
+/* Atmospheric decorative glints */
+.mission:before{
+  border-color:rgba(231,201,154,.30);
+  box-shadow:
+    0 0 0 24px rgba(231,201,154,.020),
+    0 0 0 48px rgba(34,216,210,.016);
+}
+
+.team:after{
+  content:"";
+  position:absolute;
+  width:8px;
+  height:8px;
+  right:26px;
+  bottom:24px;
+  border-radius:50%;
+  background:var(--turquoise);
+  box-shadow:
+    0 0 0 7px rgba(34,216,210,.045),
+    0 0 20px rgba(34,216,210,.22);
+}
+
+/* Better visual relief around informational blocks */
+.progress-card,
+.confirm-box{
+  border-color:#3A4043;
+}
+
+.race{
+  background:linear-gradient(180deg,#0B0E10,#070809);
+}
+
+/* Onboarding also feels warmer on first entry */
+.onboarding{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(111,159,182,.16),transparent 34%),
+    radial-gradient(circle at 100% 15%,rgba(217,155,75,.14),transparent 28%);
+}
+
+.field input,.field select{
+  background:rgba(12,15,17,.93);
+  border-color:#43484B;
+}
+
+.field input:focus,.field select:focus{
+  border-color:var(--turquoise);
+  box-shadow:0 0 0 3px rgba(34,216,210,.09);
+}
+
+/* Large-text comfort for 30+ audience */
+@media(max-width:430px){
+  .sub{font-size:16px}
+  .mission p{font-size:16px}
+  .team-copy{font-size:15px}
+  .watch p{font-size:15px}
+  .race-row{font-size:15px}
+}
+
 </style>
 </head>
 
