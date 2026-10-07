@@ -1852,6 +1852,482 @@ p,.sub,.team-copy,.watch p,.rule-text{
   .mission h2{font-size:32px}
 }
 
+
+/* ===== CLUB JC · APPROVED CAMPAIGN STYLE 2026 ===== */
+
+/* Merge: luxury VIP app + bold editorial poster */
+:root{
+  --bg:#050809;
+  --paper:#0A0F12;
+  --paper-2:#080C0E;
+  --ink:#F3F1EA;
+  --muted:#8E989D;
+  --line:#27343A;
+  --yellow:#F3EA09;
+  --gold:#D7B25D;
+  --gold-soft:#E8CF91;
+  --gold-deep:#8F6C31;
+  --cyan:#12D7D3;
+  --pink:#FF3A80;
+  --green:#33D49C;
+  --dark:#030506;
+  --shadow:0 20px 54px rgba(0,0,0,.38);
+}
+
+html{background:#050809}
+
+body{
+  background:
+    radial-gradient(circle at 88% 7%,rgba(215,178,93,.115),transparent 24%),
+    radial-gradient(circle at 7% 34%,rgba(243,234,9,.042),transparent 22%),
+    linear-gradient(180deg,#090D0F 0%,#050809 54%,#030506 100%);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* Fine editorial grid + luminous orbital points */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.16;
+  background-image:
+    radial-gradient(circle at 92% 13%,rgba(243,234,9,.95) 0 1px,transparent 1.7px),
+    radial-gradient(circle at 7% 31%,rgba(215,178,93,.82) 0 1px,transparent 1.7px),
+    linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+  background-size:190px 190px,235px 235px,34px 34px,34px 34px;
+}
+
+.app,.onboarding{position:relative;z-index:1}
+
+/* Signature top rail */
+.topbar,.onboarding-top{
+  position:relative;
+  margin-bottom:24px;
+  padding-bottom:15px;
+  border-bottom:1px solid rgba(215,178,93,.18);
+}
+.topbar:after,.onboarding-top:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:58px;
+  height:2px;
+  background:var(--yellow);
+}
+.brand{
+  color:#F4F2EB;
+  letter-spacing:2.6px;
+  font-size:11px;
+  font-weight:850;
+  text-transform:uppercase;
+}
+.brand:before{
+  content:"VIP CLUB";
+  display:inline-flex;
+  align-items:center;
+  margin-right:9px;
+  padding:5px 10px 4px;
+  border:1px solid rgba(243,234,9,.88);
+  border-radius:999px;
+  color:var(--yellow);
+  background:rgba(243,234,9,.025);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.9px;
+}
+
+/* Typography: poster-like, yet readable */
+.hello,
+.mission h2,
+.team h2,
+.watch h2,
+.modal h2,
+.onboarding h1{
+  font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+  font-weight:950;
+}
+.hello{
+  font-size:39px;
+  line-height:.96;
+  letter-spacing:-1.8px;
+  color:#F6F4EE;
+}
+.sub{
+  color:#B5BEC2;
+  font-size:14px;
+  line-height:1.48;
+  max-width:390px;
+}
+
+/* Stats = compact information chips */
+.stats{gap:8px;margin-bottom:27px}
+.pill{
+  background:#0A1114;
+  border:1px solid #223139;
+  color:#DDE2E3;
+  box-shadow:none;
+  padding:9px 13px;
+}
+.pill:first-child{
+  border-color:rgba(215,178,93,.40);
+  color:var(--gold-soft);
+}
+.pill:nth-child(3){
+  border-color:rgba(18,215,211,.28);
+}
+
+.section-label{
+  color:#9CA5A8;
+  font-size:10px;
+  letter-spacing:2.3px;
+  margin-bottom:10px;
+}
+.section-label:before{
+  content:"";
+  display:inline-block;
+  width:26px;
+  height:2px;
+  margin-right:8px;
+  vertical-align:middle;
+  background:var(--yellow);
+}
+
+/* Mission hero: poster energy inside a luxury card */
+.mission{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  padding:24px;
+  background:
+    radial-gradient(circle at 95% 10%,rgba(215,178,93,.18),transparent 27%),
+    radial-gradient(circle at 88% 20%,rgba(243,234,9,.06),transparent 22%),
+    linear-gradient(145deg,#0E1518 0%,#080C0E 74%);
+  color:var(--ink);
+  border:1px solid rgba(215,178,93,.50);
+  box-shadow:var(--shadow),inset 0 1px rgba(255,255,255,.035);
+}
+.mission:before{
+  content:"";
+  position:absolute;
+  width:225px;
+  height:225px;
+  right:-106px;
+  top:-112px;
+  border:1px solid rgba(215,178,93,.27);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 23px rgba(215,178,93,.018),
+    0 0 0 48px rgba(243,234,9,.014);
+}
+.mission:after{
+  content:"+";
+  position:absolute;
+  right:26px;
+  top:72px;
+  color:rgba(255,255,255,.50);
+  font-size:21px;
+  font-weight:300;
+}
+.mission-top,.mission h2,.mission p,.mission button{position:relative;z-index:1}
+.mission-number{
+  display:inline-flex;
+  width:max-content;
+  padding:6px 10px 5px;
+  border:1px solid rgba(243,234,9,.72);
+  border-radius:999px;
+  color:var(--yellow);
+  background:rgba(243,234,9,.02);
+  opacity:1;
+}
+.timer{
+  color:#DED1AB;
+  background:rgba(3,5,6,.55);
+  border:1px solid rgba(215,178,93,.28);
+}
+.mission h2{
+  margin:18px 0 14px;
+  max-width:380px;
+  color:#F7F5EF;
+  font-size:36px;
+  line-height:.91;
+  letter-spacing:-1.55px;
+  text-transform:uppercase;
+}
+.mission p{
+  color:#B8C0C3;
+  font-size:14px;
+  line-height:1.5;
+  max-width:390px;
+}
+
+/* Primary action = gold, editorial emphasis = yellow */
+.action{
+  min-height:50px;
+  border:1px solid rgba(255,239,190,.40);
+  background:linear-gradient(180deg,#EBD18C 0%,#D0A549 100%);
+  color:#080A0A;
+  box-shadow:0 10px 30px rgba(215,178,93,.14),inset 0 1px rgba(255,255,255,.45);
+}
+.action.done{
+  background:#091115;
+  color:var(--cyan);
+  border:1px solid rgba(18,215,211,.42);
+  box-shadow:none;
+}
+.video-button{
+  min-height:48px;
+  background:#060A0C;
+  color:#F3F2ED;
+  border:1px solid rgba(255,255,255,.50);
+  box-shadow:none;
+}
+.video-button:before{
+  content:"↗ ";
+  color:var(--cyan);
+}
+.rules-button{
+  color:#9EAAAE;
+  text-decoration:none;
+  letter-spacing:.45px;
+}
+
+/* Secondary surfaces */
+.confirm-box,.progress-card,.watch,.modal{
+  background:linear-gradient(155deg,#0D1417,#080D0F);
+  border:1px solid #25343B;
+  box-shadow:0 14px 38px rgba(0,0,0,.24);
+  color:var(--ink);
+}
+.confirm-box p,.watch p{color:#A8B2B6}
+
+/* City race / ranking block */
+.team{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(215,178,93,.13),transparent 31%),
+    linear-gradient(150deg,#0B1215,#070B0D);
+  color:var(--ink);
+  border:1px solid rgba(215,178,93,.38);
+  box-shadow:var(--shadow);
+}
+.team:before{
+  content:"CIUDADES · 3 MESES";
+  position:absolute;
+  right:17px;
+  top:16px;
+  color:var(--gold-soft);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.8px;
+  opacity:.76;
+}
+.position{
+  color:var(--yellow);
+  text-shadow:0 0 18px rgba(243,234,9,.08);
+}
+.team-copy{color:#AEB8BC}
+.race{
+  padding:9px 13px;
+  background:#060A0C;
+  border:1px solid #26343A;
+}
+.race-row{
+  padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+.race-row:last-child{border-bottom:0}
+.race-row:first-child{
+  color:#F6E2A8;
+}
+.race-row.me{
+  color:#F6E2A8;
+  font-weight:900;
+}
+.race-note{color:#86949A}
+.prize{
+  color:#DFD2AD;
+  border-top-color:rgba(215,178,93,.22);
+}
+
+/* Jorge / editorial content card */
+.watch{
+  position:relative;
+  overflow:hidden;
+  border-color:rgba(215,178,93,.24);
+  background:
+    linear-gradient(90deg,rgba(215,178,93,.045),transparent 35%),
+    linear-gradient(155deg,#0D1417,#080D0F);
+}
+.watch:before{
+  content:"DISCIPLINA · COMUNIDAD · RESULTADOS";
+  display:block;
+  color:var(--yellow);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.55px;
+  margin-bottom:9px;
+}
+.watch strong{color:var(--gold-soft)}
+.watch:after{opacity:.055;filter:grayscale(1)}
+
+/* Progress: cyan = functional state, gold = status */
+.progress-track{height:7px;background:#17242A}
+.progress-bar{
+  background:linear-gradient(90deg,#11C7C4,#19E0DD);
+  box-shadow:0 0 15px rgba(18,215,211,.15);
+}
+
+/* VIP access */
+#accessCard{
+  border:1px solid rgba(215,178,93,.34) !important;
+  background:
+    radial-gradient(circle at 96% 8%,rgba(215,178,93,.12),transparent 28%),
+    linear-gradient(150deg,#0D1417,#070B0D) !important;
+  box-shadow:var(--shadow);
+}
+#accessTitle{
+  font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;
+  font-weight:950 !important;
+  letter-spacing:-.6px;
+}
+#payClubButton{
+  background:linear-gradient(180deg,#EBD18C,#D0A549) !important;
+  color:#080A0A !important;
+  border:0 !important;
+}
+#memberSpaces button{
+  background:#0A1114 !important;
+  color:#F2F0E9 !important;
+  border:1px solid #2B3A40 !important;
+}
+
+/* Onboarding follows same campaign language */
+.onboarding h1{
+  color:#F5F3ED;
+  font-size:48px;
+  line-height:.9;
+  text-transform:uppercase;
+}
+.onboarding h1:after{
+  content:"";
+  display:block;
+  width:78px;
+  height:4px;
+  margin-top:18px;
+  background:linear-gradient(90deg,var(--yellow),var(--gold));
+  box-shadow:none;
+}
+.onboarding-intro,.onboarding-note,.step{color:#929DA2}
+.field label{color:#D9DEDF}
+.field input,.field select{
+  background:#091014;
+  color:#F3F1EA;
+  border-color:#25353C;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(215,178,93,.075);
+}
+.field input::placeholder{color:#68777D}
+.enter-button{
+  background:linear-gradient(180deg,#EBD18C,#D0A549);
+  color:#080A0A;
+  box-shadow:0 10px 28px rgba(215,178,93,.14);
+}
+
+/* Modal */
+.modal-bg{
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(10px);
+}
+.modal{border-color:rgba(215,178,93,.22)}
+.rule-number{
+  background:var(--gold);
+  color:#050707;
+}
+.close-button{
+  background:#10191D;
+  border:1px solid #34454C;
+}
+
+/* Navigation: calm, high-recognition active state */
+.nav{
+  background:rgba(4,7,8,.955);
+  border-top:1px solid rgba(215,178,93,.17);
+  box-shadow:0 -15px 40px rgba(0,0,0,.33);
+}
+.nav-item{
+  color:#7E8A8F;
+}
+.nav-item.active{
+  color:var(--yellow);
+}
+.nav-item.active .nav-icon{
+  filter:drop-shadow(0 0 7px rgba(243,234,9,.14));
+}
+
+/* Avatar and alert micro-accent */
+.avatar{
+  color:var(--gold-soft);
+  background:linear-gradient(145deg,#11191D,#070B0D);
+  border:1px solid rgba(215,178,93,.34);
+  box-shadow:0 8px 24px rgba(0,0,0,.32);
+}
+.topbar .avatar:after{
+  background:var(--pink);
+  box-shadow:0 0 10px rgba(255,58,128,.42);
+}
+
+/* Inline admin legacy light surfaces: force coherent dark theme */
+#adminPanel,
+#questionBoard,
+#topProblems,
+#contentBankClusters,
+#liveQuestions,
+#adminQuestions,
+#adminTeam{
+  color:var(--ink);
+}
+#adminPanel input,
+#adminPanel textarea,
+#adminPanel select,
+#questionModal input,
+#questionModal textarea{
+  background:#091014 !important;
+  color:#F2F1EC !important;
+  border:1px solid #293940 !important;
+}
+
+/* Eye comfort / touch targets */
+button{
+  min-height:44px;
+  -webkit-tap-highlight-color:transparent;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:2px solid rgba(232,207,145,.76);
+  outline-offset:2px;
+}
+::selection{
+  background:rgba(243,234,9,.22);
+  color:#FFF;
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:#28373D;border-radius:999px}
+
+@media(max-width:380px){
+  .hello{font-size:35px}
+  .mission h2{font-size:32px}
+}
+
 </style>
 </head>
 
