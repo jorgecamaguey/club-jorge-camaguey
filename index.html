@@ -1598,10 +1598,281 @@ body:after{
   .race-row{font-size:15px}
 }
 
+
+/* ===== CUBAN GOLD-PEN DECORATIVE LAYER · OCT 2026 ===== */
+.cuban-decor{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  contain:layout paint;
+}
+
+.cuban-decor__item{
+  position:absolute;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.55;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+  filter:drop-shadow(0 0 12px currentColor);
+}
+
+.cuban-decor__havana{
+  width:min(72vw,390px);
+  left:-78px;
+  bottom:86px;
+  color:#D8B25D;
+  opacity:.085;
+}
+
+.cuban-decor__palm{
+  width:min(43vw,215px);
+  right:-58px;
+  top:96px;
+  color:#F0D896;
+  opacity:.105;
+  transform:rotate(4deg);
+}
+
+.cuban-decor__hat{
+  width:min(34vw,150px);
+  right:16px;
+  bottom:205px;
+  color:#D8B25D;
+  opacity:.09;
+  transform:rotate(-7deg);
+}
+
+.cuban-decor__bass{
+  width:min(28vw,125px);
+  left:8px;
+  top:265px;
+  color:#D8B25D;
+  opacity:.075;
+  transform:rotate(-3deg);
+}
+
+.cuban-decor__conga{
+  width:min(25vw,112px);
+  right:8px;
+  bottom:46px;
+  color:#20D8D4;
+  opacity:.08;
+  transform:rotate(4deg);
+}
+
+.cuban-decor__orbit{
+  width:190px;
+  height:190px;
+  stroke-width:1.15;
+}
+
+.cuban-decor__orbit--gold{
+  right:-66px;
+  top:34%;
+  color:#D8B25D;
+  opacity:.11;
+}
+
+.cuban-decor__orbit--cyan{
+  left:-78px;
+  top:57%;
+  color:#20D8D4;
+  opacity:.085;
+}
+
+.cuban-decor__spark{
+  position:absolute;
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1;
+  text-shadow:0 0 12px currentColor;
+}
+
+.cuban-decor__spark--1{
+  top:17%;
+  left:9%;
+  color:#F0D896;
+  font-size:18px;
+  opacity:.28;
+}
+
+.cuban-decor__spark--2{
+  top:41%;
+  right:11%;
+  color:#20D8D4;
+  font-size:16px;
+  opacity:.24;
+}
+
+.cuban-decor__spark--3{
+  top:68%;
+  left:15%;
+  color:#D8B25D;
+  font-size:17px;
+  opacity:.22;
+}
+
+.cuban-decor__spark--4{
+  bottom:18%;
+  right:18%;
+  color:#F0D896;
+  font-size:15px;
+  opacity:.24;
+}
+
+/* Content always stays above the art */
+.app,
+.onboarding,
+.club,
+.nav,
+.modal-bg,
+.toast{
+  position:relative;
+  z-index:2;
+}
+
+.nav,
+.modal-bg,
+.toast{
+  position:fixed;
+}
+
+/* So line art never interferes with reading */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard,
+.confirm-box{
+  isolation:isolate;
+}
+
+/* A faint warm/turquoise halo links the art with the interface */
+.cuban-decor:before,
+.cuban-decor:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  filter:blur(34px);
+}
+
+.cuban-decor:before{
+  width:220px;
+  height:220px;
+  right:-70px;
+  top:105px;
+  background:rgba(216,178,93,.07);
+}
+
+.cuban-decor:after{
+  width:190px;
+  height:190px;
+  left:-70px;
+  bottom:130px;
+  background:rgba(32,216,212,.055);
+}
+
+@media(max-width:380px){
+  .cuban-decor__havana{opacity:.07;left:-95px}
+  .cuban-decor__palm{opacity:.085;right:-72px}
+  .cuban-decor__bass{opacity:.055}
+  .cuban-decor__hat{opacity:.07}
+  .cuban-decor__conga{opacity:.065}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .cuban-decor__item,
+  .cuban-decor__spark{
+    animation:none !important;
+  }
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- ===== CUBAN LINE-ART DECORATIVE LAYER ===== -->
+<div class="cuban-decor" aria-hidden="true">
+  <!-- Havana skyline / dome -->
+  <svg class="cuban-decor__item cuban-decor__havana" viewBox="0 0 420 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 198H412" />
+    <path d="M26 198V158H64V198M64 198V143H102V198M102 198V168H142V198" />
+    <path d="M142 198V122H185V198M185 198V151H225V198" />
+    <path d="M225 198V110H279V198M279 198V149H326V198M326 198V164H388V198" />
+    <path d="M236 110C238 81 248 63 252 60C256 57 269 57 273 60C278 65 288 83 289 110" />
+    <path d="M246 60C247 45 254 35 262 29C270 35 277 46 278 60" />
+    <path d="M262 29V16M256 16H268" />
+    <path d="M151 122V100H176V122M332 164V139H360V164" />
+    <path d="M15 183C35 169 48 173 62 159M390 182C370 168 358 170 347 158" />
+  </svg>
+
+  <!-- Palm -->
+  <svg class="cuban-decor__item cuban-decor__palm" viewBox="0 0 220 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M111 305C103 250 105 198 113 146C118 111 121 83 117 52" />
+    <path d="M116 57C86 29 57 21 22 31C61 39 83 53 111 75" />
+    <path d="M117 56C143 28 169 19 202 28C166 39 144 52 121 74" />
+    <path d="M115 60C82 57 54 67 32 88C68 82 91 83 115 91" />
+    <path d="M119 60C150 59 176 70 196 93C162 84 139 85 118 94" />
+    <path d="M116 57C107 31 108 14 116 5C128 20 132 37 122 62" />
+    <path d="M108 305C88 282 73 269 53 263M112 292C133 272 151 262 176 259" />
+  </svg>
+
+  <!-- Classic Cuban hat -->
+  <svg class="cuban-decor__item cuban-decor__hat" viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 113C57 99 82 95 105 95C122 95 140 98 153 101C177 106 202 108 239 98" />
+    <path d="M39 118C80 131 127 137 171 130C196 126 217 116 239 99" />
+    <path d="M88 97C90 70 97 37 113 25C126 17 151 17 166 25C178 36 187 69 186 103" />
+    <path d="M93 77C119 83 157 84 182 75" />
+    <path d="M96 82C120 91 158 91 184 82" />
+  </svg>
+
+  <!-- Upright bass -->
+  <svg class="cuban-decor__item cuban-decor__bass" viewBox="0 0 180 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M92 16V128" />
+    <path d="M80 22H104M84 31H101" />
+    <path d="M82 55H101L98 132" />
+    <path d="M89 130C65 137 55 157 61 177C68 196 58 211 42 224C26 238 26 272 43 295C58 317 75 328 90 329C106 328 123 317 138 295C155 272 155 238 139 224C123 211 113 196 120 177C126 157 115 137 92 130" />
+    <path d="M90 130V329M86 151V306M94 151V306" />
+    <path d="M74 192C82 185 98 185 106 192M74 264C82 272 99 272 107 264" />
+    <path d="M90 329V350M81 350H99" />
+  </svg>
+
+  <!-- Conga -->
+  <svg class="cuban-decor__item cuban-decor__conga" viewBox="0 0 180 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="90" cy="42" rx="55" ry="18" />
+    <path d="M35 42C41 104 46 173 58 245C76 259 104 259 122 245C134 173 139 104 145 42" />
+    <path d="M45 91C76 102 105 102 135 91M51 151C77 160 103 160 129 151M57 214C78 221 102 221 123 214" />
+    <path d="M65 61L73 239M115 61L107 239" />
+  </svg>
+
+  <!-- Gold orbit -->
+  <svg class="cuban-decor__item cuban-decor__orbit cuban-decor__orbit--gold" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="110" cy="110" r="72" />
+    <path d="M18 129C60 81 123 56 194 75" />
+    <path d="M38 174C93 137 145 124 205 134" />
+    <circle cx="187" cy="73" r="4" fill="currentColor" stroke="none"/>
+    <circle cx="39" cy="174" r="3" fill="currentColor" stroke="none"/>
+  </svg>
+
+  <!-- Turquoise orbit -->
+  <svg class="cuban-decor__item cuban-decor__orbit cuban-decor__orbit--cyan" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="110" cy="110" r="69" />
+    <path d="M25 85C77 50 139 44 197 74" />
+    <path d="M28 145C85 175 145 174 194 143" />
+    <circle cx="197" cy="74" r="4" fill="currentColor" stroke="none"/>
+  </svg>
+
+  <!-- Decorative stars / crosses -->
+  <div class="cuban-decor__spark cuban-decor__spark--1">✦</div>
+  <div class="cuban-decor__spark cuban-decor__spark--2">✧</div>
+  <div class="cuban-decor__spark cuban-decor__spark--3">＋</div>
+  <div class="cuban-decor__spark cuban-decor__spark--4">✦</div>
+</div>
+
 
 
 <!-- ONBOARDING -->
