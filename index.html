@@ -1802,6 +1802,289 @@ body:after{
   }
 }
 
+
+/* ===== BRIGHTER LUXURY CONTRAST PASS · OCT 2026 ===== */
+:root{
+  --bg:#101517;
+  --surface:#171D20;
+  --surface-2:#1C2327;
+  --surface-3:#222B30;
+
+  --text:#FFF9F0;
+  --text-2:#F0E8DC;
+  --text-3:#D4C9B9;
+
+  --gold:#E0B862;
+  --gold-light:#F6DFA2;
+  --yellow:#F2E641;
+  --cyan:#2ADBD6;
+  --cyan-soft:#8EF1ED;
+}
+
+/* Warmer, brighter first impression */
+body{
+  background:
+    radial-gradient(circle at 50% -5%,rgba(132,183,204,.38),transparent 30%),
+    radial-gradient(circle at 18% 5%,rgba(255,222,169,.24),transparent 26%),
+    radial-gradient(circle at 88% 12%,rgba(224,184,98,.28),transparent 29%),
+    radial-gradient(circle at 10% 46%,rgba(42,219,214,.12),transparent 25%),
+    linear-gradient(180deg,#30454F 0%,#223138 13%,#1A2226 28%,#111719 52%,#0A0D0F 100%);
+}
+
+/* warm daylight veil */
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(180deg,rgba(255,232,194,.13),transparent 34%),
+    radial-gradient(ellipse at 50% 5%,rgba(255,215,151,.15),transparent 43%);
+  mix-blend-mode:screen;
+  opacity:.95;
+}
+
+/* header reads lighter, not cave-like */
+.topbar,.onboarding-top{
+  background:
+    linear-gradient(180deg,rgba(48,69,79,.82),rgba(22,30,34,.72),transparent);
+  border-bottom-color:rgba(246,223,162,.34);
+}
+
+.brand,
+.hello,
+.onboarding h1{
+  color:#FFF9F0;
+}
+
+.sub{
+  color:#F2ECE3;
+}
+
+.avatar{
+  background:linear-gradient(145deg,#2A3338,#171C1F);
+  border-color:rgba(246,223,162,.58);
+}
+
+/* brighter chips */
+.pill{
+  background:rgba(29,36,40,.90);
+  color:#F4EEE6;
+  border-color:#4A5459;
+  box-shadow:inset 0 1px rgba(255,255,255,.025);
+}
+
+.pill:first-child{
+  background:linear-gradient(180deg,rgba(224,184,98,.16),rgba(29,36,40,.92));
+  color:#F8E2AC;
+  border-color:rgba(224,184,98,.58);
+}
+
+.pill:nth-child(3){
+  background:linear-gradient(180deg,rgba(42,219,214,.11),rgba(29,36,40,.92));
+  color:#DFFDFC;
+  border-color:rgba(42,219,214,.54);
+}
+
+/* cards are lifted from black to charcoal with light */
+.mission,
+.team,
+.watch,
+.progress-card,
+#accessCard,
+.confirm-box,
+.modal{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(246,223,162,.075),transparent 28%),
+    linear-gradient(155deg,#1B2327,#111619) !important;
+  border-color:rgba(246,223,162,.28) !important;
+  box-shadow:
+    0 20px 44px rgba(0,0,0,.28),
+    inset 0 1px rgba(255,255,255,.04);
+}
+
+.mission{
+  background:
+    radial-gradient(circle at 94% 9%,rgba(224,184,98,.25),transparent 27%),
+    radial-gradient(circle at 8% 100%,rgba(42,219,214,.13),transparent 34%),
+    linear-gradient(145deg,#222A2E,#111619 72%) !important;
+  border-color:rgba(224,184,98,.64) !important;
+}
+
+.team{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(224,184,98,.20),transparent 30%),
+    radial-gradient(circle at 0% 100%,rgba(42,219,214,.12),transparent 30%),
+    linear-gradient(150deg,#1E272B,#121719) !important;
+  border-color:rgba(224,184,98,.50) !important;
+}
+
+.watch{
+  background:
+    radial-gradient(circle at 100% 8%,rgba(224,184,98,.15),transparent 28%),
+    radial-gradient(circle at 0% 100%,rgba(42,219,214,.10),transparent 26%),
+    linear-gradient(150deg,#1E272B,#121719) !important;
+}
+
+.progress-card{
+  background:
+    radial-gradient(circle at 10% 0%,rgba(42,219,214,.08),transparent 28%),
+    linear-gradient(155deg,#20282C,#141A1D) !important;
+}
+
+/* more gold and light */
+.section-label:before{
+  background:linear-gradient(90deg,#F6DFA2,#2ADBD6);
+}
+
+.mission-number,
+.brand:before,
+.watch:before{
+  color:#F4EB58;
+}
+
+.timer,
+.position,
+.watch strong,
+.prize,
+.race-row:first-child,
+.race-row.me{
+  color:#F7DF9E;
+}
+
+/* readability */
+.mission p,
+.team-copy,
+.watch p,
+.confirm-box p,
+#accessText,
+#progressMessage{
+  color:#EEE7DD !important;
+}
+
+.school-line,
+.race-note,
+.rules-button,
+.later-button{
+  color:#D9D0C5 !important;
+}
+
+/* gold CTA gets more presence */
+.action,
+.enter-button,
+#payClubButton{
+  background:linear-gradient(180deg,#F7E2AA 0%,#E0B45D 100%) !important;
+  color:#111 !important;
+  border-color:rgba(255,244,211,.60) !important;
+  box-shadow:
+    0 10px 28px rgba(224,180,84,.22),
+    inset 0 1px rgba(255,255,255,.55) !important;
+}
+
+.video-button{
+  background:
+    linear-gradient(180deg,rgba(42,219,214,.11),#111719);
+  border-color:rgba(42,219,214,.56);
+  color:#F7FFFF;
+}
+
+/* brighter secondary surfaces */
+.race{
+  background:linear-gradient(180deg,#171D20,#111619);
+  border-color:#4A5357;
+}
+
+#memberSpaces button{
+  background:#1A2125 !important;
+  border-color:#50595E !important;
+  color:#FFF8EF !important;
+}
+
+/* cyan gets a bit more role */
+.progress-bar{
+  background:linear-gradient(90deg,#20C8C4,#2ADBD6,#92F3EF);
+  box-shadow:0 0 18px rgba(42,219,214,.20);
+}
+
+.nav{
+  background:
+    linear-gradient(180deg,rgba(23,29,32,.96),rgba(10,13,15,.98));
+  border-top-color:rgba(246,223,162,.28);
+}
+
+.nav-item{
+  color:#D8D1C7;
+}
+
+.nav-item.active{
+  color:#F3EA54;
+}
+
+.nav-item:nth-child(3).active{
+  color:#52E4DE;
+}
+
+/* decorative layer becomes more visible but still background */
+.cuban-decor__havana{
+  color:#E0B862;
+  opacity:.14;
+}
+
+.cuban-decor__hatconga{
+  color:#F0D08A;
+  opacity:.16;
+  filter:drop-shadow(0 0 14px rgba(224,184,98,.18));
+}
+
+.cuban-decor__bass{
+  color:#E0B862;
+  opacity:.09;
+}
+
+.cuban-decor__arch{
+  color:#E0B862;
+  opacity:.085;
+}
+
+.cuban-decor__orbit--gold{
+  color:#F0C96F;
+  opacity:.15;
+}
+
+.cuban-decor__orbit--cyan{
+  color:#2ADBD6;
+  opacity:.12;
+}
+
+/* extra warm/cyan ambient light */
+.cuban-decor:before{
+  background:rgba(224,184,98,.10);
+}
+
+.cuban-decor:after{
+  background:rgba(42,219,214,.075);
+}
+
+/* fields lighter too */
+.field input,
+.field select,
+#adminPanel input,
+#adminPanel textarea,
+#adminPanel select,
+#questionModal input,
+#questionModal textarea{
+  background:#171D20 !important;
+  color:#FFF9F0 !important;
+  border-color:#4D575B !important;
+}
+
+/* keep it mature: brighter, but never neon */
+@media(max-width:380px){
+  .cuban-decor__hatconga{opacity:.135}
+  .cuban-decor__havana{opacity:.115}
+}
+
 </style>
 </head>
 
