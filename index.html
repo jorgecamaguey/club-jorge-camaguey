@@ -3029,6 +3029,64 @@ body{
   line-height:1.45;
   font-weight:500;
 }
+
+/* ===== STATS ROW OVERFLOW FIX · OCT 2026 ===== */
+
+/* Keep all three stat pills fully inside the app viewport */
+.stats{
+  width:100%;
+  max-width:100%;
+  overflow:hidden !important;
+  display:grid !important;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1.15fr) minmax(0,.82fr);
+  gap:8px !important;
+}
+
+.stats .pill{
+  width:100%;
+  min-width:0 !important;
+  max-width:100%;
+  justify-content:center;
+  padding:9px 10px !important;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.stats .pill span[id]{
+  min-width:0;
+}
+
+#cityLabel{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Long city names stay inside their pill */
+.stats .pill:last-child{
+  min-width:0 !important;
+}
+
+.stats .pill:last-child .premium-icon{
+  flex:0 0 auto;
+}
+
+@media(max-width:390px){
+  .stats{
+    grid-template-columns:minmax(0,1.08fr) minmax(0,1.08fr) minmax(0,.84fr);
+    gap:7px !important;
+  }
+
+  .stats .pill{
+    padding:9px 8px !important;
+    font-size:13px !important;
+  }
+
+  .premium-icon{
+    margin-right:5px !important;
+  }
+}
+
 </style>
 </head>
 
