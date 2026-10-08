@@ -4180,6 +4180,7 @@ h1,h2,h3{
     <textarea id="adminMissionDescription" placeholder="Descripción" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;min-height:90px;"></textarea>
     <select id="missionVideoPicker" onchange="pickMissionVideo()" style="width:100%;color:#171717;background:white;padding:12px;"><option value="">Elegir vídeo #mision…</option></select>
     <button type="button" onclick="refreshMissionVideos()">ACTUALIZAR VÍDEOS</button>
+    <div style="font-size:11px;color:#5b5650;margin:5px 0 9px;">Pon un título después de #mision en la descripción del vídeo del canal. La lista muestra título, fecha y número.</div>
     <input id="adminMissionVideo" placeholder="URL vídeo de Jorge (opcional)" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;">
     <button class="action" type="button" onclick="adminCreateMission(true)">PUBLICAR MISIÓN</button>
   </div>
@@ -5018,7 +5019,12 @@ async function refreshMissionVideos(){
     missionVideoChoices=d.videos||[];
     const picker=document.getElementById("missionVideoPicker");
     picker.replaceChildren(new Option("Elegir vídeo #mision…",""));
-    missionVideoChoices.forEach(v=>picker.add(new Option((v.caption||"Vídeo").slice(0,70),String(v.id))));
+    missionVideoChoices.forEach(v=>{
+      const name=String(v.caption||"").replace(/#mision\\b/gi,"").trim()||"Vídeo sin título";
+      const date=v.created_at?new Date(v.created_at).toLocaleDateString("es-ES",{day:"2-digit",month:"short",year:"numeric"}):"";
+      const number=String(v.message_url||"").split("/").pop();
+      picker.add(new Option(name.slice(0,55)+" · "+date+" · #"+number,String(v.id)));
+    });
   }catch(e){showToast("Error al cargar vídeos");}
 }
 function pickMissionVideo(){
