@@ -3933,6 +3933,20 @@ h1,h2,h3{
 </section>
 
 
+<section id="subscriptionGate" class="onboarding" style="display:none;justify-content:center;min-height:100vh;padding:34px 24px;text-align:center;">
+<div class="brand" style="margin-bottom:45px;letter-spacing:2px;">CLUB JORGE CAMAGÜEY</div>
+<div style="color:#D9B76A;font-size:12px;letter-spacing:2px;font-weight:800;margin-bottom:18px;">UNA EXPERIENCIA PRIVADA</div>
+<h1 style="font-size:44px;line-height:1.05;margin:0 0 22px;">TU PRÓXIMO PASO<br>EMPIEZA AQUÍ.</h1>
+<p class="onboarding-intro" style="margin:0 auto 25px;">Una misión nueva cada semana, aprendizaje junto a Jorge y una comunidad que crece contigo. Suma puntos para tu ciudad y forma parte de algo especial.</p>
+<div style="border:1px solid #D9B76A;border-radius:20px;padding:20px;margin:0 0 22px;background:#10191E;">
+<div style="font-size:14px;font-weight:800;color:#F0D99A;">ACCESO AL CLUB PRIVADO</div>
+<div style="font-size:29px;font-weight:900;margin:12px 0;">9 € / mes</div>
+<div style="font-size:12px;color:#C8C9C7;">Suscripción mensual. Pago seguro mediante Stripe.</div>
+</div>
+<button class="enter-button" onclick="gateSubscribe()" style="background:#D9B76A;color:#101014;">QUIERO ENTRAR AL CLUB →</button>
+<p class="onboarding-note">El contenido y las actividades son exclusivos para miembros con acceso activo.</p>
+<div id="gateError" style="margin-top:14px;color:#F0D99A;font-size:12px;"></div>
+</section>
 <!-- CLUB -->
 
 <div class="club" id="club">
@@ -4463,25 +4477,45 @@ function focusSubscriptionIntent(){
   },450);
 }
 
-function startApp(){
-
-  if(
-    profile &&
-    profile.country &&
-    profile.city
-  ){
-
-    showClub();
-    focusSubscriptionIntent();
-
-  }else{
-
-    document
-      .getElementById("onboarding")
-      .classList.add("show");
-
-  }
-
+let gateChecking=false;
+function showSubscriptionGate(message=""){
+  document.getElementById("club").classList.remove("show");
+  document.getElementById("onboarding").classList.remove("show");
+  document.getElementById("subscriptionGate").style.display="flex";
+  document.getElementById("gateError").textContent=message;
+}
+async function startApp(){
+  if(gateChecking)return;
+  gateChecking=true;
+  document.getElementById("club").classList.remove("show");
+  document.getElementById("onboarding").classList.remove("show");
+  document.getElementById("subscriptionGate").style.display="none";
+  try{
+    const state=await clubApi("subscription_access");
+    if(state.active){
+      document.getElementById("subscriptionGate").style.display="none";
+      if(profile&&profile.country&&profile.city)showClub();
+      else document.getElementById("onboarding").classList.add("show");
+    }else showSubscriptionGate();
+  }catch(e){showSubscriptionGate("No se pudo verificar tu acceso. Vuelve a intentarlo.");}
+  finally{gateChecking=false;}
+}
+async function gateSubscribe(){
+  const button=document.querySelector("#subscriptionGate .enter-button");
+  button.disabled=true;
+  try{
+    const state=await clubApi("subscription_access");
+    if(state.active){await startApp();return;}
+    if(!profile||!profile.country||!profile.city || !state.linked){
+      document.getElementById("subscriptionGate").style.display="none";
+      document.getElementById("onboarding").classList.add("show");
+      return;
+    }
+    const d=await clubApi("payment_link");
+    if(!d.url)throw Error("Payment unavailable");
+    if(tg.openLink)tg.openLink(d.url);else window.location.href=d.url;
+  }catch(e){document.getElementById("gateError").textContent="No se pudo abrir el pago. Vuelve a intentarlo.";}
+  finally{button.disabled=false;}
 }
 
 
@@ -4573,8 +4607,8 @@ try {
     .classList.remove("show");
 
 
-  showClub();
-  focusSubscriptionIntent();
+  showSubscriptionGate();
+  await gateSubscribe();
 
 
   if(tg.HapticFeedback){
@@ -5503,13 +5537,13 @@ function showToast(message){
 
 // When the user returns from Stripe to Telegram, refresh membership immediately.
 document.addEventListener("visibilitychange",function(){
-  if(!document.hidden && document.getElementById("club")?.classList.contains("show")){
-    loadAccessState();
+  if(!document.hidden){
+    startApp();
   }
 });
 window.addEventListener("focus",function(){
-  if(document.getElementById("club")?.classList.contains("show")){
-    loadAccessState();
+  if(true){
+    startApp();
   }
 });
 
