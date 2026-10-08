@@ -4011,6 +4011,7 @@ h1,h2,h3{
       Próximamente
     </h2>
 
+    <button id="watchJorge" type="button" onclick="watchJorge()" style="display:none;width:100%;background:#78dfd5;color:#112222;padding:13px;border:0;border-radius:12px;font-weight:bold;">VER VÍDEO DE JORGE</button>
     <p id="missionDescription">
       Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.
     </p>
@@ -4177,6 +4178,8 @@ h1,h2,h3{
     <h3>NUEVA MISIÓN</h3>
     <input id="adminMissionTitle" placeholder="Título" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;">
     <textarea id="adminMissionDescription" placeholder="Descripción" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;min-height:90px;"></textarea>
+    <select id="missionVideoPicker" onchange="pickMissionVideo()" style="width:100%;color:#171717;background:white;padding:12px;"><option value="">Elegir vídeo #mision…</option></select>
+    <button type="button" onclick="refreshMissionVideos()">ACTUALIZAR VÍDEOS</button>
     <input id="adminMissionVideo" placeholder="URL vídeo de Jorge (opcional)" style="width:100%;box-sizing:border-box;padding:12px;margin:5px 0;">
     <button class="action" type="button" onclick="adminCreateMission(true)">PUBLICAR MISIÓN</button>
   </div>
@@ -4678,6 +4681,7 @@ async function loadMemberHomeState(){
         button.classList.toggle("done",completed);
       }
       if(videoButton) videoButton.style.display="block";
+      document.getElementById("watchJorge").style.display=String(activeMission.jorge_video_url||"").startsWith("https://t.me/")?"block":"none";
     }else{
       if(intro) intro.innerText="Próximamente publicaremos la primera misión.";
       if(number) number.innerText="SIN MISIÓN ACTIVA";
@@ -4685,6 +4689,7 @@ async function loadMemberHomeState(){
       if(description) description.innerText="Cuando Jorge publique la primera misión, aparecerá aquí automáticamente.";
       if(button) button.style.display="none";
       if(videoButton) videoButton.style.display="none";
+      document.getElementById("watchJorge").style.display="none";
     }
     updateUI();
   }catch(e){
@@ -4900,6 +4905,7 @@ async function configureTelegramWebhook(){
 async function loadAdmin(){
   try{
     const data=await clubApi("admin_state");
+    if(["owner","admin"].includes(data.role))refreshMissionVideos();
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
@@ -5005,6 +5011,27 @@ async function adminCloseSeason(){
   }
 }
 
+let missionVideoChoices=[];
+async function refreshMissionVideos(){
+  try {
+    const d=await clubApi("admin_mission_videos");
+    missionVideoChoices=d.videos||[];
+    const picker=document.getElementById("missionVideoPicker");
+    picker.replaceChildren(new Option("Elegir vídeo #mision…",""));
+    missionVideoChoices.forEach(v=>picker.add(new Option((v.caption||"Vídeo").slice(0,70),String(v.id))));
+  }catch(e){showToast("Error al cargar vídeos");}
+}
+function pickMissionVideo(){
+  const id=Number(document.getElementById("missionVideoPicker").value);
+  const v=missionVideoChoices.find(x=>Number(x.id)===id);
+  document.getElementById("adminMissionVideo").value=v?.message_url||"";
+}
+function watchJorge(){
+  const link=String(activeMission?.jorge_video_url||"");
+  if(!link.startsWith("https://t.me/"))return;
+  if(tg.openTelegramLink)tg.openTelegramLink(link);
+  else window.open(link,"_blank");
+}
 async function adminCreateMission(activate){
   const title=document.getElementById("adminMissionTitle").value.trim();
   if(!title){showToast("Escribe el título.");return;}
