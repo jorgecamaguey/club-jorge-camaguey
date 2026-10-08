@@ -5292,6 +5292,22 @@ async function loadAccessState(){
     card.style.display="block";
     const pay=document.getElementById("payClubButton");
     const spaces=document.getElementById("memberSpaces");
+    let tools=document.getElementById("billingManagePanel");
+    if(!tools){
+      tools=document.createElement("div");tools.id="billingManagePanel";tools.style.cssText="margin:12px 0;padding:12px;background:#fff;color:#111;border-radius:12px;";
+      card.append(tools);
+    }
+    tools.replaceChildren();
+    if(d.can_manage){
+      const date=document.createElement("p");
+      date.style.cssText="font-size:13px;margin:0 0 9px";
+      if(d.status==="past_due"&&d.grace_ends_at)date.textContent="Pago pendiente. Actualiza tu tarjeta antes del "+new Date(d.grace_ends_at).toLocaleDateString("es-ES")+".";
+      else date.textContent=d.current_period_end?"Próxima fecha de facturación o fin de periodo: "+new Date(d.current_period_end).toLocaleDateString("es-ES"):"Consulta tu próxima fecha de cobro en Stripe.";
+      tools.append(date);
+      const manage=document.createElement("button");manage.type="button";manage.textContent="GESTIONAR SUSCRIPCIÓN Y TARJETA";
+      manage.style.cssText="padding:12px;width:100%;background:#113c38;color:white;border:0;border-radius:10px;font-weight:bold;";
+      manage.onclick=manageSubscription;tools.append(manage);
+    }
     if(d.active){
       const manualLabel=d.access_type==="gift"?"ACCESO DE REGALO":(d.access_type==="free"?"ACCESO INVITADO":"MEMBRESÍA ACTIVA");
       document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":manualLabel;
@@ -5312,6 +5328,12 @@ async function loadAccessState(){
       if(spaces)spaces.style.display="none";
     }
   }catch(e){}
+}
+async function manageSubscription(){
+ try{
+   const d=await clubApi("subscription_portal");
+   if(d.url){if(tg.openLink)tg.openLink(d.url);else window.location.href=d.url;}
+ }catch(e){showToast("No se pudo abrir Stripe. Contacta con el administrador.");}
 }
 async function startSubscription(){
   try{const d=await clubApi("payment_link");if(tg.openLink)tg.openLink(d.url);else window.location.href=d.url;}
