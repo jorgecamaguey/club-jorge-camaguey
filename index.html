@@ -4110,7 +4110,7 @@ h1,h2,h3{
       </div>
     </div>
 
-  <div style="background:#fff;color:#161616;padding:16px;border-radius:16px;margin-top:15px;"><h3>MIS MISIONES ANTERIORES</h3><div id="missionLibrary">Cargando…</div></div>
+  <div style="background:#fff;color:#161616;padding:16px;border-radius:16px;margin-top:15px;"><h3>TODAS MIS MISIONES</h3><p style="font-size:13px;color:#555">Elige cualquier misión de esta temporada. Puedes completarlas en el orden que prefieras.</p><div id="missionLibrary">Cargando…</div></div>
 </section>
 
   <!-- TEAM -->
@@ -4504,6 +4504,8 @@ let missions = 0;
 let missionTarget = 12;
 let completed = false;
 let activeMission = null;
+let selectedMission = null;
+let missionLibraryItems = [];
 let activeSeason = null;
 
 
@@ -4729,6 +4731,7 @@ async function loadMemberHomeState(){
   try{
     const data=await clubApi("member_home_state");
     activeMission=data.active_mission||null;
+    selectedMission=activeMission;
     activeSeason=data.season||null;
     missions=Number(data.mission_count||0);
     missionTarget=Number(data.mission_target||12);
@@ -4779,7 +4782,10 @@ async function loadMemberHomeState(){
 
 async function completeMission(){
 
-  if(completed){
+  const mission=selectedMission||activeMission;
+  if(!mission){showToast("Selecciona una misión.");return;}
+  const alreadyCompleted=missionLibraryItems.some(x=>Number(x.id)===Number(mission.id)&&x.completed);
+  if(alreadyCompleted){
     showToast("Esta misión ya está completada.");
     return;
   }
@@ -4801,7 +4807,8 @@ async function completeMission(){
         },
         body: JSON.stringify({
           initData: tg.initData,
-          action: "complete_mission"
+          action: "complete_mission",
+          mission_id: Number(mission.id)
         })
       }
     );
@@ -4821,7 +4828,6 @@ async function completeMission(){
     }
 
     await loadMemberHomeState();
-
     if(tg.HapticFeedback){
       tg.HapticFeedback
         .notificationOccurred("success");
@@ -5133,20 +5139,35 @@ async function loadMissionLibrary(){
  try{
  const d=await clubApi("member_library"), box=document.getElementById("missionLibrary");
  if(!box)return;
+ missionLibraryItems=Array.isArray(d.items)?d.items:[];
  box.replaceChildren();
- if(!d.items.length){box.textContent="Aún no hay misiones publicadas.";return;}
- for(const item of d.items){
- const card=document.createElement("div");card.style.cssText="padding:11px 0;border-bottom:1px solid #ddd";
+ const seasonId=Number(activeSeason?.id);
+ const seasonItems=missionLibraryItems.filter(x=>!seasonId||Number(x.season_id)===seasonId);
+ if(!seasonItems.length){box.textContent="Aún no hay misiones publicadas.";return;}
+ const label=document.createElement("div");
+ label.style.cssText="font-size:12px;color:#555;margin:8px 0 14px";
+ label.textContent=seasonItems.filter(x=>x.completed).length+" de "+seasonItems.length+" misiones completadas";
+ box.append(label);
+ for(const item of seasonItems){
+ const card=document.createElement("div");card.style.cssText="padding:15px 0;border-bottom:1px solid #ddd";
  const title=document.createElement("strong");title.textContent=item.title+(item.completed?" ✓":"");card.append(title);
- const detail=document.createElement("p");detail.textContent=item.description||"";detail.style.cssText="font-size:12px;color:#555";card.append(detail);
+ const state=document.createElement("div");state.style.cssText="font-size:12px;margin-top:5px;color:"+(item.completed?"#13674e":"#755a19");
+ state.textContent=item.completed?"COMPLETADA":"PENDIENTE · PUEDES HACERLA HOY";card.append(state);
+ const detail=document.createElement("p");detail.textContent=item.description||"";detail.style.cssText="font-size:13px;color:#555;line-height:1.5";card.append(detail);
+ const controls=document.createElement("div");controls.style.cssText="display:flex;gap:7px;flex-wrap:wrap";
  if(item.jorge_video_url?.startsWith("https://t.me/")){
- const link=document.createElement("button");link.textContent="VER VÍDEO";link.style.cssText="padding:9px;border-radius:9px;border:1px solid #bbb;background:#fff;color:#111";link.onclick=()=>tg.openTelegramLink?tg.openTelegramLink(item.jorge_video_url):window.open(item.jorge_video_url,"_blank");card.append(link);
+ const link=document.createElement("button");link.textContent="VER VÍDEO DE JORGE";link.style.cssText="padding:10px;border-radius:9px;border:1px solid #bbb;background:#fff;color:#111;font-weight:700";link.onclick=()=>tg.openTelegramLink?tg.openTelegramLink(item.jorge_video_url):window.open(item.jorge_video_url,"_blank");controls.append(link);
  }
- box.append(card);
+ const done=document.createElement("button");done.textContent=item.completed?"✓ COMPLETADA":"✓ HE HECHO LA MISIÓN";
+ done.disabled=!!item.completed;
+ done.style.cssText="padding:11px;border-radius:9px;border:0;background:"+(item.completed?"#dce9e4":"#161616")+";color:"+(item.completed?"#13674e":"#fff")+";font-weight:800";
+ done.onclick=async()=>{selectedMission=item;done.disabled=true;done.textContent="GUARDANDO…";try{const result=await clubApi("complete_mission",{mission_id:Number(item.id)});if(!result.success)throw Error("Save failed");showToast("Misión guardada.");await loadMemberHomeState();await loadCityRanking();}catch(e){done.disabled=false;done.textContent="✓ HE HECHO LA MISIÓN";showToast("Error al guardar la misión.");}};
+ controls.append(done);
+ const video=document.createElement("button");video.textContent="ENVIAR VÍDEO";video.style.cssText="padding:11px;border-radius:9px;border:0;background:#087d7b;color:#fff;font-weight:800";video.onclick=()=>sendVideo(item.id);controls.append(video);
+ card.append(controls);box.append(card);
  }
- const completed=d.items.filter(x=>x.completed).length;
- const steps=document.getElementById("firstSteps");if(steps)steps.style.display=completed===0?"block":"none";
- }catch(e){console.warn("Library unavailable",e);}
+ const steps=document.getElementById("firstSteps");if(steps)steps.style.display=seasonItems.every(x=>!x.completed)?"block":"none";
+ }catch(e){console.warn("Library unavailable",e);const box=document.getElementById("missionLibrary");if(box)box.textContent="No se pudo cargar el archivo. Vuelve a abrir el Club.";}
 }
 function renderAdminMissions(missions){
  const el=document.getElementById("adminMissionList");if(!el)return;el.replaceChildren();
@@ -5447,7 +5468,10 @@ function openCommunity(){openClubSpace("community_group");}
 
 /* VIDEO */
 
-function sendVideo(){
+function sendVideo(missionId){
+  const mission = Number.isSafeInteger(Number(missionId)) && Number(missionId)>0 ? missionLibraryItems.find(x=>Number(x.id)===Number(missionId)) : (selectedMission||activeMission);
+  if(!mission){showToast("Selecciona una misión.");return;}
+  selectedMission=mission;
   const checkbox=document.getElementById("videoPublicConsent");
   if(checkbox) checkbox.checked=false;
   document.getElementById("videoConsentModal").classList.add("show");
@@ -5475,6 +5499,7 @@ async function confirmVideoSend(){
         body:JSON.stringify({
           initData:tg.initData,
           action:"prepare_video_upload",
+          mission_id:Number(selectedMission?.id),
           public_review_consent:consent
         })
       }
