@@ -5118,16 +5118,32 @@ function renderUserManagement(){
     const id=Number(m.id);
     const name=escapeHtml(m.first_name||"Sin nombre");
     const detail=escapeHtml([m.city||"Sin ciudad",m.telegram_id||"Sin ID",m.access_type||""].join(" · "));
+    const suspended=m.access_type==="revoked";
     const options=["member","moderator","admin"].map(role=>'<option value="'+role+'"'+(m.role===role?' selected':'')+'>'+({member:"Participante",moderator:"Moderador",admin:"Administrador"}[role])+'</option>').join("");
     return '<div style="background:#ffffff;color:#171717;border:1px solid #d4cdc0;border-radius:14px;padding:12px;margin-bottom:9px;">'
       +'<div style="font-weight:850;color:#161616;">'+name+' '+(m.role==="owner"?'· PROPIETARIO':'')+'</div>'
       +'<div style="font-size:10px;color:#756f67;overflow-wrap:anywhere;margin:4px 0 10px;">'+detail+'</div>'
-      +(m.role==="owner"?'<div style="font-size:11px;color:#777;">Cuenta protegida</div>':
+      +(m.role==="owner"?'<div style="font-size:11px;color:#777;">Cuenta protegida</div>':suspended?'<button type="button" onclick="restoreManagedUser('+id+')" style="padding:11px;border-radius:10px;border:0;background:#195a40;color:white;font-weight:800;">REACTIVAR Y ENVIAR INVITACIÓN</button>':
         '<div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;"><select aria-label="Rol" id="userRole_'+id+'" style="flex:1;min-width:140px;padding:9px;border-radius:9px;border:1px solid #ddd;">'+options+'</select>'
         +'<button type="button" onclick="saveManagedRole('+id+')" style="padding:10px;border-radius:9px;background:#171717;color:white;border:0;">GUARDAR</button>'
         +'<button type="button" onclick="removeManagedUser('+id+')" style="padding:10px;border-radius:9px;background:#fff0ec;color:#a42e20;border:1px solid #eac8be;">EXCLUIR</button></div>')
       +'</div>';
   }).join("")||'<p style="color:#777;font-size:12px;">No se encontraron usuarios.</p>';
+}
+async function restoreManagedUser(id){
+  const person=(window.userManagementTeam||[]).find(x=>Number(x.id)===id);
+  if(!person||person.access_type!=="revoked")return;
+  if(!confirm("¿Reactivar a "+(person.first_name||"este usuario")+" y enviar una nueva invitación? Si no tiene una suscripción activa se concederá acceso gratuito."))return;
+  try{
+    const result=await clubApi("owner_restore_user",{member_id:id});
+    const links=result.links||{};
+    const invite=[links.official_channel,links.community_group].filter(Boolean).join("\n");
+    if(invite){
+      try{await navigator.clipboard.writeText(invite);}catch(e){}
+    }
+    showToast(result.message_sent?"✅ Acceso restaurado. Invitación enviada.":"✅ Acceso restaurado. Enlaces copiados si el navegador lo permite.");
+    await loadAdmin();
+  }catch(e){showToast("No se pudo reactivar. Comprueba permisos del bot.");}
 }
 async function saveManagedRole(id){
   const role=document.getElementById("userRole_"+id)?.value;
