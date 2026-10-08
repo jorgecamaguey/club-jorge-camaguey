@@ -3993,7 +3993,8 @@ h1,h2,h3{
     01 · MI MISIÓN
   </div>
 
-  <section class="mission" id="missionSection">
+  <div id="firstSteps" style="display:none;background:#fff;color:#161616;border-radius:16px;padding:15px;margin:12px 16px;"><strong>PRIMEROS PASOS</strong><p>1. Mira la bienvenida · 2. Completa tu perfil · 3. Haz tu primera misión.</p></div>
+<section class="mission" id="missionSection">
 
     <div class="mission-top">
 
@@ -4054,7 +4055,8 @@ h1,h2,h3{
       </div>
     </div>
 
-  </section>
+  <div style="background:#fff;color:#161616;padding:16px;border-radius:16px;margin-top:15px;"><h3>MIS MISIONES ANTERIORES</h3><div id="missionLibrary">Cargando…</div></div>
+</section>
 
   <!-- TEAM -->
 
@@ -4185,7 +4187,8 @@ h1,h2,h3{
     <button class="action" type="button" onclick="adminCreateMission(true)">PUBLICAR MISIÓN</button>
   </div>
 
-  <h3 style="margin-top:24px;">VÍDEOS</h3>
+  <h3 style="margin-top:24px;">GESTIONAR MISIONES</h3><div id="adminMissionList"></div>
+<h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
   <h3 style="margin-top:24px;">ESTUDIO DEL DIRECTO</h3>
@@ -4693,6 +4696,7 @@ async function loadMemberHomeState(){
       document.getElementById("watchJorge").style.display="none";
     }
     updateUI();
+    await loadMissionLibrary();
   }catch(e){
     console.error("Member home state error",e);
   }
@@ -4907,6 +4911,7 @@ async function loadAdmin(){
   try{
     const data=await clubApi("admin_state");
     if(["owner","admin"].includes(data.role))refreshMissionVideos();
+    renderAdminMissions(data.missions||[]);
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
@@ -5037,6 +5042,46 @@ function watchJorge(){
   if(!link.startsWith("https://t.me/"))return;
   if(tg.openTelegramLink)tg.openTelegramLink(link);
   else window.open(link,"_blank");
+}
+async function loadMissionLibrary(){
+ try{
+ const d=await clubApi("member_library"), box=document.getElementById("missionLibrary");
+ if(!box)return;
+ box.replaceChildren();
+ if(!d.items.length){box.textContent="Aún no hay misiones publicadas.";return;}
+ for(const item of d.items){
+ const card=document.createElement("div");card.style.cssText="padding:11px 0;border-bottom:1px solid #ddd";
+ const title=document.createElement("strong");title.textContent=item.title+(item.completed?" ✓":"");card.append(title);
+ const detail=document.createElement("p");detail.textContent=item.description||"";detail.style.cssText="font-size:12px;color:#555";card.append(detail);
+ if(item.jorge_video_url?.startsWith("https://t.me/")){
+ const link=document.createElement("button");link.textContent="VER VÍDEO";link.style.cssText="padding:9px;border-radius:9px;border:1px solid #bbb;background:#fff;color:#111";link.onclick=()=>tg.openTelegramLink?tg.openTelegramLink(item.jorge_video_url):window.open(item.jorge_video_url,"_blank");card.append(link);
+ }
+ box.append(card);
+ }
+ const completed=d.items.filter(x=>x.completed).length;
+ const steps=document.getElementById("firstSteps");if(steps)steps.style.display=completed===0?"block":"none";
+ }catch(e){console.warn("Library unavailable",e);}
+}
+function renderAdminMissions(missions){
+ const el=document.getElementById("adminMissionList");if(!el)return;el.replaceChildren();
+ for(const m of missions||[]){
+ const wrap=document.createElement("div");wrap.style.cssText="background:white;color:#111;padding:12px;margin:8px 0;border-radius:12px";
+ const label=document.createElement("strong");label.textContent=m.title;wrap.append(label);
+ const edit=document.createElement("button");edit.textContent="EDITAR";edit.onclick=()=>editSavedMission(m);wrap.append(edit);
+ const del=document.createElement("button");del.textContent="ELIMINAR";del.style.marginLeft="8px";del.onclick=()=>deleteSavedMission(m);wrap.append(del);el.append(wrap);
+ }
+}
+async function editSavedMission(m){
+ const title=prompt("Título",m.title);if(title===null)return;
+ const description=prompt("Descripción",m.description||"");if(description===null)return;
+ const link=prompt("URL vídeo",m.jorge_video_url||"");if(link===null)return;
+ try{await clubApi("admin_edit_mission",{mission_id:m.id,title,description,jorge_video_url:link});showToast("Misión actualizada");await loadAdmin();await loadMemberHomeState();await loadMissionLibrary();}
+ catch(e){showToast("No se pudo editar");}
+}
+async function deleteSavedMission(m){
+ if(!confirm("¿Eliminar la misión "+m.title+"? Solo es posible si nadie la completó."))return;
+ try{await clubApi("admin_delete_mission",{mission_id:m.id});showToast("Misión eliminada");await loadAdmin();await loadMemberHomeState();await loadMissionLibrary();}
+ catch(e){showToast("No se puede eliminar una misión con progreso");}
 }
 async function adminCreateMission(activate){
   const title=document.getElementById("adminMissionTitle").value.trim();
