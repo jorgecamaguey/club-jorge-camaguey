@@ -3625,6 +3625,10 @@ h1,h2,h3{
 .stats .pill:last-child .premium-icon{flex:0 0 auto !important;}
 #cityLabel{display:block !important;flex:1 1 auto !important;min-width:0 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;overflow-wrap:normal !important;word-break:normal !important;font-size:clamp(11px,3.1vw,14px) !important;text-align:center !important;}
 @media(max-width:370px){.stats{gap:5px !important;grid-template-columns:minmax(0,.95fr) minmax(0,.95fr) minmax(0,1.35fr) !important;}.stats .pill{font-size:12px !important;padding:9px 5px !important;}}
+
+/* Prevent iOS focus zoom and jump when editing mission fields. */
+#missionAdmin input, #missionAdmin textarea, #missionAdmin select {font-size:16px !important;max-width:100% !important;scroll-margin-top:85px;}
+#missionAdmin{overflow-anchor:none;}
 </style>
 </head>
 
@@ -5339,7 +5343,7 @@ function goSection(id,button){
   if(!target)return;
   document.querySelectorAll(".nav-item").forEach(function(item){item.classList.remove("active");});
   if(button)button.classList.add("active");
-  target.scrollIntoView({behavior:"smooth",block:"start"});
+  /* Keep Telegram Mini App viewport stable when changing tabs. */
 }
 let clubSpaceLinks={};
 let clubSpaceLinksLoadedAt=0;
