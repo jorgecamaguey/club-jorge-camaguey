@@ -3617,6 +3617,14 @@ h1,h2,h3{
 #subscriptionGate .enter-button {display:block !important; width:100% !important; max-width:100% !important; background:#D9B76A !important; color:#101014 !important; text-align:center !important; white-space:normal !important;}
 #subscriptionGate .brand {font-size:12px !important; white-space:normal !important;}
 
+
+/* OCT 8: city-name pill: allow readable names and avoid character-by-character wraps */
+.stats{display:grid !important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.45fr) !important;gap:8px !important;overflow:visible !important;}
+.stats .pill{min-width:0 !important;width:100%;display:flex !important;align-items:center !important;justify-content:center !important;gap:5px !important;padding:10px 7px !important;white-space:nowrap !important;overflow:hidden !important;}
+.stats .pill:last-child{min-width:0 !important;}
+.stats .pill:last-child .premium-icon{flex:0 0 auto !important;}
+#cityLabel{display:block !important;flex:1 1 auto !important;min-width:0 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;overflow-wrap:normal !important;word-break:normal !important;font-size:clamp(11px,3.1vw,14px) !important;text-align:center !important;}
+@media(max-width:370px){.stats{gap:5px !important;grid-template-columns:minmax(0,.95fr) minmax(0,.95fr) minmax(0,1.35fr) !important;}.stats .pill{font-size:12px !important;padding:9px 5px !important;}}
 </style>
 </head>
 
@@ -5375,7 +5383,7 @@ async function loadAccessState(){
       const manualLabel=d.access_type==="gift"?"ACCESO DE REGALO":(d.access_type==="free"?"ACCESO INVITADO":"MEMBRESÍA ACTIVA");
       document.getElementById("accessTitle").innerText=d.staff?"ACCESO DE EQUIPO":manualLabel;
       let accessCopy=d.staff?"Acceso interno del equipo.":(d.manual?"Tu acceso al Club está activo sin pago.":"Tu acceso al Club está activo.");
-      if(d.access_expires_at) accessCopy+=" Hasta "+new Date(d.access_expires_at).toLocaleDateString("es-ES")+".";
+      if(d.manual && d.access_expires_at && new Date(d.access_expires_at).getTime()>Date.now()) accessCopy+=" Hasta "+new Date(d.access_expires_at).toLocaleDateString("es-ES")+".";
       document.getElementById("accessText").innerText=accessCopy;
       pay.style.display="none";
       if(spaces)spaces.style.display="none";
