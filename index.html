@@ -4506,7 +4506,7 @@ async function gateSubscribe(){
   try{
     const state=await clubApi("subscription_access");
     if(state.active){await startApp();return;}
-    if(!profile||!profile.country||!profile.city || !state.linked){
+    if(!profile||!profile.country||!profile.city){
       document.getElementById("subscriptionGate").style.display="none";
       document.getElementById("onboarding").classList.add("show");
       return;
