@@ -4187,7 +4187,7 @@ h1,h2,h3{
     <button class="action" type="button" onclick="adminCreateMission(true)">PUBLICAR MISIÓN</button>
   </div>
 
-  <h3 style="margin-top:24px;">GESTIONAR MISIONES</h3><div id="adminMissionList"></div>
+  <div id="ownerMetricsPanel" style="display:none;background:#f1ede5;color:#161616;border-radius:16px;padding:14px;margin:16px 0;"><h3>DATOS DEL CLUB</h3><div id="ownerMetricsText">Cargando métricas…</div></div><h3 style="margin-top:24px;">GESTIONAR MISIONES</h3><div id="adminMissionList"></div>
 <h3 style="margin-top:24px;">VÍDEOS</h3>
   <div id="adminVideos">Sin vídeos pendientes.</div>
 
@@ -4912,6 +4912,17 @@ async function loadAdmin(){
     const data=await clubApi("admin_state");
     if(["owner","admin"].includes(data.role))refreshMissionVideos();
     renderAdminMissions(data.missions||[]);
+    const metricsPanel=document.getElementById("ownerMetricsPanel");
+    if(metricsPanel)metricsPanel.style.display=data.role==="owner"?"block":"none";
+    if(data.role==="owner"){
+      try{
+        const m=await clubApi("owner_metrics");
+        document.getElementById("ownerMetricsText").textContent=
+          "Suscripciones activas: "+m.active_subscriptions+" · Usuarios registrados: "+m.registered_members+
+          " · Nuevos últimos 30 días: "+m.new_members_30d+" · Participaron últimos 30 días: "+m.engaged_members_30d+
+          " · Misiones: "+m.missions_published;
+      }catch(e){document.getElementById("ownerMetricsText").textContent="Métricas no disponibles"; }
+    }
     const panel=document.getElementById("adminPanel");
     panel.style.display="block";
     document.getElementById("adminRole").innerText="Rol: "+String(data.role).toUpperCase();
